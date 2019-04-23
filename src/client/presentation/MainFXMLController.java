@@ -9,18 +9,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.SubScene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -30,20 +29,39 @@ import javafx.scene.layout.Pane;
 public class MainFXMLController implements Initializable {
 
     @FXML
-    private SubScene module;
+    private SubScene subScene;
 
     @FXML
     private VBox menu;
     @FXML
     private GridPane menuGrid;
+    @FXML
+    private Button buttonDashboard;
+    @FXML
+    private Button buttonCalendar;
+    @FXML
+    private Button buttonDashboardLabel;
+    @FXML
+    private Button buttonCalendarLabel;
+    @FXML
+    private Button buttonJournalLabel;
+    @FXML
+    private Button buttonJournal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Side-menu
         menu.prefHeightProperty().bind(((AnchorPane) menu.getParent()).heightProperty());
-        module.heightProperty().bind(menu.heightProperty());
-        module.widthProperty().bind(((Pane) module.getParent()).widthProperty());
+        subScene.heightProperty().bind(menu.heightProperty());
+        ((AnchorPane) subScene.getParent()).widthProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                subScene.setWidth((double) newValue - 60);
+            }
+        });
+
         TranslateTransition menuTranslation = new TranslateTransition(Duration.millis(500), menu);
+
         menuTranslation.setFromX(-140);
         menuTranslation.setToX(0);
         menu.setOnMouseEntered(evt -> {
@@ -55,39 +73,21 @@ public class MainFXMLController implements Initializable {
             menuTranslation.play();
         });
 
-        //Set home path to dashboard
-        getNodeFromGridPane(menuGrid, 0, 0).setOnMouseClicked((e) -> loadSubScene("modules/dashboard/DashboardFXML.fxml"));
-        getNodeFromGridPane(menuGrid, 1, 0).setOnMouseClicked((e) -> loadSubScene("modules/dashboard/DashboardFXML.fxml"));
 
-        getNodeFromGridPane(menuGrid, 0, 1).setOnMouseClicked((e) -> loadSubScene("modules/calendar/CalendarFXML.fxml"));
-        getNodeFromGridPane(menuGrid, 1, 1).setOnMouseClicked((e) -> loadSubScene("modules/calendar/CalendarFXML.fxml"));
-        
-        //getNodeFromGridPane(menuGrid, 0, 1).setOnMouseClicked((e) -> loadSubScene("LoginFXML.fxml"));
-        //getNodeFromGridPane(menuGrid, 1, 1).setOnMouseClicked((e) -> loadSubScene("LoginFXML.fxml"));
-
+        buttonDashboard.setOnAction((e) -> loadSubScene("modules/dashboard/DashboardFXML.fxml"));
+        buttonCalendar.setOnAction((e) -> loadSubScene("modules/calendar/CalendarFXML.fxml"));
+        buttonJournal.setOnAction((e) -> loadSubScene("modules/journal/JournalFXML.fxml"));
+        buttonDashboardLabel.setOnAction((e) -> loadSubScene("modules/dashboard/DashboardFXML.fxml"));
+        buttonCalendarLabel.setOnAction((e) -> loadSubScene("modules/calendar/CalendarFXML.fxml"));
+        buttonJournalLabel.setOnAction((e) -> loadSubScene("modules/journal/JournalFXML.fxml"));
         loadSubScene("modules/dashboard/DashboardFXML.fxml");
-        //loadSubScene("LoginFXML.fxml");
     }
 
     public void loadSubScene(String path) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
-            Parent root = loader.load();
-            module.setRoot(root);
-            //module.setRoot(FXMLLoader.load(getClass().getResource(path)));
-            System.out.println(root);
+            subScene.setRoot(FXMLLoader.load(getClass().getResource(path)));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-
-    private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
-        for (Node node : gridPane.getChildren()) {
-            if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
-                return node;
-            }
-        }
-        return null;
-    }
-
 }

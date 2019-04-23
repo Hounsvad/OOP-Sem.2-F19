@@ -9,35 +9,37 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author duffy
  */
-public class ClientHandlerThread implements Runnable{
+public class ClientHandlerThread implements Runnable {
 
-    private Socket clientSocket;
+    private final Socket clientSocket;
 
     public ClientHandlerThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
     }
-    
+
     @Override
     public void run() {
-        
+
         try {
-            ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
             ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream());
-            output.writeBoolean(true);
-            output.writeObject(DomainHandler.getDomainHandler().parseQuery((String[])input.readObject()));
-            
+            ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
+            String[] query = (String[]) input.readObject();
+            List<String[]> sendVariable = DomainHandler.getDomainHandler().parseQuery(query);
+            output.writeObject(sendVariable == null ? null : new ArrayList<String[]>(sendVariable));
+
         } catch (IOException ex) {
-            //Logger.getLogger(ClientHandlerThread.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("IO error " + ex);
+            ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        
+
     }
-    
+
 }

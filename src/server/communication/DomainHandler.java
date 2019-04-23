@@ -7,6 +7,7 @@ package server.communication;
 
 import java.util.List;
 import server.domain.DomainInterface;
+import server.domain.DomainInterfaceImpl;
 
 /**
  *
@@ -14,10 +15,10 @@ import server.domain.DomainInterface;
  */
 public class DomainHandler {
     private static DomainHandler domainHandler;
-    private DomainInterface domainInterface;
+    private final DomainInterface domainInterface;
     
     private DomainHandler(){
-        domainInterface = new server.domain.DomainInterfaceImpl();
+        domainInterface = new DomainInterfaceImpl();
     }
     
     public static DomainHandler getDomainHandler(){
@@ -28,6 +29,6 @@ public class DomainHandler {
     }
     
     public synchronized List<String[]> parseQuery(String[] query){
-        return domainHandler.parseQuery(query);
+        return domainInterface.parseQuery(query);
     }
 }

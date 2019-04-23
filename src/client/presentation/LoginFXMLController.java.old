@@ -6,7 +6,6 @@
 package client.presentation;
 
 import client.presentation.utils.CustomDecorator;
-import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.svg.SVGGlyph;
@@ -17,7 +16,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -55,9 +53,9 @@ public class LoginFXMLController implements Initializable {
     public static String uName = null;
     public static String pWord = null;
 
-    boolean caps = Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
+    private boolean caps = Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
 
-    private CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
+    private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -90,17 +88,14 @@ public class LoginFXMLController implements Initializable {
         message.sceneProperty().addListener((observable, oldScene, newScene)
                 -> {
             if (oldScene == null && newScene != null) {
-                newScene.setOnKeyReleased(new EventHandler<javafx.scene.input.KeyEvent>() {
-                    @Override
-                    public void handle(javafx.scene.input.KeyEvent event) {
-                        if (event.getCode() == KeyCode.CAPS) {
-                            caps = !caps;
-                        }
-                        if (caps) {
-                            message.setText("Caps Lock is on!");
-                        } else {
-                            message.setText("");
-                        }
+                newScene.setOnKeyReleased((javafx.scene.input.KeyEvent event) -> {
+                    if (event.getCode() == KeyCode.CAPS) {
+                        caps = !caps;
+                    }
+                    if (caps) {
+                        message.setText("Caps Lock is on!");
+                    } else {
+                        message.setText("");
                     }
                 });
             }
@@ -110,19 +105,16 @@ public class LoginFXMLController implements Initializable {
 
     @FXML
     public void capslockCheck() {
-        message.getScene().setOnKeyReleased(new EventHandler<javafx.scene.input.KeyEvent>() {
-            @Override
-            public void handle(javafx.scene.input.KeyEvent event) {
-                if (event.getCode() == KeyCode.CAPS) {
-                    caps = caps ? false : true;
-                    System.out.println(caps);
+        message.getScene().setOnKeyReleased((javafx.scene.input.KeyEvent event) -> {
+            if (event.getCode() == KeyCode.CAPS) {
+                caps = !caps;
+                System.out.println(caps);
 
-                }
-                if (caps) {
-                    message.setText("Caps Lock is on!");
-                } else if (message.getText() == "Caps Lock is on!") {
-                    message.setText("");
-                }
+            }
+            if (caps) {
+                message.setText("Caps Lock is on!");
+            } else if (message.getText().equals("Caps Lock is on!")) {
+                message.setText("");
             }
         });
     }
@@ -130,45 +122,41 @@ public class LoginFXMLController implements Initializable {
     @FXML
     private void handleLoginButtonAction() {
         loadpane.setVisible(true);
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<String[]> sqlReturn = communicationHandler.sendQuery(new String[]{"login", username.getText(), password.getText()});
-                if (sqlReturn != null && !sqlReturn.isEmpty()) {
-                    uName = username.getText();
-                    pWord = password.getText();
-                    Platform.runLater(()
-                            -> {
-                        loadMain();
-                        closeStage();
-                    });
-
-                } else if (username.getText().isEmpty() || password.getText().isEmpty()) {
-                    System.err.println("Please enter a username and a password!");
-                    Platform.runLater(()
-                            -> {
-                        message.setText("Please enter a username and a password!");
-                        username.getStyleClass().add("wrong-credentials");
-                        password.getStyleClass().add("wrong-credentials");
-                    });
-
-                } else {
-                    System.err.println("Wrong username or password!");
-                    Platform.runLater(()
-                            -> {
-                        message.setText("Wrong username or password!");
-                        password.setText("");
-                        username.getStyleClass().add("wrong-credentials");
-                        password.getStyleClass().add("wrong-credentials");
-                    });
-
-                }
+        Thread t = new Thread(() -> {
+            List<String[]> sqlReturn = communicationHandler.sendQuery(new String[]{"login", username.getText(), password.getText()});
+            if (sqlReturn != null && !sqlReturn.isEmpty()) {
+                uName = username.getText();
+                pWord = password.getText();
                 Platform.runLater(()
                         -> {
-                    loadpane.setVisible(false);
+                    loadMain();
+                    closeStage();
+                });
+
+            } else if (username.getText().isEmpty() || password.getText().isEmpty()) {
+                System.err.println("Please enter a username and a password!");
+                Platform.runLater(()
+                        -> {
+                    message.setText("Please enter a username and a password!");
+                    username.getStyleClass().add("wrong-credentials");
+                    password.getStyleClass().add("wrong-credentials");
+                });
+
+            } else {
+                System.err.println("Wrong username or password!");
+                Platform.runLater(()
+                        -> {
+                    message.setText("Wrong username or password!");
+                    password.setText("");
+                    username.getStyleClass().add("wrong-credentials");
+                    password.getStyleClass().add("wrong-credentials");
                 });
 
             }
+            Platform.runLater(()
+                    -> {
+                loadpane.setVisible(false);
+            });
         });
         t.start();
     }

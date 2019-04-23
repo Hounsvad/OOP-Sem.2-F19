@@ -33,8 +33,6 @@ and open the template in the editor.
     -fx-text-fill: -fx-secondary;
 }
 
-
-
 /*Login Screen Specific*/
 
 .jfx-spinner .arc 
@@ -109,7 +107,7 @@ and open the template in the editor.
 
 /* Dashboad */
 .list-view {
-    -fx-background-color: -fx-secondary;
+    -fx-background-color: derive(-fx-primary, -40%);;
     -fx-padding : 0px;
     -fx-background-insets: 0;
 }

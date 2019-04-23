@@ -7,6 +7,7 @@ package server.domain;
 
 import java.util.List;
 import server.persistance.PersistanceInterface;
+import server.persistance.PersistanceInterfaceImpl;
 
 /**
  *
@@ -14,7 +15,7 @@ import server.persistance.PersistanceInterface;
  */
 public class DomainInterfaceImpl implements DomainInterface {
 
-    private PersistanceInterface persistanceInterface;
+    private PersistanceInterface persistanceInterface = new PersistanceInterfaceImpl();
 
     @Override
     public List<String[]> parseQuery(String[] query) {

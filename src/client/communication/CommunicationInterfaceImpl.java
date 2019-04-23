@@ -47,18 +47,15 @@ public class CommunicationInterfaceImpl implements CommunicationInterface {
     public List<String[]> sendQuery(String[] query) {
         if (checkQuery(query)) {
             try {
-                Socket clientSocket= new Socket("localhost", 1025);
+                Socket clientSocket = new Socket("localhost", 1025);
+                ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
                 ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream());
-                ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());                
-                if (input.readBoolean()){
-                    output.writeObject(query);
-                    return ((List<String[]>)input.readObject());
-                }
-                    
+                output.writeObject(query);
+                return ((List<String[]>) input.readObject());
             } catch (IOException ex) {
-                System.out.println("I/ O error " + ex);
+                ex.printStackTrace();
             } catch (ClassNotFoundException ex) {
-                System.out.println("Input error " + ex);
+                ex.printStackTrace();
             }
         }
         return null;

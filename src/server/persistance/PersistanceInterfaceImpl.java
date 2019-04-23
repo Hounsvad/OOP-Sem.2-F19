@@ -46,7 +46,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     while (s.hasNextLine()) {
                         String[] turple = s.nextLine().split(",");
                         //Check username and password
-                        if (turple[0] == query[1] && turple[1] == query[2]) {
+                        if (turple[0].equals(query[1]) && turple[1].equals(query[2])) {
                             return new ArrayList<String[]>() {
                                 {
                                     add(new String[]{

@@ -5,6 +5,7 @@ package client.presentation.utils.credentials;
 
 import client.presentation.CommunicationHandler;
 import client.presentation.utils.CustomDecorator;
+import client.presentation.utils.StringUtils;
 import com.google.common.hash.Hashing;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -91,10 +92,10 @@ public class LoginPopupFXMLController implements Initializable {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                List<String[]> sqlReturn = CommunicationHandler.getInstance().sendQuery(new String[]{"login", username.getText(), hash(password.getText())});
+                List<String[]> sqlReturn = CommunicationHandler.getInstance().sendQuery(new String[]{"login", username.getText(), StringUtils.hash(password.getText())});
                 if (sqlReturn != null && !sqlReturn.isEmpty()) {
                     CredentialContainer.getInstance().setUsername(username.getText());
-                    CredentialContainer.getInstance().setPassword(hash(password.getText()));
+                    CredentialContainer.getInstance().setPassword(StringUtils.hash(password.getText()));
                     Platform.runLater(() -> {
                         if (containerInstance.isFirst()) {
                             loadMain();

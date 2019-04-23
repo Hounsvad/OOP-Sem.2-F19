@@ -6,11 +6,8 @@
 package server.communication;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -21,17 +18,15 @@ public class ServerController implements Runnable {
     ServerSocket server;
 
     public void run() {
-        while (true) {
-            try {
-                server = new ServerSocket(1025);
+        try {
+            server = new ServerSocket(1025);
+            while (true) {
                 Socket clientSocket = server.accept();
                 Runnable clientHandler = new ClientHandlerThread(clientSocket);
                 new Thread(clientHandler).start();
-
-            } catch (IOException ex) {
-                //Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("IO Error " + ex);
             }
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }

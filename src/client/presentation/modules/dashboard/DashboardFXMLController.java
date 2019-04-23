@@ -61,35 +61,40 @@ public class DashboardFXMLController implements Initializable {
             new ActivityEntry(("Delete"), new Date(), "Everything"),
             new ActivityEntry(("Create journal"), new Date(), "Frederik Hounsvwad awdawdawdad")
         };
-        
+
         MessageEntry[] messageEntries = new MessageEntry[]{
-            new MessageEntry(("Ny bruger"), "John Lennon", "Vi har fået en ny bruger som hedder Gorm, så tag godt imod ham. Han er ny i afdelingen og kommer fremad til at arbejde med sildefilliteringen", new Date()),
+            new MessageEntry(("Ny bruger"), "John Lennon", "Vi har fået en ny bruger som hedder Gorm, så tag godt imod ham. Han er ny i afdelingen og kommer fremad til at være UX", new Date()),
             new MessageEntry(("Login"), "john", "Common login", new Date()),
             new MessageEntry(("Login"), "john", "Common login", new Date()),
             new MessageEntry(("Login"), "john", "Common login", new Date()),
             new MessageEntry(("Login"), "john", "Common login", new Date()),
             new MessageEntry(("Login"), "john", "Common login", new Date()),
-            new MessageEntry(("Login"), "john", "Common login", new Date()),
-        };
+            new MessageEntry(("Login"), "john", "Common login", new Date())};
 
         activityView.getItems().addAll(activityEntries);
         activityView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
-                activityView.getSelectionModel().getSelectedItem().showPopup();
+                try {
+                    activityView.getSelectionModel().getSelectedItem().showPopup();
+                } catch (NullPointerException e) {
+
+                }
             }
         });
-        
         messageView.getItems().addAll(messageEntries);
         messageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
-                messageView.getSelectionModel().getSelectedItem().showPopup();
+                try {
+                    messageView.getSelectionModel().getSelectedItem().showPopup();
+                } catch (NullPointerException e) {
+                }
             }
-        });
-
+        }
+        );
     }
 
 }
