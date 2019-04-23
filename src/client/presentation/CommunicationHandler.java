@@ -23,6 +23,10 @@ public class CommunicationHandler {
         communicationInterface = new CommunicationInterfaceImpl();
     }
     
+    /**
+     *
+     * @return
+     */
     public static CommunicationHandler getInstance()
     {
         if (communicationHandler == null)
@@ -32,6 +36,11 @@ public class CommunicationHandler {
         return communicationHandler;
     }
     
+    /**
+     *
+     * @param query
+     * @return
+     */
     public List<String[]> sendQuery(String[] query)
     {
         List<String[]> returnVariable = communicationInterface.sendQuery(query);
@@ -39,6 +48,10 @@ public class CommunicationHandler {
         return returnVariable;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getName()
     {
         return name;
