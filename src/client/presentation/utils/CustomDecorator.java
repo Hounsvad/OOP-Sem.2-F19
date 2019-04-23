@@ -14,7 +14,15 @@ import javafx.stage.Stage;
  * @author Oliver
  */
 public class CustomDecorator extends JFXDecorator {
-
+    
+    /**
+     * Constructs the CustomDecorator which makes the top buttons non traversable by the tab button
+     * @param stage
+     * @param node
+     * @param fullScreen
+     * @param max
+     * @param min 
+     */
     public CustomDecorator(Stage stage, Node node, boolean fullScreen, boolean max, boolean min) {
         super(stage, node, fullScreen, max, min);
         //make UnTraversable

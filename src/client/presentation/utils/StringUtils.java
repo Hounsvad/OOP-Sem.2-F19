@@ -16,10 +16,18 @@ import java.util.List;
  */
 public class StringUtils {
 
+    /**
+     * The offset on the Ascii table to convert a lowercase character to a Math Bold Latin character
+     */
     private static final int BOLD_ASCII_OFFSET_LOWERCASE = 120205;
+    
+    /**
+     * The offset on the Ascii table to convert a uppercase character to a Math Bold Latin character
+     */
     private static final int BOLD_ASCII_OFFSET_UPPERCASE = 119743;
 
     /**
+     * Converts a string into a string written wih bold characters
      * @param s String input
      * @return input string in Math Bold Latin characters instead of normal
      */
