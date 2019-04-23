@@ -12,5 +12,10 @@ import java.util.*;
  * @author Oliver
  */
 public interface CommunicationInterface {
+    /**
+     * Sends the query 
+     * @param query
+     * @return the the data from the database
+     */
     public List<String[]> sendQuery(String[] query);
 }

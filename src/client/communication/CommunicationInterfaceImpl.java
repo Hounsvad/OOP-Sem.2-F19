@@ -16,27 +16,65 @@ import java.util.*;
  * @author duffy
  */
 public class CommunicationInterfaceImpl implements CommunicationInterface {
-
+    
+    /**
+     * 
+     */
     List<String[]> list = new ArrayList();
-
+    
+    /**
+     * The possible commands for the system
+     */
     enum Commands {
+        /**
+         * The login command 
+         */
         LOGIN(3, "login"),
+        /**
+         * the calender command
+         */
         GETCALENDER(4, "getCalender"),
+        /**
+         * the medicin command
+         */
         MEDICIN(2, "getMedicin"),
+        /**
+         * the userlist command
+         */
         USERLIST(3, "getUsers");
-
+        
+        /**
+         * the count of attributes for the commands
+         */
         int count = 0;
+        
+        /**
+         * the command that gets sent
+         */
         String command;
 
+        /**
+         * Uses the enum with the given count and command
+         * @param count
+         * @param command 
+         */
         Commands(int count, String command) {
             this.count = count;
             this.command = command;
         }
-
+        
+        /**
+         * Gets the count
+         * @return 
+         */
         public int getCount() {
             return this.count;
         }
 
+        /**
+         * gets the command
+         * @return 
+         */
         public String getCommand() {
             return this.command;
         }
