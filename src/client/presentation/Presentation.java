@@ -18,9 +18,16 @@ import javafx.stage.StageStyle;
  */
 public class Presentation extends Application {
 
+
     private double xOffset = 0;
     private double yOffset = 0;
 
+    /**
+     * Initialize the first login screen without a decorator.
+     *
+     * @param stage
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("utils/credentials/LoginPopupFXML.fxml"));
