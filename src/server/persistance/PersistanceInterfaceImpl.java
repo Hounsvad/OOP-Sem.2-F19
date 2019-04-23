@@ -26,6 +26,9 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
         }
     };
 
+    /**
+     * if not the file f exists in a database table, a new file is created
+     */
     public PersistanceInterfaceImpl() {
         for (File f : tables.values()) {
             if (!f.exists()) {
@@ -38,6 +41,11 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
         }
     }
 
+    /**
+     *
+     * @param query 
+     * @return
+     */
     @Override
     public List<String[]> parseQuery(String[] query) {
         switch (query[0]) {
