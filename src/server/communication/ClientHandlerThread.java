@@ -17,13 +17,22 @@ import java.util.List;
  * @author duffy
  */
 public class ClientHandlerThread implements Runnable {
-
+    /**
+     * The socket the client uses 
+     */
     private final Socket clientSocket;
-
+    
+    /**
+     * Constructs the ClientHandlerSocket with the given Socket
+     * @param clientSocket 
+     */
     public ClientHandlerThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
     }
 
+    /**
+     * Overrides the Run method for the thread
+     */
     @Override
     public void run() {
 
