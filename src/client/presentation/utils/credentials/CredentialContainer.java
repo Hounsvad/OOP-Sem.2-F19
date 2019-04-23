@@ -44,7 +44,7 @@ public final class CredentialContainer {
     private boolean isGettingCredentials = false;
 
     /**
-     *
+     * A variable to indicate whether its the first time login in
      */
     private boolean firstRound = true;
 
@@ -57,7 +57,11 @@ public final class CredentialContainer {
      * The path of the login screens FXML
      */
     private static final String LOGIN_SCREEN_PATH = "";
-
+    
+    /**
+     * gets the value of the Boolean property that indicates if the credentials are ready
+     * @return 
+     */
     protected BooleanProperty getCredentialReadyProperty() {
         return credentialReady;
     }
@@ -65,7 +69,10 @@ public final class CredentialContainer {
     private CredentialContainer() {
 
     }
-
+    /**
+     * gets the instance og the CredentialContainer
+     * @return the CredentialContainer
+     */
     public static CredentialContainer getInstance() {
         if (instance != null) {
             return instance;

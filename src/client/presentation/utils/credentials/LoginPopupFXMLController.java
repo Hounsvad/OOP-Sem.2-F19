@@ -35,22 +35,53 @@ import javafx.stage.Stage;
  */
 public class LoginPopupFXMLController implements Initializable {
 
+    /**
+     * the offset on the x axis
+     */
     private double xOffset = 0;
+    /**
+     * the offset on the y axis
+     */
     private double yOffset = 0;
 
+    /**
+     * the CommunicationHandler
+     */
     private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
 
+    /**
+     * The text field for the username
+     */
     @FXML
     private JFXTextField username;
+    
+    /**
+     * The text field for the password
+     */
     @FXML
     private JFXPasswordField password;
+
+    /**
+     * The label for the message if the password/username is wrong
+     */
     @FXML
     private Label message;
+    
+    /**
+     * The pane for the loading animation
+     */
     @FXML
     private Pane loadpane;
+    
+    /**
+     * The image view for the blurred login screen
+     */
     @FXML
     private ImageView loadblur;
 
+    /**
+     * The Credential instance
+     */
     private CredentialContainer containerInstance;
 
     /**
@@ -79,13 +110,20 @@ public class LoginPopupFXMLController implements Initializable {
         });
         containerInstance = CredentialContainer.getInstance();
     }
-
+    
+    /**
+     * Cheeky way around the login - Gets deleted
+     * @param event 
+     */
     @FXML
     private void skip(ContextMenuEvent event) {
         loadMain();
         closeStage();
     }
-
+    
+    /**
+     * Handles the actual Login
+     */
     @FXML
     private void handleLoginButtonAction() {
         loadpane.setVisible(true);
@@ -132,20 +170,34 @@ public class LoginPopupFXMLController implements Initializable {
         });
         t.start();
     }
-
+    
+    /**
+     * Closes the application when cancelling the login
+     */
     @FXML
     private void handleCancelButtonAction() {
         System.exit(0);
     }
-
+    
+    /**
+     * Hashes the input
+     * @param input
+     * @return the hashed input
+     */
     private String hash(String input) {
         return Hashing.sha256().hashString(input, Charset.forName("UTF8")).toString();
     }
-
+    
+    /**
+     * Closes the stage
+     */
     private void closeStage() {
         ((Stage) username.getScene().getWindow()).close();
     }
-
+    
+    /**
+     * Initializes the main application screen
+     */
     private void loadMain() {
         try {
             Stage stage = new Stage();
