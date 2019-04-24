@@ -21,6 +21,7 @@ public class DomainInterfaceImpl implements DomainInterface {
     public List<String[]> parseQuery(String[] query) {
         switch (query[0]) {
             case "login":
+                query[0] = "checkCredentials";
                 return persistanceInterface.parseQuery(query);
             case "getMessages":
                 return persistanceInterface.parseQuery(query);

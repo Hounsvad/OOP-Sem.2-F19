@@ -6,6 +6,11 @@
 package server.persistance;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,15 +43,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
 
         }
     };
-    s
-
-    private String databaseName;
-
-    private String dbURL;
-
-    private String dbUser;
-
-    private String dbPassword;
+    private Map<String, String> configFileMap;
 
     /**
      * Connection container
@@ -55,29 +52,73 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
 
     public PersistanceInterfaceImpl() {
         //Load settings from config file
-        Map<String, String> configFileMap = new TreeMap<>();
+        this.configFileMap = new TreeMap<>();
         try (Scanner configFileScanner = new Scanner(getClass().getResourceAsStream("recources/DatabaseConfiguration.config"))) {
 
             while (configFileScanner.hasNextLine()) {
                 String[] tokens = configFileScanner.nextLine().split(" := ");
-                configFileMap.put(tokens[0], tokens[1]);
+                this.configFileMap.put(tokens[0], tokens[1]);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             System.exit(-1);
         }
-        //Set local parametes based on config file
-        //this.databaseName = configFileMap.get("this")
     }
 
     @Override
     public List<String[]> parseQuery(String[] query) {
+
+        ResultSet sqlReturnValues;
+        List<String[]> output = null;
+        Statement stmt = null;
+        String queryString;
+        //readying sql driver and connection
+        try {
+            DriverManager.registerDriver(new org.postgresql.Driver());
+            Class.forName("org.postgresql.Driver");
+            conn = DriverManager.getConnection("jdbc:postgresql://" + configFileMap.get("url") + ":" + configFileMap.get("port") + "/" + configFileMap.get("databaseName"), configFileMap.get("username"), configFileMap.get("password"));
+            stmt = conn.createStatement();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
         switch (query[0]) {
             case "checkCredentials":
-
+                queryString = "SELECT full_name, uid from users where password = '" + query[2] + "' AND username = '" + query[1] + "'";
                 break;
+            default:
+                return null;
         }
-        return null;
+
+        try {
+            sqlReturnValues = stmt.executeQuery(queryString);
+            int columnCount = sqlReturnValues.getMetaData().getColumnCount();
+            output = new ArrayList<>();
+            while (sqlReturnValues.next()) {
+                String[] temp = new String[columnCount];
+                System.out.println(columnCount);
+                for (int i = 1; i <= columnCount; i++) {
+                    temp[i - 1] = sqlReturnValues.getString(i);
+                }
+                output.add(temp);
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return output;
+
     }
 
 }
