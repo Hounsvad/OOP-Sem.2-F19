@@ -5,13 +5,12 @@
  */
 package server.persistance;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 /**
  *
@@ -19,86 +18,63 @@ import java.util.Scanner;
  */
 public class PersistanceInterfaceImpl implements PersistanceInterface {
 
-    private Map<String, File> tables = new HashMap<String, File>() {
+    /**
+     * Table and column names
+     */
+    private final Map<String, String[]> tables = new HashMap<String, String[]>() {
         {
-            put("users", new File("db/users.csv"));
-            put("messages", new File("db/messages.csv"));
+            put("activity", new String[]{"user_uid", "date", "type", "specifics", "ip"});
+            put("calender", new String[]{"event_id", "date", "event_name", "event_detail"});
+            put("departments", new String[]{"name", "department_id", "department_mail_domain"});
+            put("id", new String[]{"uid", "fullName", "is_patient"});
+            put("journal", new String[]{"patient_uid", "department_id", "date", "text", "created_by_uid", "entry_type"});
+            put("messages", new String[]{"sender_uid", "recipient_uid", "title", "message", "date", "seen"});
+            put("participation", new String[]{"event_id", "uid"});
+            put("patient_assignment", new String[]{"user_uid", "patient_uid"});
+            put("rhythm", new String[]{"patien_uid", "hour", "icon", "title", "text"});
+            put("role_assignment", new String[]{"user_uid", "role"});
+            put("roles", new String[]{"role", "description"});
+            put("users", new String[]{"username", "password", "full_name", "department", "uid"});
+
         }
     };
+    s
+
+    private String databaseName;
+
+    private String dbURL;
+
+    private String dbUser;
+
+    private String dbPassword;
+
+    /**
+     * Connection container
+     */
+    private Connection conn = null;
 
     public PersistanceInterfaceImpl() {
-        for (File f : tables.values()) {
-            if (!f.exists()) {
-                try {
-                    f.createNewFile();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+        //Load settings from config file
+        Map<String, String> configFileMap = new TreeMap<>();
+        try (Scanner configFileScanner = new Scanner(getClass().getResourceAsStream("recources/DatabaseConfiguration.config"))) {
+
+            while (configFileScanner.hasNextLine()) {
+                String[] tokens = configFileScanner.nextLine().split(" := ");
+                configFileMap.put(tokens[0], tokens[1]);
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            System.exit(-1);
         }
+        //Set local parametes based on config file
+        //this.databaseName = configFileMap.get("this")
     }
 
     @Override
     public List<String[]> parseQuery(String[] query) {
         switch (query[0]) {
-            case "login":
-                try (Scanner s = new Scanner(tables.get("users"))) {
-                    while (s.hasNextLine()) {
-                        String[] turple = s.nextLine().split(",");
-                        //Check username and password
-                        if (turple[0].equals(query[1]) && turple[1].equals(query[2])) {
-                            return new ArrayList<String[]>() {
-                                {
-                                    add(new String[]{
-                                        turple[0],
-                                        turple[2],
-                                        turple[3],
-                                        turple[4]
-                                    });
-                                }
-                            };
-                        }
-                    }
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                break;
+            case "checkCredentials":
 
-            case "getMessages":
-                try (Scanner s = new Scanner(tables.get("messages"))) {
-                    List<String[]> returnVariable = new ArrayList<>();
-                    while (s.hasNextLine()) {
-                        //Check username
-                        String[] turple = s.nextLine().split(",");
-                        if (turple[0] == query[1]) {
-                            returnVariable.add(turple);
-                        }
-                    }
-                    return returnVariable;
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                break;
-
-            case "getUsers":
-                try (Scanner s = new Scanner(tables.get("users"))) {
-                    List<String[]> returnVariable = new ArrayList<>();
-                    while (s.hasNextLine()) {
-                        String[] turple = s.nextLine().split(",");
-                        //Check institution
-                        if (turple[3] == query[1]) {
-                            returnVariable.add(new String[]{
-                                turple[0],
-                                turple[2],
-                                turple[3],
-                                turple[4]
-                            });
-                        }
-                    }
-                    return returnVariable;
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
                 break;
         }
         return null;
