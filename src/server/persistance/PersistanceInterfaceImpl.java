@@ -78,9 +78,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection("jdbc:postgresql://" + configFileMap.get("url") + ":" + configFileMap.get("port") + "/" + configFileMap.get("databaseName"), configFileMap.get("username"), configFileMap.get("password"));
             stmt = conn.createStatement();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
 
