@@ -86,8 +86,12 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
 
         switch (query[0]) {
             case "checkCredentials":
-                queryString = "SELECT full_name, uid from users where password = '" + query[2] + "' AND username = '" + query[1] + "'";
+                queryString = "SELECT full_name, id FROM users WHERE password = '" + query[2] + "' AND user.username = '" + query[1] + "'"; // returns id, full name
                 break;
+            case "getCalendar":
+                queryString = "SELECT calender.* FROM calender, (SELECT participation.event_id FROM participation WHERE participation.id = " + query[1] + ") AS x WHERE (calender.date < " + query[3] + " AND calender.date > " + query[2] + " ) AND calender.event_id = x.event_id";
+                break;
+
             default:
                 return null;
         }
