@@ -84,10 +84,62 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
 
         switch (query[0]) {
             case "checkCredentials":
-                queryString = "SELECT full_name, id FROM users WHERE password = '" + query[2] + "' AND user.username = '" + query[1] + "'"; // returns id, full name
+                queryString = "SELECT id.full_name, matchingId.id FROM id, (SELECT id FROM users WHERE password = '"
+                        + query[2]
+                        + "' AND username = '"
+                        + query[1]
+                        + "') AS matchingId WHERE matchingId.id = id.id";
                 break;
             case "getCalendar":
-                queryString = "SELECT calender.* FROM calender, (SELECT participation.event_id FROM participation WHERE participation.id = " + query[1] + ") AS x WHERE (calender.date < " + query[3] + " AND calender.date > " + query[2] + " ) AND calender.event_id = x.event_id";
+                queryString = "SELECT calender.* FROM calender, (SELECT participation.event_id FROM participation WHERE participation.id = "
+                        + query[1]
+                        + ") AS x WHERE (calender.date < "
+                        + query[3]
+                        + " AND calender.date > "
+                        + query[2]
+                        + " ) AND calender.event_id = x.event_id";
+                break;
+            case "getEventParticipants":
+                queryString = "SELECT id.id, id.full_name FROM id, (SELECT id FROM participation WHERE event_id ="
+                        + query[1]
+                        + ") as participants WHERE id.id = participants.id";
+                break;
+            case "addEventParticipant":
+                queryString = "insert INTO participation VALUES ("
+                        + query[1]
+                        + ", "
+                        + query[2]
+                        + ")";
+                break;
+            case "addCalendarEvent":
+                queryString = "INSERT INTO calender VALUES ((SELECT MAX(W.event_id) FROM calender as W)+1, "
+                        + query[1]
+                        + ", '"
+                        + query[3]
+                        + "', '"
+                        + query[4]
+                        + "',"
+                        + query[2]
+                        + ")";
+                break;
+            case "updateCalendarEvent":
+                queryString = "UPDATE calender SET date = "
+                        + query[2]
+                        + ", event_name = '"
+                        + query[4]
+                        + "', event_detail = '"
+                        + query[5]
+                        + "', date_end = "
+                        + query[3]
+                        + " WHERE event_id = "
+                        + query[1];
+                break;
+            case "removeCalendarEvent":
+                queryString = "DELETE FROM participation WHERE event_id = '"
+                        + query[1]
+                        + "'; DELETE FROM calender WHERE event_id = '"
+                        + query[1]
+                        + "'";
                 break;
 
             default:
