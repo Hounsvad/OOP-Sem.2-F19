@@ -6,15 +6,17 @@
 package client.presentation.modules.dashboard;
 
 import client.presentation.CommunicationHandler;
+import client.presentation.utils.credentials.CredentialContainer;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
 /**
@@ -37,41 +39,17 @@ public class DashboardFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         name.setText(CommunicationHandler.getInstance().getName());
-        name.setFill(Paint.valueOf("#2e4057"));
-        ActivityEntry[] activityEntries = new ActivityEntry[]{
-            new ActivityEntry(("Login"), new Date(), "Common login"),
-            new ActivityEntry(("Delete"), new Date(), "Everything"),
-            new ActivityEntry(("Login"), new Date(), "Common login"),
-            new ActivityEntry(("Delete"), new Date(), "Everything"),
-            new ActivityEntry(("Login"), new Date(), "Common login"),
-            new ActivityEntry(("Delete"), new Date(), "Everything"),
-            new ActivityEntry(("Login"), new Date(), "Common login"),
-            new ActivityEntry(("Delete"), new Date(), "Everything"),
-            new ActivityEntry(("Login"), new Date(), "Common login"),
-            new ActivityEntry(("Delete"), new Date(), "Everything"),
-            new ActivityEntry(("Login"), new Date(), "Common login"),
-            new ActivityEntry(("Delete"), new Date(), "Everything"),
-            new ActivityEntry(("Login"), new Date(), "Common login"),
-            new ActivityEntry(("Delete"), new Date(), "Everything"),
-            new ActivityEntry(("Login"), new Date(), "Common login"),
-            new ActivityEntry(("Delete"), new Date(), "Everything"),
-            new ActivityEntry(("Login"), new Date(), "Common login"),
-            new ActivityEntry(("Delete"), new Date(), "Everything"),
-            new ActivityEntry(("Login"), new Date(), "Common login"),
-            new ActivityEntry(("Delete"), new Date(), "Everything"),
-            new ActivityEntry(("Create journal"), new Date(), "Frederik Hounsvwad awdawdawdad")
-        };
+        try {
+            List<ActivityEntry> activityEntries = new ArrayList<>();
+            CommunicationHandler.getInstance().sendQuery(new String[]{"getActivity", CredentialContainer.getInstance().getUsername(), CredentialContainer.getInstance().getPassword()}).forEach((tuple) -> activityEntries.add(new ActivityEntry(tuple[1], new Date(Integer.parseInt(tuple[0])), tuple[2], tuple[3])));
+            activityView.getItems().addAll(activityEntries);
 
-        MessageEntry[] messageEntries = new MessageEntry[]{
-            new MessageEntry(("Ny bruger"), "John Lennon", "Vi har fået en ny bruger som hedder Gorm, så tag godt imod ham. Han er ny i afdelingen og kommer fremad til at være UX", new Date()),
-            new MessageEntry(("Login"), "john", "Common login", new Date()),
-            new MessageEntry(("Login"), "john", "Common login", new Date()),
-            new MessageEntry(("Login"), "john", "Common login", new Date()),
-            new MessageEntry(("Login"), "john", "Common login", new Date()),
-            new MessageEntry(("Login"), "john", "Common login", new Date()),
-            new MessageEntry(("Login"), "john", "Common login", new Date())};
+            List<MessageEntry> messageEntries = new ArrayList<>();
+            CommunicationHandler.getInstance().sendQuery(new String[]{"getMessages", CredentialContainer.getInstance().getUsername(), CredentialContainer.getInstance().getPassword()}).forEach((tuple) -> messageEntries.add(new MessageEntry(tuple[1], tuple[0], tuple[2], new Date(Integer.parseInt(tuple[3])))));
+            messageView.getItems().addAll(messageEntries);
+        } catch (NullPointerException e) {
+        }
 
-        activityView.getItems().addAll(activityEntries);
         activityView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
@@ -83,7 +61,7 @@ public class DashboardFXMLController implements Initializable {
                 }
             }
         });
-        messageView.getItems().addAll(messageEntries);
+
         messageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override

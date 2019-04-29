@@ -29,7 +29,7 @@
                         <Insets left="20.0" top="20.0" />
                      </HBox.margin>
                   </Text>
-                  <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" wrappingWidth="726.41455078125">
+                  <Text fx:id="name" fill="#2e4057" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" wrappingWidth="726.41455078125">
                      <font>
                         <Font size="49.0" />
                      </font>
@@ -58,7 +58,7 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </GridPane.margin>
                      <children>
-                        <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" style="-fx-background-color: #048BA8;" text="Messages" textAlignment="CENTER" textFill="WHITE">
+                        <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" style="-fx-background-color: #048BA8;" stylesheets="@../../css/generalStyleSheet.css" text="Messages" textAlignment="CENTER" textFill="WHITE">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
@@ -69,7 +69,7 @@
                               <Insets left="10.0" />
                            </padding>
                         </Label>
-                        <JFXListView fx:id="messageView" style="-fx-background-color: #2E4057;" />
+                        <JFXListView fx:id="messageView" stylesheets="@../../css/generalStyleSheet.css" />
                      </children>
                   </VBox>
                </children>

@@ -1,16 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Ellipse?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: BLUE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.presentation.modules.calendar.CalendarFXMLController">
-   <children>
-      <Pane layoutX="200.0" layoutY="86.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: RED;" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="86.0" />
-      <Text layoutY="-50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TEst" wrappingWidth="116.89453125" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="40.0" />
-      <Ellipse fill="DODGERBLUE" layoutX="140.0" layoutY="152.0" radiusX="100.0" radiusY="80.0" stroke="BLACK" strokeType="INSIDE" />
-      <Button layoutX="240.0" layoutY="35.0" mnemonicParsing="false" onAction="#handle" text="Button" />
-   </children>
-</AnchorPane>
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="1120.0" prefHeight="800.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.presentation.modules.calendar.CalendarFXMLController">
+   <center>
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="1020.0" BorderPane.alignment="CENTER">
+         <bottom>
+            <HBox prefHeight="200.0" prefWidth="1020.0" BorderPane.alignment="CENTER" />
+         </bottom>
+         <center>
+            <AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="940.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+               </BorderPane.margin>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </center>
+   <right>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="200.0" style="-fx-background-color: #048BA8;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="50.0" prefHeight="40.0" prefWidth="200.0" text="Patients" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+            <JFXListView fx:id="PatientView" fixedCellSize="0.0" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+   </right>
+</BorderPane>

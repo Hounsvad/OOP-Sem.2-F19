@@ -14,33 +14,34 @@ import java.util.List;
  * @author Oliver
  */
 public class CommunicationHandler {
+
     private static CommunicationHandler communicationHandler;
     private String name;
-    private CommunicationInterface communicationInterface;
-    
-    private CommunicationHandler()
-    {
+    private final CommunicationInterface communicationInterface;
+
+    private CommunicationHandler() {
         communicationInterface = new CommunicationInterfaceImpl();
     }
-    
-    public static CommunicationHandler getInstance()
-    {
-        if (communicationHandler == null)
-        {
+
+    public static CommunicationHandler getInstance() {
+        if (communicationHandler == null) {
             communicationHandler = new CommunicationHandler();
         }
         return communicationHandler;
     }
-    
-    public List<String[]> sendQuery(String[] query)
-    {
+
+    public List<String[]> sendQuery(String[] query) {
+        if (query == null) {
+            return null;
+        }
         List<String[]> returnVariable = communicationInterface.sendQuery(query);
-        name = returnVariable == null ? "error" : returnVariable.get(0)[1];
+        if (query[0] == "login") {
+            name = returnVariable == null ? "" : returnVariable.get(0)[1];
+        }
         return returnVariable;
     }
-    
-    public String getName()
-    {
+
+    public String getName() {
         return name;
     }
 }

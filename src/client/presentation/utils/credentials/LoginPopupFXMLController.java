@@ -156,8 +156,8 @@ public class LoginPopupFXMLController implements Initializable {
             Scene scene = new Scene(decorator);
             scene.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
             stage.setScene(scene);
-            stage.setMinHeight(870);
-            stage.setMinWidth(1200);
+            stage.setMinHeight(845);
+            stage.setMinWidth(1290);
             stage.show();
             stage.setTitle("Sanitas Overview");
 

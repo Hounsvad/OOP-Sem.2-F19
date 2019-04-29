@@ -25,8 +25,9 @@ public class ActivityEntry {
     private final String typeOfEntry;
     private final String dateOfEntryString;
     private final String specificsOfEntry;
+    private final String ip;
 
-    public ActivityEntry(String typeOfEntry, Date dateOfEntry, String specificsOfEntry) {
+    public ActivityEntry(String typeOfEntry, Date dateOfEntry, String specificsOfEntry, String ip) {
         this.typeOfEntry = typeOfEntry;
         this.dateOfEntryString = String.format("%1$" + 2 + "s", dateOfEntry.getHours()).replace(' ', '0') + ":"
                 + String.format("%1$" + 2 + "s", dateOfEntry.getMinutes()).replace(' ', '0') + ":"
@@ -35,6 +36,7 @@ public class ActivityEntry {
                 + String.format("%1$" + 2 + "s", dateOfEntry.getMonth()).replace(' ', '0') + "/"
                 + (dateOfEntry.getYear() + 1900);
         this.specificsOfEntry = specificsOfEntry;
+        this.ip = ip;
     }
 
     @Override
@@ -49,18 +51,19 @@ public class ActivityEntry {
 
     public void showPopup() {
         Platform.runLater(()
-        -> {
+                -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ActivityEntryPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 ActivityEntryPopupFXMLController controller = fxmlLoader.<ActivityEntryPopupFXMLController>getController();
-                controller.setData(typeOfEntry, specificsOfEntry, "Query: ladidada", dateOfEntryString, "IP: 10.201.271.28");
+                controller.setData(typeOfEntry, specificsOfEntry, "Query: ladidada", dateOfEntryString, ip);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.initStyle(StageStyle.UNDECORATED);
                 stage.setScene(new Scene(root));
                 stage.show();
-            } catch (IOException e) {}
+            } catch (IOException e) {
+            }
         });
     }
 }
