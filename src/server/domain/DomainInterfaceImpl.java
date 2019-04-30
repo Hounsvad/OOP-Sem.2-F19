@@ -15,8 +15,16 @@ import server.persistance.PersistanceInterfaceImpl;
  */
 public class DomainInterfaceImpl implements DomainInterface {
 
+    /**
+     * An instance of the PersistanceInterfaceImpl
+     */
     private PersistanceInterface persistanceInterface = new PersistanceInterfaceImpl();
 
+    /**
+     * Parses the query by command
+     * @param query The Query for the database
+     * @return The data from the database
+     */
     @Override
     public List<String[]> parseQuery(String[] query) {
         switch (query[0]) {
