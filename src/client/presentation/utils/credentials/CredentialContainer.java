@@ -44,7 +44,7 @@ public final class CredentialContainer {
     private boolean isGettingCredentials = false;
 
     /**
-     * A variable to indicate whether its the first time login in
+     * A variable to indicate whether its the first time loging in
      */
     private boolean firstRound = true;
 
@@ -60,7 +60,7 @@ public final class CredentialContainer {
     
     /**
      * gets the value of the Boolean property that indicates if the credentials are ready
-     * @return 
+     * @return true if the credentials are ready
      */
     protected BooleanProperty getCredentialReadyProperty() {
         return credentialReady;
@@ -69,8 +69,9 @@ public final class CredentialContainer {
     private CredentialContainer() {
 
     }
+    
     /**
-     * gets the instance og the CredentialContainer
+     * Gets the instance of the CredentialContainer
      * @return the CredentialContainer
      */
     public static CredentialContainer getInstance() {
@@ -105,7 +106,7 @@ public final class CredentialContainer {
      * If the credentials have not been accessed for one hour they will
      * be reset
      *
-     * @return
+     * @return true if the credentials have not been accessed for an hour
      */
     public boolean checkTimeValid() {
         if (this.lastAccess > 0 && this.lastAccess > System.currentTimeMillis() - 3600000) {

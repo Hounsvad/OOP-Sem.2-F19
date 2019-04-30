@@ -36,16 +36,16 @@ import javafx.stage.Stage;
 public class LoginPopupFXMLController implements Initializable {
 
     /**
-     * the offset on the x axis
+     * The offset on the x axis
      */
     private double xOffset = 0;
     /**
-     * the offset on the y axis
+     * The offset on the y axis
      */
     private double yOffset = 0;
 
     /**
-     * the CommunicationHandler
+     * The CommunicationHandler
      */
     private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
 
@@ -85,7 +85,9 @@ public class LoginPopupFXMLController implements Initializable {
     private CredentialContainer containerInstance;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class
+     * @param url
+     * @param rb 
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -112,7 +114,7 @@ public class LoginPopupFXMLController implements Initializable {
     }
     
     /**
-     * Cheeky way around the login - Gets deleted
+     * Cheeky way around the login - DELETE IN FINAL VERSION
      * @param event 
      */
     @FXML
@@ -122,7 +124,9 @@ public class LoginPopupFXMLController implements Initializable {
     }
     
     /**
-     * Handles the actual Login
+     * Handles the login
+     * Opens the main program if your login was successful
+     * Tells you if your login failed
      */
     @FXML
     private void handleLoginButtonAction() {
@@ -181,7 +185,7 @@ public class LoginPopupFXMLController implements Initializable {
     
     /**
      * Hashes the input
-     * @param input
+     * @param input The string that gets hashed
      * @return the hashed input
      */
     private String hash(String input) {
