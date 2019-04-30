@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.*;
 
+
 /**
  *
  * @author duffy
@@ -48,9 +49,11 @@ public class CommunicationInterfaceImpl implements CommunicationInterface {
         if (checkQuery(query)) {
             try {
                 Socket clientSocket = new Socket("localhost", 1025);
-                ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
-                ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream());
-                output.writeObject(query);
+                // yeet
+                
+//                ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
+//                ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream());
+//                output.writeObject(query);
                 return ((List<String[]>) input.readObject());
             } catch (IOException ex) {
                 ex.printStackTrace();
