@@ -19,38 +19,40 @@ import javafx.scene.layout.AnchorPane;
 public class JournalFXMLController implements Initializable {
     
     /**
-     * The list view for the activity feed about log entries
+     * The list view for the AutomaticEntries
      */
     @FXML
     private JFXListView<LogEntry> automaticEntriesView;
     /**
-     * The list view for the activity feed about medicinal entries
+     * The list view for the MedicinalEntries
      */
     @FXML
     private JFXListView<MedicinalEntry> medicinalEntriesView;
     /**
-     * The list view for the activity feed about manual entries
+     * The list view for the ManualEntries
      */
     @FXML
     private JFXListView<ManualEntry> manualEntriesView;
     /**
-     * The list view for the activity feed about the patients
+     * The list view for the Patients
      */
     @FXML
     private JFXListView<Patient> PatientView;
     /**
-     * the anchor pane used as a button to add medicinal entry
+     * the anchor pane used as a button to add a MedicinalEntry
      */
     @FXML
     private AnchorPane addMedicinalEntryButton;
     /**
-     * The anchor pane used as a button to add a manual entry
+     * The anchor pane used as a button to add a ManualEntry
      */
     @FXML
     private AnchorPane addManualEntryButton;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class
+     * @param url
+     * @param rb 
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,7 +63,7 @@ public class JournalFXMLController implements Initializable {
     }
     
     /**
-     * Adds a medicinal entry
+     * Adds a {@link MedicinalEntry}
      * @param event 
      */
     @FXML
@@ -69,7 +71,7 @@ public class JournalFXMLController implements Initializable {
     }
 
     /**
-     * adds a manual entry
+     * adds a {@link ManualEntry}
      * @param event 
      */
     @FXML
