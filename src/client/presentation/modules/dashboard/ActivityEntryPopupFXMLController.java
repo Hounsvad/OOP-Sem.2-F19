@@ -22,31 +22,31 @@ import javafx.stage.Stage;
 public class ActivityEntryPopupFXMLController implements Initializable {
 
     /**
-     * A placeholder for the FontAwesomeIconView icons
+     * The icon for the cross that exits the program
      */
     @FXML
     private FontAwesomeIconView cross;
     
     /**
-     * The title of the activity entry
+     * The title of the ActivityEntry
      */
     @FXML
     private Label title;
     
     /**
-     * The description of the the activity entry
+     * The description of the the ActivityEntry
      */
     @FXML
     private Label description;
     
     /**
-     * the label for the query
+     * The label for the query
      */
     @FXML
     private Label query;
     
     /**
-     * The date of the activity entry
+     * The date of the ActivityEntry
      */
     @FXML
     private Label date;
@@ -58,14 +58,16 @@ public class ActivityEntryPopupFXMLController implements Initializable {
     private Label ip;
 
     /**
-     * Initializes the controller class.
+     * Initilizes the controller class
+     * @param url
+     * @param rb 
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
     
     /**
-     * Closes popup
+     * Closes the popup
      * @param event 
      */
     @FXML
@@ -74,12 +76,12 @@ public class ActivityEntryPopupFXMLController implements Initializable {
     }
     
     /**
-     * Set the Data for the activity entry
-     * @param titleString
-     * @param descriptionString
-     * @param queryString
-     * @param dateString
-     * @param ipString 
+     * Set the data for the ActivityEntry popup
+     * @param titleString the title for the entry
+     * @param descriptionString the description of the entry
+     * @param queryString the query of the entry???
+     * @param dateString the date of the entry
+     * @param ipString  the ip of the entry
      */
     public void setData(String titleString, String descriptionString, String queryString, String dateString, String ipString) {
         title.setText(titleString);

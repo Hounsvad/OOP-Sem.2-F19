@@ -21,11 +21,34 @@ import javafx.stage.StageStyle;
  * @author Oliver
  */
 public class MessageEntry {
+    
+    /**
+     * The subject of the the entry
+     */
     private final String subject;
+    
+    /**
+     * The sender of the entry
+     */
     private final String sender;
+    
+    /**
+     * The message of the entry
+     */
     private final String message;
+    
+    /**
+     * The date on which the entry has been sent
+     */
     private final String sentDateString;
 
+    /**
+     * Constructs a new MessageEntry
+     * @param subject The subject of the the entry
+     * @param sender The sender of the entry
+     * @param message The message of the entry
+     * @param sentDate The date on which the entry has been sent
+     */
     public MessageEntry(String subject, String sender, String message, Date sentDate) {
         this.subject = subject;
         this.sender = sender;
@@ -38,13 +61,18 @@ public class MessageEntry {
                 + (sentDate.getYear() + 1900);
     }
     
-    
+    /**
+     * A custom toString method
+     * @return The MessageEntry as a String
+     */
     @Override
     public String toString() {
         return getBoldString(sender) + ": "+subject + "\n" + message + "\n" + sentDateString;
     }
     
-    
+    /**
+     * Opens a detailed popup of the MessageEntry
+     */
     public void showPopup() {
         Platform.runLater(()
         -> {

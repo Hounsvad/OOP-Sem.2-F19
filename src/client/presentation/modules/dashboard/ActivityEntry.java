@@ -33,15 +33,15 @@ public class ActivityEntry {
     private final String dateOfEntryString;
     
     /**
-     * the spicifics of the entry
+     * the specifics of the entry
      */
     private final String specificsOfEntry;
 
     /**
      * Constructs an ActivityEntry
-     * @param typeOfEntry
-     * @param dateOfEntry
-     * @param specificsOfEntry 
+     * @param typeOfEntry the type of the entry
+     * @param dateOfEntry the date of the entry
+     * @param specificsOfEntry the specifics of the entry
      */
     public ActivityEntry(String typeOfEntry, Date dateOfEntry, String specificsOfEntry) {
         this.typeOfEntry = typeOfEntry;

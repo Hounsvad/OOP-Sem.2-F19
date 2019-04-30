@@ -42,7 +42,7 @@ public class DashboardFXMLController implements Initializable {
     private JFXListView<MessageEntry> messageView;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
