@@ -4,7 +4,8 @@
 package client.presentation.modules.dashboard;
 
 import client.presentation.CommunicationHandler;
-import client.presentation.utils.User;
+import client.presentation.containers.User;
+import client.presentation.modules.Popup;
 import client.presentation.utils.credentials.CredentialContainer;
 import com.jfoenix.animation.alert.JFXAlertAnimation;
 import com.jfoenix.controls.JFXAlert;
@@ -28,10 +29,8 @@ import javafx.stage.Stage;
  *
  * @author Oliver
  */
-public class MessageEntryCreationPopupFXMLController implements Initializable {
+public class MessageEntryCreationPopupFXMLController extends Popup {
 
-    @FXML
-    private FontAwesomeIconView cross;
     @FXML
     private JFXComboBox<User> recipients;
     @FXML
@@ -39,8 +38,7 @@ public class MessageEntryCreationPopupFXMLController implements Initializable {
     @FXML
     private JFXTextArea message;
 
-    CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
-    CredentialContainer credentialContainer = CredentialContainer.getInstance();
+
 
     /**
      * Initializes the controller class.
@@ -52,11 +50,6 @@ public class MessageEntryCreationPopupFXMLController implements Initializable {
         userList.add(new User("frhou18", "Frederik Alexander Hounsvad", "DEADBEAF002"));
         //communicationHandler.sendQuery(new String[]{"userList", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> userList.add(new User(tuple[0], tuple[1], tuple[3])));
         recipients.getItems().addAll(userList);
-    }
-
-    @FXML
-    private void close() {
-        ((Stage) cross.getScene().getWindow()).close();
     }
 
     @FXML

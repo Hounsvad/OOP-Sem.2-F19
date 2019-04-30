@@ -5,11 +5,11 @@
  */
 package client.presentation.modules.dashboard;
 
+import client.presentation.modules.Popup;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -19,10 +19,9 @@ import javafx.stage.Stage;
  *
  * @author Oliver
  */
-public class MessageEntryPopupFXMLController implements Initializable {
+public class MessageEntryPopupFXMLController extends Popup {
 
-    @FXML
-    private FontAwesomeIconView cross;
+
     @FXML
     private Label title;
     @FXML
@@ -35,11 +34,6 @@ public class MessageEntryPopupFXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    }
-
-    @FXML
-    private void close(MouseEvent event) {
-        ((Stage) cross.getScene().getWindow()).close();
     }
 
     public void setData(String titleString, String messageString, String dateString) {

@@ -5,6 +5,7 @@
  */
 package client.presentation.modules.calendar;
 
+import client.presentation.containers.Patient;
 import com.calendarfx.view.DayViewBase;
 import com.calendarfx.view.DetailedWeekView;
 import com.jfoenix.controls.JFXListView;
@@ -24,7 +25,7 @@ import javafx.scene.layout.Region;
 public class CalendarFXMLController implements Initializable {
 
     @FXML
-    private JFXListView<?> PatientView;
+    private JFXListView<Patient> PatientView;
     @FXML
     private AnchorPane anchorPane;
 

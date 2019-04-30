@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,47 +33,44 @@ public class DashboardFXMLController implements Initializable {
     private JFXListView<ActivityEntry> activityView;
     @FXML
     private JFXListView<MessageEntry> messageView;
+    
+    private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
+    private final CredentialContainer credentialContainer = CredentialContainer.getInstance();
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Set the text on name to the name of the user
         name.setText(CommunicationHandler.getInstance().getName());
-        try {
-            List<ActivityEntry> activityEntries = new ArrayList<>();
-            CommunicationHandler.getInstance().sendQuery(new String[]{"getActivity", CredentialContainer.getInstance().getUsername(), CredentialContainer.getInstance().getPassword()}).forEach((tuple) -> activityEntries.add(new ActivityEntry(tuple[1], new Date(Integer.parseInt(tuple[0])), tuple[2], tuple[3])));
-            activityView.getItems().addAll(activityEntries);
-
-            List<MessageEntry> messageEntries = new ArrayList<>();
-            CommunicationHandler.getInstance().sendQuery(new String[]{"getMessages", CredentialContainer.getInstance().getUsername(), CredentialContainer.getInstance().getPassword()}).forEach((tuple) -> messageEntries.add(new MessageEntry(tuple[1], tuple[0], tuple[2], new Date(Integer.parseInt(tuple[3])))));
-            messageView.getItems().addAll(messageEntries);
-        } catch (NullPointerException e) {
-        }
-
-        activityView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
+        
+        Thread t = new Thread(() -> {
+            while (true) {
+                Platform.runLater(() -> updateData());
                 try {
-                    activityView.getSelectionModel().getSelectedItem().showPopup();
-                } catch (NullPointerException e) {
-
+                    Thread.sleep(30000);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
                 }
             }
         });
 
-        messageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    messageView.getSelectionModel().getSelectedItem().showPopup();
-                } catch (NullPointerException e) {
-                }
+        activityView.setOnMouseClicked((MouseEvent event) -> {
+            try {
+                activityView.getSelectionModel().getSelectedItem().showPopup();
+            } catch (NullPointerException e) {
+                
             }
-        }
-        );
+        });
+
+        messageView.setOnMouseClicked((MouseEvent event) -> {
+            try {
+                messageView.getSelectionModel().getSelectedItem().showPopup();
+            } catch (NullPointerException e) {
+                //Do nothing
+            }
+        });
     }
 
     @FXML
@@ -80,4 +78,16 @@ public class DashboardFXMLController implements Initializable {
         MessageEntry.showCreationPopup();
     }
 
+    private void updateData() {
+        try {
+            List<ActivityEntry> activityEntries = new ArrayList<>();
+            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> activityEntries.add(new ActivityEntry(tuple[1], new Date(Integer.parseInt(tuple[0])), tuple[2], tuple[3])));
+            activityView.getItems().addAll(activityEntries);
+
+            List<MessageEntry> messageEntries = new ArrayList<>();
+            communicationHandler.sendQuery(new String[]{"getMessages", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> messageEntries.add(new MessageEntry(tuple[1], tuple[0], tuple[2], new Date(Integer.parseInt(tuple[3])))));
+            messageView.getItems().addAll(messageEntries);
+        } catch (NullPointerException e) {
+        }
+    }
 }

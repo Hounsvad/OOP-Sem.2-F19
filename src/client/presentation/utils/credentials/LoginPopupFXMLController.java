@@ -89,48 +89,41 @@ public class LoginPopupFXMLController implements Initializable {
     @FXML
     private void handleLoginButtonAction() {
         loadpane.setVisible(true);
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<String[]> sqlReturn = CommunicationHandler.getInstance().sendQuery(new String[]{"login", username.getText(), StringUtils.hash(password.getText())});
-                if (sqlReturn != null && !sqlReturn.isEmpty()) {
-                    CredentialContainer.getInstance().setUsername(username.getText());
-                    CredentialContainer.getInstance().setPassword(StringUtils.hash(password.getText()));
-                    Platform.runLater(() -> {
-                        if (containerInstance.isFirst()) {
-                            loadMain();
-                        }
-                        closeStage();
-                    });
-
-                } else if (username.getText().isEmpty() || password.getText().isEmpty()) {
-                    System.err.println("Please enter a username and a password!");
-                    Platform.runLater(()
-                            -> {
-                        message.setText("Please enter a username and a password!");
-                        username.getStyleClass().add("wrong-credentials");
-                        password.getStyleClass().add("wrong-credentials");
-                    });
-
-                } else {
-                    System.err.println("Wrong username or password!");
-                    Platform.runLater(()
-                            -> {
-                        message.setText("Wrong username or password!");
-                        password.setText("");
-                        username.getStyleClass().add("wrong-credentials");
-                        password.getStyleClass().add("wrong-credentials");
-                    });
-
-                }
+        new Thread(() -> {
+            List<String[]> sqlReturn = CommunicationHandler.getInstance().sendQuery(new String[]{"login", username.getText(), StringUtils.hash(password.getText())});
+            if (sqlReturn != null && !sqlReturn.isEmpty()) {
+                CredentialContainer.getInstance().setUsername(username.getText());
+                CredentialContainer.getInstance().setPassword(StringUtils.hash(password.getText()));
+                Platform.runLater(() -> {
+                    if (containerInstance.isFirst()) {
+                        loadMain();
+                    }
+                    closeStage();
+                });
+                
+            } else if (username.getText().isEmpty() || password.getText().isEmpty()) {
                 Platform.runLater(()
                         -> {
-                    loadpane.setVisible(false);
+                    message.setText("Please enter a username and a password!");
+                    username.getStyleClass().add("wrong-credentials");
+                    password.getStyleClass().add("wrong-credentials");
                 });
 
+            } else {
+                Platform.runLater(()
+                        -> {
+                    message.setText("Wrong username or password!");
+                    password.setText("");
+                    username.getStyleClass().add("wrong-credentials");
+                    password.getStyleClass().add("wrong-credentials");
+                });
+                
             }
-        });
-        t.start();
+            Platform.runLater(()
+                    -> {
+                loadpane.setVisible(false);
+            });
+        }).start();
     }
 
     @FXML
