@@ -22,8 +22,8 @@ public class ServerController implements Runnable {
             server = new ServerSocket(1025);
             while (true) {
                 Socket clientSocket = server.accept();
-                Runnable clientHandler = new ClientHandlerThread(clientSocket);
-                new Thread(clientHandler).start();
+                Thread clientHandler = new ClientHandlerThread(clientSocket);
+                clientHandler.start();
             }
         } catch (IOException ex) {
             ex.printStackTrace();
