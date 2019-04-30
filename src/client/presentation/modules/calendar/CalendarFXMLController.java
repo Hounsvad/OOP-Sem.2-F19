@@ -5,9 +5,11 @@
  */
 package client.presentation.modules.calendar;
 
-import com.calendarfx.view.page.WeekPage;
+import com.calendarfx.view.DayViewBase;
+import com.calendarfx.view.DetailedWeekView;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
+import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,19 +33,22 @@ public class CalendarFXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        WeekPage dayView = new WeekPage();
-        //dayView.setManaged(true);
+        DetailedWeekView detailedWeekView = new DetailedWeekView();
+        detailedWeekView.earlyLateHoursStrategyProperty().set(DayViewBase.EarlyLateHoursStrategy.SHOW_COMPRESSED);
+        detailedWeekView.createCalendarSource();
+        detailedWeekView.createEntryAt(ZonedDateTime.now());
 
-        anchorPane.getChildren().add(dayView);
-        dayView.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-        Thread t = new Thread(() -> {
-            while (true) {
-                dayView.setPrefSize(940 > anchorPane.getWidth() ? 940 : anchorPane.getWidth(), 520 > anchorPane.getHeight() ? 520 : anchorPane.getHeight());
-                dayView.resize(940 > anchorPane.getWidth() ? 940 : anchorPane.getWidth(), 520 > anchorPane.getHeight() ? 520 : anchorPane.getHeight());
-            }
+        anchorPane.getChildren().add(detailedWeekView);
+        detailedWeekView.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+
+        anchorPane.heightProperty().addListener((a, b, c) -> {
+            detailedWeekView.setPrefSize(940 > anchorPane.getWidth() ? 940 : anchorPane.getWidth(), 520 > anchorPane.getHeight() ? 520 : anchorPane.getHeight());
+            detailedWeekView.resize(940 > anchorPane.getWidth() ? 940 : anchorPane.getWidth(), 520 > anchorPane.getHeight() ? 520 : anchorPane.getHeight());
         });
-        t.setPriority(Thread.MIN_PRIORITY);
-        t.start();
+        anchorPane.widthProperty().addListener((a, b, c) -> {
+            detailedWeekView.setPrefSize(940 > anchorPane.getWidth() ? 940 : anchorPane.getWidth(), 520 > anchorPane.getHeight() ? 520 : anchorPane.getHeight());
+            detailedWeekView.resize(940 > anchorPane.getWidth() ? 940 : anchorPane.getWidth(), 520 > anchorPane.getHeight() ? 520 : anchorPane.getHeight());
+        });
 
     }
 

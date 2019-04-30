@@ -75,4 +75,9 @@ public class DashboardFXMLController implements Initializable {
         );
     }
 
+    @FXML
+    private void addNewMessage(MouseEvent event) {
+        MessageEntry.showCreationPopup();
+    }
+
 }

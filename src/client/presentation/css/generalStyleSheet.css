@@ -198,3 +198,15 @@ and open the template in the editor.
     /*-fx-background-color: derive(-fx-secondary, 20%);*/
     /*-fx-border-color: derive(-fx-secondary, 20%);*/
 }
+
+.text-area {
+    -fx-text-fill: -fx-secondary;
+}
+
+.jfx-combo-box .label{
+    -fx-text-fill: -fx-secondary;
+}
+
+.jfx-combo-box .list-cell {
+    -fx-text-fill: -fx-secondary;
+}

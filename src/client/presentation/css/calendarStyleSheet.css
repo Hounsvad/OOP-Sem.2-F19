@@ -6,10 +6,5 @@ The use of this code in a non commercial and non exam environment is permitted
     Author     : Oliver
 */
 
-.list-view .scroll-bar:vertical .increment-arrow,
-.list-view .scroll-bar:vertical .decrement-arrow,
-.list-view .scroll-bar:vertical .increment-button,
-.list-view .scroll-bar:vertical .decrement-button {
-    -fx-padding:0;
-}
+
 
