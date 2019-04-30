@@ -27,9 +27,9 @@ public class StringUtils {
     private static final int BOLD_ASCII_OFFSET_UPPERCASE = 119743;
 
     /**
-     * Converts a string into a string written wih bold characters
-     * @param s String input
-     * @return input string in Math Bold Latin characters instead of normal
+     * Converts a string into a string written with bold characters
+     * @param s The String input
+     * @return The input string in Math Bold Latin characters instead of normal
      */
     public static String getBoldString(String s) {
         List<Character> input = Chars.asList(s.toCharArray());
@@ -45,6 +45,11 @@ public class StringUtils {
         }
         return sb.toString();
     }
+    /**
+     * Hashes a String
+     * @param input The String to be hashed
+     * @return The hashed String
+     */
     public static String hash(String input) {
         return Hashing.sha256().hashString(input, Charset.forName("UTF-8")).toString();
     }
