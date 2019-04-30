@@ -13,6 +13,11 @@ import java.util.List;
  */
 public interface DomainInterface {
     
+    /**
+     * Parse the query by the command in the query
+     * @param query The query for the database
+     * @return The data from the database
+     */
     public List<String[]> parseQuery(String[] query);
     
 }
