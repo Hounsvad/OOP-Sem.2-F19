@@ -20,7 +20,7 @@ public class CommunicationInterfaceImpl implements CommunicationInterface {
     /**
      * 
      */
-    List<String[]> list = new ArrayList();
+    List<String[]> list = new ArrayList(); //Necessary?
     
     /**
      * The possible commands for the system
@@ -55,8 +55,8 @@ public class CommunicationInterfaceImpl implements CommunicationInterface {
 
         /**
          * Uses the enum with the given count and command
-         * @param count
-         * @param command 
+         * @param count the amount of the attributes for the specific command
+         * @param command the command for the query
          */
         Commands(int count, String command) {
             this.count = count;
@@ -64,23 +64,26 @@ public class CommunicationInterfaceImpl implements CommunicationInterface {
         }
         
         /**
-         * Gets the count
-         * @return 
+         * @return the amount of attributes for the command
          */
         public int getCount() {
             return this.count;
         }
 
         /**
-         * gets the command
-         * @return 
+         * @return the command for the query
          */
         public String getCommand() {
             return this.command;
         }
 
     }
-
+    
+    /**
+     * Sends the query to the server throug a TCP connection
+     * @param query the query for the database
+     * @return the data from the database
+     */
     @Override
     public List<String[]> sendQuery(String[] query) {
         if (checkQuery(query)) {
@@ -99,6 +102,11 @@ public class CommunicationInterfaceImpl implements CommunicationInterface {
         return null;
     }
 
+    /**
+     * Checks if the query is accepted
+     * @param query the query for the database
+     * @return if the query is legit
+     */
     public boolean checkQuery(String[] query) {
         for (Commands com : Commands.values()) {
             if (query[0] == com.getCommand() && query.length == com.count) {
