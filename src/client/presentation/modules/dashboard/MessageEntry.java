@@ -76,7 +76,6 @@ public class MessageEntry {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(MessageEntry.class.getResource("MessageEntryCreationPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
-                MessageEntryCreationPopupFXMLController controller = fxmlLoader.<MessageEntryCreationPopupFXMLController>getController();
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.initStyle(StageStyle.UNDECORATED);

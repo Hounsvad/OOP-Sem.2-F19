@@ -5,15 +5,12 @@ package client.presentation.modules.journal;
 
 import client.presentation.CommunicationHandler;
 import client.presentation.containers.Patient;
-import client.presentation.modules.dashboard.ActivityEntry;
 import client.presentation.utils.credentials.CredentialContainer;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
@@ -38,7 +35,7 @@ public class JournalFXMLController implements Initializable {
     private AnchorPane addMedicinalEntryButton;
     @FXML
     private AnchorPane addManualEntryButton;
-    
+
     private Patient currentPatient;
     private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
     private final CredentialContainer credentialContainer = CredentialContainer.getInstance();
@@ -48,29 +45,17 @@ public class JournalFXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Thread t = new Thread(() -> {
-            while (true) {
-                Platform.runLater(() -> updateData());
-                try {
-                    Thread.sleep(30000);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-
-        PatientView.getSelectionModel().selectionModeProperty().addListener((observable) -> {
-            getPatient((Patient) PatientView.getSelectionModel().getSelectedItem());
-        });
-
+        updateData();
     }
 
     @FXML
     private void addMedicinalEntry(MouseEvent event) {
+        MedicinalEntry.showCreationPopup();
     }
 
     @FXML
     private void addManualEntry(MouseEvent event) {
+        ManualEntry.showCreationPopup();
     }
 
     private void getPatient(Patient patient) {
@@ -78,8 +63,7 @@ public class JournalFXMLController implements Initializable {
     }
 
     private void updateData() {
-        if (currentPatient == null)
-        {
+        if (currentPatient == null) {
             return;
         }
         try {

@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
@@ -33,7 +31,7 @@ public class DashboardFXMLController implements Initializable {
     private JFXListView<ActivityEntry> activityView;
     @FXML
     private JFXListView<MessageEntry> messageView;
-    
+
     private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
     private final CredentialContainer credentialContainer = CredentialContainer.getInstance();
 
@@ -44,23 +42,14 @@ public class DashboardFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //Set the text on name to the name of the user
         name.setText(CommunicationHandler.getInstance().getName());
-        
-        Thread t = new Thread(() -> {
-            while (true) {
-                Platform.runLater(() -> updateData());
-                try {
-                    Thread.sleep(30000);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+
+        updateData();
 
         activityView.setOnMouseClicked((MouseEvent event) -> {
             try {
                 activityView.getSelectionModel().getSelectedItem().showPopup();
             } catch (NullPointerException e) {
-                
+
             }
         });
 

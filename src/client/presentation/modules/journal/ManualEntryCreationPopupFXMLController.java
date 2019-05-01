@@ -1,9 +1,8 @@
 /*This is code written by Frederik Alexander Hounsvad
  * The use of this code in a non commercial and non exam environment is permitted
  */
-package client.presentation.modules.dashboard;
+package client.presentation.modules.journal;
 
-import client.presentation.containers.User;
 import client.presentation.modules.Popup;
 import com.jfoenix.animation.alert.JFXAlertAnimation;
 import com.jfoenix.controls.JFXAlert;
@@ -12,8 +11,6 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -25,34 +22,29 @@ import javafx.stage.Stage;
  *
  * @author Oliver
  */
-public class MessageEntryCreationPopupFXMLController extends Popup {
+public class ManualEntryCreationPopupFXMLController extends Popup {
 
     @FXML
-    private JFXComboBox<User> recipients;
+    private JFXComboBox<String> medicin;
     @FXML
-    private JFXTextField subject;
+    private JFXTextField dosage;
     @FXML
-    private JFXTextArea message;
+    private JFXTextArea notes;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        List<User> userList = new ArrayList<>();
-        userList.add(new User("olnor18", "Oliver Lind Nordestgaard", "DEADBEAF001"));
-        userList.add(new User("frhou18", "Frederik Alexander Hounsvad", "DEADBEAF002"));
-        //communicationHandler.sendQuery(new String[]{"userList", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> userList.add(new User(tuple[0], tuple[1], tuple[3])));
-        recipients.getItems().addAll(userList);
     }
 
     @FXML
     private void send() {
-        if (recipients.getSelectionModel().getSelectedItem() != null && !subject.getText().isEmpty() && !message.getText().isEmpty()) {
-            communicationHandler.sendQuery(new String[]{"sendMessage", credentialContainer.getUsername(), credentialContainer.getPassword(), recipients.getSelectionModel().getSelectedItem().getUserID(), subject.getText(), message.getText()});
+        if (medicin.getSelectionModel().getSelectedItem() != null && !dosage.getText().isEmpty() && !notes.getText().isEmpty()) {
+            communicationHandler.sendQuery(new String[]{});
             close();
         } else {
-            JFXAlert alert = new JFXAlert<>(((Stage) message.getScene().getWindow()));
+            JFXAlert alert = new JFXAlert<>(((Stage) notes.getScene().getWindow()));
             JFXDialogLayout layout = new JFXDialogLayout();
             layout.setBody(new Label("Please fill out all the fields"));
             alert.setOverlayClose(true);
@@ -62,5 +54,4 @@ public class MessageEntryCreationPopupFXMLController extends Popup {
             alert.showAndWait();
         }
     }
-
 }
