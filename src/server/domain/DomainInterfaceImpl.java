@@ -5,7 +5,6 @@
  */
 package server.domain;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import java.util.List;
 import server.persistance.PersistanceInterface;
 import server.persistance.PersistanceInterfaceImpl;
@@ -36,22 +35,21 @@ public class DomainInterfaceImpl implements DomainInterface {
                         return data;
                     case "getCalendar":
                         addActivity(query[0], query[3] + ";:;" + query[4] + ";:;" + query[5], ip, userId);
-                        return persistanceInterface.parseQuery(new String[]{query[3], query[4], query[5]});
+                        return persistanceInterface.parseQuery("getCalendar", query[3], query[4], query[5]);
                     case "getEventParticipants":
-                        return persistanceInterface.parseQuery(new String[]{query[3]});
+                        return persistanceInterface.parseQuery("getEventParticipants", query[3]);
                     case "addCalendarEvent":
-                        String eventId = persistanceInterface.parseQuery(new String[]{query[3]});
-                    case "getMessages":
-                        return persistanceInterface.parseQuery(query);
-                    case "getUsers":
-                        List<String[]> userData = persistanceInterface.parseQuery(new String[]{"login", query[1], query[2]});
-                        if (!userData.isEmpty()) {
-                            return persistanceInterface.parseQuery(new String[]{query[0], userData.get(0)[3]});
+                        List<String[]> eventId = persistanceInterface.parseQuery("addCalendarEvent", query[3], query[4], query[5], query[6]);
+                        for (int i = 7; i < query.length; i++) {
+                            persistanceInterface.parseQuery("addEventParticipant", eventId.get(0)[0], query[i]);
                         }
-                        break;
+                        return eventId;
+                    case "updateCalendarEvent":
+                        persistanceInterface.parseQuery("updateCalenderEvent", query[3], query[4], query[5], query[6], query[7]);
+                        List<String[]> participants = persistanceInterface.parseQuery("getEventParticipants", query[3]);
                 }
             }
-        } catch (ArrayIndexOutOfBoundsException | NullPointerException | InvalidArgumentException e) {
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
             e.printStackTrace();
         }
         return null;

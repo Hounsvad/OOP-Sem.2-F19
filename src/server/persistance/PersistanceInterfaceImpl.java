@@ -68,7 +68,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
     }
 
     @Override
-    public List<String[]> parseQuery(String[] query) {
+    public List<String[]> parseQuery(String... query) {
 
         ResultSet sqlReturnValues;
         List<String[]> output = null;
