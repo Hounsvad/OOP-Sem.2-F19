@@ -28,18 +28,20 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
      */
     private final Map<String, String[]> tables = new HashMap<String, String[]>() {
         {
-            put("activity", new String[]{"user_uid", "date", "type", "specifics", "ip"});
-            put("calender", new String[]{"event_id", "date", "event_name", "event_detail"});
+            put("activity", new String[]{"user_id", "date", "type", "specifics", "ip"});
+            put("calender", new String[]{"event_id", "date", "event_name", "event_detail", "date_end"});
             put("departments", new String[]{"name", "department_id", "department_mail_domain"});
-            put("id", new String[]{"uid", "fullName", "is_patient"});
-            put("journal", new String[]{"patient_uid", "department_id", "date", "text", "created_by_uid", "entry_type"});
-            put("messages", new String[]{"sender_uid", "recipient_uid", "title", "message", "date", "seen"});
-            put("participation", new String[]{"event_id", "uid"});
-            put("patient_assignment", new String[]{"user_uid", "patient_uid"});
-            put("rhythm", new String[]{"patien_uid", "hour", "icon", "title", "text"});
-            put("role_assignment", new String[]{"user_uid", "role"});
+            put("id", new String[]{"uid", "fullName"});
+            put("journal", new String[]{"patient_id", "department_id", "date", "text", "created_by_id", "entry_type"});
+            put("messages", new String[]{"sender_id", "recipient_id", "title", "message", "date"});
+            put("modules", new String[]{"name", "icon", "fxml", "role"});
+            put("participation", new String[]{"event_id", "id"});
+            put("patient_assignment", new String[]{"user_id", "patient_id"});
+            put("patients", new String[]{"id", "department"});
+            put("rhythm", new String[]{"patien_id", "hour", "icon", "title", "text"});
+            put("role_assignment", new String[]{"user_id", "role", "department"});
             put("roles", new String[]{"role", "description"});
-            put("users", new String[]{"username", "password", "full_name", "department", "uid"});
+            put("users", new String[]{"username", "password", "department", "id"});
 
         }
     };
@@ -84,64 +86,80 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
 
         switch (query[0]) {
             case "checkCredentials":
-                queryString = "SELECT id.full_name, matchingId.id FROM id, (SELECT id FROM users WHERE password = '"
-                        + query[2]
-                        + "' AND username = '"
-                        + query[1]
-                        + "') AS matchingId WHERE matchingId.id = id.id";
+                queryString = "SELECT id.full_name, matchingId.id FROM id, (SELECT id FROM users WHERE password = '" + query[2] + "' AND username = '" + query[1] + "') AS matchingId WHERE matchingId.id = id.id";
                 break;
             case "getCalendar":
-                queryString = "SELECT calender.* FROM calender, (SELECT participation.event_id FROM participation WHERE participation.id = "
-                        + query[1]
-                        + ") AS x WHERE (calender.date < "
-                        + query[3]
-                        + " AND calender.date > "
-                        + query[2]
-                        + " ) AND calender.event_id = x.event_id";
+                queryString = "SELECT calender.* FROM calender, (SELECT participation.event_id FROM participation WHERE participation.id = " + query[1] + ") AS x WHERE (calender.date > " + query[2] + " AND calender.date < " + query[3] + ") AND calender.event_id = x.event_id";
                 break;
             case "getEventParticipants":
-                queryString = "SELECT id.id, id.full_name FROM id, (SELECT id FROM participation WHERE event_id ="
-                        + query[1]
-                        + ") as participants WHERE id.id = participants.id";
+                queryString = "SELECT id.id, id.full_name FROM id, (SELECT id FROM participation WHERE event_id = " + query[1] + ") as participants WHERE id.id = participants.id";
                 break;
             case "addEventParticipant":
-                queryString = "insert INTO participation VALUES ("
-                        + query[1]
-                        + ", "
-                        + query[2]
-                        + ")";
+                queryString = "INSERT INTO participation VALUES (" + query[1] + ", " + query[2] + ")";
                 break;
             case "addCalendarEvent":
-                queryString = "INSERT INTO calender VALUES ((SELECT MAX(W.event_id) FROM calender as W)+1, "
-                        + query[1]
-                        + ", '"
-                        + query[3]
-                        + "', '"
-                        + query[4]
-                        + "',"
-                        + query[2]
-                        + ")";
+                queryString = "INSERT INTO calender VALUES ((SELECT MAX(W.event_id) FROM calender as W)+1, " + query[1] + ", '" + query[3] + "', '" + query[4] + "'," + query[2] + ")";
                 break;
             case "updateCalendarEvent":
-                queryString = "UPDATE calender SET date = "
-                        + query[2]
-                        + ", event_name = '"
-                        + query[4]
-                        + "', event_detail = '"
-                        + query[5]
-                        + "', date_end = "
-                        + query[3]
-                        + " WHERE event_id = "
-                        + query[1];
+                queryString = "UPDATE calender SET date = " + query[2] + ", event_name = '" + query[4] + "', event_detail = '" + query[5] + "', date_end = " + query[3] + " WHERE event_id = " + query[1];
                 break;
             case "removeCalendarEvent":
-                queryString = "DELETE FROM participation WHERE event_id = '"
-                        + query[1]
-                        + "'; DELETE FROM calender WHERE event_id = '"
-                        + query[1]
-                        + "'";
+                queryString = "DELETE FROM participation WHERE event_id = '" + query[1] + "'; DELETE FROM calender WHERE event_id = '" + query[1] + "'";
                 break;
-
+            case "addPatient":
+                queryString = "INSERT INTO id VALUES ((SELECT MAX(id) FROM id WHERE id < 9000000000) + 1, '" + query[1] + "'); INSERT INTO patients VALUES((SELECT MAX(id) FROM id WHERE id < 9000000000), '" + query[2] + "')";
+                break;
+            case "getPatients":
+                queryString = "SELECT id.id, id.full_name FROM id, (SELECT patient_id as id FROM patient_assignment WHERE user_id = " + query[1] + ") as compare WHERE compare.id = id.id";
+                break;
+            case "getAllPatients":
+                queryString = "SELECT patients.id, patients.department, id.full_name FROM patients, id, (SELECT department FROM users WHERE id = '" + query[1] + "') as dep where patients.id = id.id AND patients.department = dep.department ORDER BY patients.id ASC";
+                break;
+            case "addUser":
+                queryString = "INSERT INTO id VALUES((SELECT MAX(id) FROM id)+1, '" + query[2] + "'); INSERT INTO users VALUES ('" + query[1] + "', '" + query[3] + "', " + query[4] + ", (SELECT MAX(id.id)from id))";
+                break;
+            case "getUsers":
+                queryString = "SELECT * FROM users WHERE users.department = '" + query[1] + "' order by users.id";
+                break;
+            case "alterUserFullName":
+                queryString = "UPDATE id SET full_name = '" + query[2] + "' WHERE id = " + query[1];
+                break;
+            case "setUserPassword":
+                queryString = "UPDATE users SET password = '" + query[2] + "' WHERE id = " + query[1];
+                break;
+            case "addUserRole":
+                queryString = "INSERT INTO role_assignment VALUES (" + query[1] + ", '" + query[2] + "')";
+                break;
+            case "removeUserRole":
+                queryString = "DELETE FROM role_assignment WHERE user_id = " + query[1] + " AND role = '" + query[2] + "'";
+                break;
+            case "getUserRoles":
+                queryString = "SELECT role FROM role_assignment where user_id = " + query[1];
+                break;
+            case "getRoles":
+                queryString = "SELECT role FROM roles";
+                break;
+            case "addJournalEntry":
+                queryString = "INSERT INTO journal VALUES (" + query[1] + ", '" + query[2] + "', " + query[3] + ", '" + query[4] + "', " + query[5] + ", '" + query[6] + "')";
+                break;
+            case "getJournal":
+                queryString = "SELECT * FROM journal WHERE patient_id = '" + query[1] + "' LIMIT 30";
+                break;
+            case "addActivity":
+                queryString = "INSERT INTO activity (user_id, type, specifics, ip) VALUES (" + query[4] + ", '" + query[1] + "', '" + query[2] + "', '" + query[3] + "')";
+                break;
+            case "getActivity":
+                queryString = "SELECT date, type, specifics, ip FROM activity WHERE date > (date_part('epoch'::text, now()) * (1000)::double precision) AND user_id = " + query[1];
+                break;
+            case "sendMessage":
+                queryString = "INSERT INTO messages(sender_id, recipient_id, title, message) VALUES (" + query[1] + ", " + query[2] + ", '" + query[3] + "', '" + query[4] + "')";
+                break;
+            case "getMessages":
+                queryString = "SELECT id.full_name, users.username, messages.title, messages.message, messages.date FROM users, id, messages WHERE id.id = sender_id AND users.id = sender_id AND recipient_id = " + query[1] + " ORDER BY date DESC LIMIT 30";
+                break;
+            case "getMenuItems":
+                queryString = "SELECT DISTINCT modules.name, modules.icon, modules.fxml FROM modules, role_assignment WHERE role_assignment.user_id = " + query[1] + " AND (role_assignment.role = modules.role OR role_assignment.role = '000-000')";
+                break;
             default:
                 return null;
         }
