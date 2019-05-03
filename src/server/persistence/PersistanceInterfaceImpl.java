@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server.persistance;
+package server.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -143,7 +143,10 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 queryString = "INSERT INTO journal VALUES (" + query[1] + ", '" + query[2] + "', " + query[3] + ", '" + query[4] + "', " + query[5] + ", '" + query[6] + "')";
                 break;
             case "getJournal":
-                queryString = "SELECT * FROM journal WHERE patient_id = '" + query[1] + "' LIMIT 30";
+                queryString = "SELECT * FROM journal WHERE patient_id = " + query[1] + " AND entry_type = 'journal' LIMIT 30";
+                break;
+            case "getMedicalJournal":
+                queryString = "SELECT * FROM journal WHERE patient_id = " + query[1] + " AND entry_type = 'medicinal' LIMIT 30";
                 break;
             case "addActivity":
                 queryString = "INSERT INTO activity (user_id, type, specifics, ip) VALUES (" + query[4] + ", '" + query[1] + "', '" + query[2] + "', '" + query[3] + "')";
