@@ -212,7 +212,8 @@ public class DomainInterfaceImpl implements DomainInterface {
     }
 
     private void sendPassword(String username, String domain, String password) {
-        //implement contents
+        //implement remaining
+        //Oh how i detest email
     }
 
     private String generatePassword() {
