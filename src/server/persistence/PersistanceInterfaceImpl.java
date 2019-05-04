@@ -116,10 +116,10 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 queryString = "SELECT patients.id, patients.department, id.full_name FROM patients, id, (SELECT department FROM users WHERE id = '" + query[1] + "') as dep where patients.id = id.id AND patients.department = dep.department ORDER BY patients.id ASC";
                 break;
             case "addUser":
-                queryString = "INSERT INTO id VALUES((SELECT MAX(id) FROM id)+1, '" + query[2] + "'); INSERT INTO users VALUES ('" + query[1] + "', '" + query[3] + "', " + query[4] + ", (SELECT MAX(id.id)from id))";
+                queryString = "INSERT INTO id VALUES((SELECT MAX(id) FROM id)+1, '" + query[2] + "'); INSERT INTO users VALUES ('" + query[1] + "', '" + query[3] + "', " + query[4] + ", (SELECT MAX(id.id)from id)); SELECT MAX(id.id)from id";
                 break;
             case "getUsers":
-                queryString = "SELECT * FROM users WHERE users.department = '" + query[1] + "' order by users.id";
+                queryString = "SELECT username, users.id, full_name FROM users, id WHERE id.id = users.id AND users.department = '" + query[1] + "' order by users.id";
                 break;
             case "alterUserFullName":
                 queryString = "UPDATE id SET full_name = '" + query[2] + "' WHERE id = " + query[1];
@@ -162,6 +162,15 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 break;
             case "getMenuItems":
                 queryString = "SELECT DISTINCT modules.name, modules.icon, modules.fxml FROM modules, role_assignment WHERE role_assignment.user_id = " + query[1] + " AND (role_assignment.role = modules.role OR role_assignment.role = '000-000')";
+                break;
+            case "getUserDepartment":
+                queryString = "SELECT users.department FROM users WHERE users.id=" + query[1];
+                break;
+            case "getPatientId":
+                queryString = "SELECT patients.department FROM patients WHERE patients.id=" + query[1];
+                break;
+            case "getDomain":
+                queryString = "SELECT users.domain FROM users WHERE users.id=" + query[1];
                 break;
             default:
                 return null;

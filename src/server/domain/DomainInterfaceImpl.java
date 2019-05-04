@@ -5,6 +5,8 @@
  */
 package server.domain;
 
+import com.google.common.hash.Hashing;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +17,7 @@ import server.persistence.PersistanceInterfaceImpl;
 
 /**
  *
- * @author Oliver
+ * @author Frederik
  */
 public class DomainInterfaceImpl implements DomainInterface {
 
@@ -24,6 +26,7 @@ public class DomainInterfaceImpl implements DomainInterface {
     private String userId = null;
     private String ip = null;
     private List<String> rights = null;
+    private static final String PASS_CHARS = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz,.-1234567890+?!@#&/";
 
     public DomainInterfaceImpl(String ip) {
         this.ip = ip;
@@ -93,6 +96,60 @@ public class DomainInterfaceImpl implements DomainInterface {
                         case "removeCalendarEvent":
                             persistenceInterface.parseQuery("removeCalendarEvent", query[3]);
                             return constructReturn("Success", "Event Removed");
+                        case "addPatient":
+                            persistenceInterface.parseQuery("addPatient", query[3], persistenceInterface.parseQuery("getUserDepartment", userId).get(0)[0]);
+                            return constructReturn("Success", "Patienty");
+                        case "getPatients":
+                            return persistenceInterface.parseQuery("getPatients", userId);
+                        case "addUser":
+                            String password = generatePassword();
+                            List<String[]> result = persistenceInterface.parseQuery("addUser", query[3], query[4], Hashing.sha256().hashString(password, Charset.forName("UTF-8")).toString(), query[5]);
+                            sendPassword(query[4], result.get(0)[0], password);
+                            return result;
+                        case "userList":
+                            return persistenceInterface.parseQuery("getUsers", persistenceInterface.parseQuery("getUserDepartment", userId).get(0)[0]);
+                        case "alterUserfullName":
+                            persistenceInterface.parseQuery("alterUserFullName", query[3], query[4]);
+                            return constructReturn("Success", "Full name of user altered");
+                        case "resetUserPassword":
+                            String newPassword = generatePassword();
+                            persistenceInterface.parseQuery("setUserPassword", query[3], Hashing.sha256().hashString(newPassword, Charset.forName("UTF-8")).toString());
+                            sendPassword(query[4], query[3], newPassword);
+                            return constructReturn("Success", "Password updated");
+                        case "alterOwnPassword":
+                            persistenceInterface.parseQuery("setUserPassword", query[4], query[3]);
+                            return constructReturn("Success", "Password succesfully updated");
+                        case "setUserRoles":
+                            List<String> roles = persistenceInterface.parseQuery("getUserRoles", query[3]).stream().map(t -> t[0]).collect(Collectors.toList());
+                            for (int i = 4; i < query.length; i++) {
+                                if (!roles.contains(query[i])) {
+                                    persistenceInterface.parseQuery("addUserRole", query[3], query[i]);
+                                    roles.remove(roles.indexOf(query[i]));
+                                }
+                            }
+                            roles.forEach((t) -> {
+                                persistenceInterface.parseQuery("removeUserRole", query[3], t);
+                            });
+                            return constructReturn("Success", "roles successfully updated");
+                        case "getUserRoles":
+                            return persistenceInterface.parseQuery("getUserRoles", query[3]);
+                        case "getRoles":
+                            return persistenceInterface.parseQuery("getRoles");
+                        case "addJournalEntry":
+                            persistenceInterface.parseQuery("addJournalEntry", query[3], query[4], Long.toString(System.currentTimeMillis()), query[6], userId, query[5]);
+                            return constructReturn("Success", "Entry added");
+                        case "getJournal":
+                            return persistenceInterface.parseQuery("getJournal", query[3]);
+                        case "getMedicinalJournal":
+                            return persistenceInterface.parseQuery("getMedicalJournal", query[3]);
+                        case "getActivity":
+                            return persistenceInterface.parseQuery("getActivity", userId);
+                        case "sendMessage":
+                            return persistenceInterface.parseQuery("sendMessage", userId, query[3], query[4], query[5]);
+                        case "getMessages":
+                            return persistenceInterface.parseQuery("getMessages", userId);
+                        case "getMenuItems":
+                            return persistenceInterface.parseQuery("getMenuItems", userId);
                     }
                 } else {
                     return constructReturn("Error", "Missing required roles");
@@ -154,5 +211,17 @@ public class DomainInterfaceImpl implements DomainInterface {
 
     private boolean isAssignedPatient(String id) {
         return persistenceInterface.parseQuery("getPatients", userId).stream().map(t -> t[0]).collect(Collectors.toList()).contains(id);
+    }
+
+    private void sendPassword(String username, String domain, String password) {
+        //implement contents
+    }
+
+    private String generatePassword() {
+        StringBuilder passwordBuilder = new StringBuilder();
+        for (int i = 0; i < 16; i++) {
+            passwordBuilder.append(PASS_CHARS.charAt((int) (Math.random() * 70)));
+        }
+        return passwordBuilder.toString();
     }
 }
