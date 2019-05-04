@@ -22,7 +22,6 @@ import server.persistence.PersistanceInterfaceImpl;
 public class DomainInterfaceImpl implements DomainInterface {
 
     private final PersistanceInterface persistenceInterface = new PersistanceInterfaceImpl();
-    private String full_name = null;
     private String userId = null;
     private String ip = null;
     private List<String> rights = null;
@@ -56,7 +55,6 @@ public class DomainInterfaceImpl implements DomainInterface {
             List<String[]> data = persistenceInterface.parseQuery("checkCredentials", query[1], query[2]);
 
             userId = data.get(0)[1];
-            full_name = data.get(0)[0];
             rights = persistenceInterface.parseQuery("getUserRoles", userId).stream().map(t -> t[0]).collect(Collectors.toList());
 
             if (!data.isEmpty()) {
