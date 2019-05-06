@@ -179,6 +179,8 @@ public class DomainInterfaceImpl implements DomainInterface {
                             return persistenceInterface.parseQuery("getMessages", userId);
                         case "getMenuItems":
                             return persistenceInterface.parseQuery("getMenuItems", userId);
+                        case "getDepartments":
+                            return persistenceInterface.parseQuery("getDepartments");
                     }
                 } else {
                     return constructReturn("Error", "Missing required roles");
