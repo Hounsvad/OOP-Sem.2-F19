@@ -26,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 
 /**
  * FXML Controller class
@@ -83,7 +84,7 @@ public class CalendarFXMLController implements Initializable {
         yearMonthView.setOnMouseClicked(selectedObject -> {
             if (selectedObject.getPickResult().getIntersectedNode() instanceof DateCell) {
                 yearMonthView.setDate(((DateCell) selectedObject.getPickResult().getIntersectedNode()).getDate());
-            } else {
+            } else if (selectedObject.getPickResult().getIntersectedNode() instanceof Text) {
                 yearMonthView.setDate(((DateCell) selectedObject.getPickResult().getIntersectedNode().getParent()).getDate());
             }
         });
