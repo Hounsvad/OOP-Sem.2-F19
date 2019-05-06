@@ -54,6 +54,7 @@ public class DomainInterfaceImpl implements DomainInterface {
             put("sendMessage", "");
             put("getMessages", "");
             put("getMenuItems", "");
+            put("getUserActivity", "002-007");
 
         }
     };
@@ -173,6 +174,8 @@ public class DomainInterfaceImpl implements DomainInterface {
                             return persistenceInterface.parseQuery("getMedicalJournal", query[3]);
                         case "getActivity":
                             return persistenceInterface.parseQuery("getActivity", userId);
+                        case "getUserActivity":
+                            return persistenceInterface.parseQuery("getActivity", query[3]);
                         case "sendMessage":
                             return persistenceInterface.parseQuery("sendMessage", userId, query[3], query[4], query[5]);
                         case "getMessages":
