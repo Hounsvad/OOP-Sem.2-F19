@@ -172,6 +172,9 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             case "getDomain":
                 queryString = "SELECT users.domain FROM users WHERE users.id=" + query[1];
                 break;
+            case "getDepartments":
+                queryString ="SELECT department_id FROM departments";
+                break;
             default:
                 return null;
         }
