@@ -26,6 +26,37 @@ public class DomainInterfaceImpl implements DomainInterface {
     private String ip = null;
     private List<String> rights = null;
     private static final String PASS_CHARS = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz,.-1234567890+?!@#&/";
+    private final Map<String, String> actions = new HashMap<String, String>() {
+        {
+            put("direct", "");
+            put("login", "");
+            put("getCalendar", "005-001");
+            put("getEventParticipants", "005-001");
+            put("addCalendarEvent", "005-001");
+            put("updateCalendarEvent", "005-001");
+            put("removeCalendarEvent", "005-001");
+            put("addPatient", "004-002");
+            put("getPatients", "004-001");
+            put("addUser", "002-002");
+            put("userList", "002-001");
+            put("alterUserfullName", "002-003");
+            put("alterUserUsername", "002-003");
+            put("resetUserPassword", "002-005");
+            put("alterOwnPassword", "003-001");
+            put("setUserRoles", "002-006");
+            put("getUserRoles", "002-006");
+            put("getRoles", "002-006");
+            put("addJournalEntry", "001-001");
+            put("getJournal", "d");
+            put("getMedicinalJournal", "");
+            put("addActivity", "");
+            put("getActivity", "");
+            put("sendMessage", "");
+            put("getMessages", "");
+            put("getMenuItems", "");
+
+        }
+    };
 
     public DomainInterfaceImpl(String ip) {
         this.ip = ip;
@@ -174,36 +205,6 @@ public class DomainInterfaceImpl implements DomainInterface {
     }
 
     private boolean hasRights(String action) {
-        Map<String, String> actions = new HashMap<String, String>() {
-            {
-                put("login", "");
-                put("getCalendar", "005-001");
-                put("getEventParticipants", "005-001");
-                put("addCalendarEvent", "005-001");
-                put("updateCalendarEvent", "005-001");
-                put("removeCalendarEvent", "005-001");
-                put("addPatient", "004-002");
-                put("getPatients", "004-001");
-                put("addUser", "002-002");
-                put("userList", "002-001");
-                put("alterUserfullName", "002-003");
-                put("alterUserUsername", "002-003");
-                put("resetUserPassword", "002-005");
-                put("alterOwnPassword", "003-001");
-                put("setUserRoles", "002-006");
-                put("getUserRoles", "002-006");
-                put("getRoles", "002-006");
-                put("addJournalEntry", "001-001");
-                put("getJournal", "d");
-                put("getMedicinalJournal", "");
-                put("addActivity", "");
-                put("getActivity", "");
-                put("sendMessage", "");
-                put("getMessages", "");
-                put("getMenuItems", "");
-
-            }
-        };
         return actions.get(action).isEmpty() || rights.contains(actions.get(action));
     }
 
