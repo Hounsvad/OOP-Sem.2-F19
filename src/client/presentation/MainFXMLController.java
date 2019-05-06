@@ -80,7 +80,7 @@ public class MainFXMLController implements Initializable {
             {
                 add(new String[]{"Calendar", "CALENDAR", "modules/calendar/CalendarFXML.fxml"});
                 add(new String[]{"Journal", "FILE_TEXT", "modules/journal/JournalFXML.fxml"});
-                add(new String[]{"Admin", "COG", "modules/journal/JournalFXML.fxml"}); //FXML TO BE CHANGED
+                add(new String[]{"Admin", "COG", "modules/admin/AdminFXML.fxml"}); //FXML TO BE CHANGED
             }
         });
         loadSubScene("modules/dashboard/DashboardFXML.fxml");

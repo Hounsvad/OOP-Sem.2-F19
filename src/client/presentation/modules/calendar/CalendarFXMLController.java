@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 
 /**
@@ -28,6 +29,8 @@ public class CalendarFXMLController implements Initializable {
     private JFXListView<Patient> PatientView;
     @FXML
     private AnchorPane anchorPane;
+    @FXML
+    private HBox hbox;
 
     /**
      * Initializes the controller class.
