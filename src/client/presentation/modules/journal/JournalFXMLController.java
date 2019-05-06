@@ -80,7 +80,7 @@ public class JournalFXMLController implements Initializable {
             manualEntriesView.getItems().addAll(manualEntries);
 
             List<Patient> patients = new ArrayList<>();
-            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> patients.add(new Patient()));
+            communicationHandler.sendQuery(new String[]{"getPatients", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> patients.add(new Patient(tuple[1], tuple[0])));
             PatientView.getItems().addAll(patients);
         } catch (NullPointerException e) {
         }

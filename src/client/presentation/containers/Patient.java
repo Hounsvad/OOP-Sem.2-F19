@@ -9,4 +9,20 @@ package client.presentation.containers;
  */
 public class Patient {
 
+    private final String fullName;
+    private final String patientID;
+
+    public Patient(String fullName, String patientID) {
+        this.fullName = fullName;
+        this.patientID = patientID;
+    }
+
+    @Override
+    public String toString() {
+        return fullName;
+    }
+
+    public String getPatientID() {
+        return patientID;
+    }
 }
