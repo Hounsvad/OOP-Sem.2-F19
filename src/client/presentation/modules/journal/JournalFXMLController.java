@@ -6,11 +6,13 @@ package client.presentation.modules.journal;
 import client.presentation.CommunicationHandler;
 import client.presentation.containers.Patient;
 import client.presentation.utils.credentials.CredentialContainer;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
@@ -26,14 +28,21 @@ public class JournalFXMLController implements Initializable {
     private JFXListView<LogEntry> automaticEntriesView;
     private JFXListView<MedicinalEntry> medicinalEntriesView;
     private JFXListView<ManualEntry> manualEntriesView;
-    @FXML
     private JFXListView<Patient> PatientView;
 
     private Patient currentPatient;
     private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
     private final CredentialContainer credentialContainer = CredentialContainer.getInstance();
     @FXML
-    private AnchorPane addMedicinalEntryButton1;
+    private JFXComboBox<?> departmentPicker;
+    @FXML
+    private JFXListView<?> UserView1;
+    @FXML
+    private JFXListView<?> UserView11;
+    @FXML
+    private AnchorPane addUserButton;
+    @FXML
+    private JFXListView<?> UserView;
 
     /**
      * Initializes the controller class.
@@ -43,7 +52,6 @@ public class JournalFXMLController implements Initializable {
         updateData();
     }
 
-    @FXML
     private void addMedicinalEntry(MouseEvent event) {
         MedicinalEntry.showCreationPopup();
     }
@@ -78,5 +86,25 @@ public class JournalFXMLController implements Initializable {
             PatientView.getItems().addAll(patients);
         } catch (NullPointerException e) {
         }
+    }
+
+    @FXML
+    private void departmentPicked(ActionEvent event) {
+    }
+
+    @FXML
+    private void saveAssignments(MouseEvent event) {
+    }
+
+    @FXML
+    private void userSelected(MouseEvent event) {
+    }
+
+    @FXML
+    private void saveRoles(MouseEvent event) {
+    }
+
+    @FXML
+    private void addUserButtonClicked(MouseEvent event) {
     }
 }
