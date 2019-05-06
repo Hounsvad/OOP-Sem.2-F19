@@ -23,22 +23,17 @@ import javafx.scene.layout.AnchorPane;
  */
 public class JournalFXMLController implements Initializable {
 
-    @FXML
     private JFXListView<LogEntry> automaticEntriesView;
-    @FXML
     private JFXListView<MedicinalEntry> medicinalEntriesView;
-    @FXML
     private JFXListView<ManualEntry> manualEntriesView;
     @FXML
     private JFXListView<Patient> PatientView;
-    @FXML
-    private AnchorPane addMedicinalEntryButton;
-    @FXML
-    private AnchorPane addManualEntryButton;
 
     private Patient currentPatient;
     private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
     private final CredentialContainer credentialContainer = CredentialContainer.getInstance();
+    @FXML
+    private AnchorPane addMedicinalEntryButton1;
 
     /**
      * Initializes the controller class.
@@ -53,7 +48,6 @@ public class JournalFXMLController implements Initializable {
         MedicinalEntry.showCreationPopup();
     }
 
-    @FXML
     private void addManualEntry(MouseEvent event) {
         ManualEntry.showCreationPopup();
     }
