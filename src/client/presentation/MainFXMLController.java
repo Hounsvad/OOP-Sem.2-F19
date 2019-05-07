@@ -28,26 +28,66 @@ import javafx.util.Duration;
  */
 public class MainFXMLController implements Initializable {
 
+    /**
+     * The SubScene of the stage
+     */
     @FXML
     private SubScene subScene;
-
+    
+    /**
+     * The VBox for the Menu
+     */
     @FXML
     private VBox menu;
+    
+    /**
+     * The GridPane for the menu
+     */
     @FXML
     private GridPane menuGrid;
+    
+    /**
+     * The Button leading to the Dashboard
+     */
     @FXML
     private Button buttonDashboard;
+    
+    /**
+     * The Button leading to the Calendar
+     */
     @FXML
     private Button buttonCalendar;
-    @FXML
-    private Button buttonDashboardLabel;
-    @FXML
-    private Button buttonCalendarLabel;
-    @FXML
-    private Button buttonJournalLabel;
+    
+    /**
+     * The Button leading to the Journal
+     */
     @FXML
     private Button buttonJournal;
 
+    /**
+     * The TextButton leading to the Dashboard
+     */
+    @FXML
+    private Button buttonDashboardLabel;
+    
+    /**
+     * The TextButton leading to the Calandar
+     */
+    @FXML
+    private Button buttonCalendarLabel;
+    
+    /**
+     * The TextButton leading to the Journal
+     */
+    @FXML
+    private Button buttonJournalLabel;
+    
+
+    /**
+     * Initializes the controller class
+     * @param url
+     * @param rb 
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Side-menu
@@ -83,6 +123,10 @@ public class MainFXMLController implements Initializable {
         loadSubScene("modules/dashboard/DashboardFXML.fxml");
     }
 
+    /**
+     * Loads the Subscene
+     * @param path The path to the Subscene
+     */
     public void loadSubScene(String path) {
         try {
             subScene.setRoot(FXMLLoader.load(getClass().getResource(path)));

@@ -44,7 +44,7 @@ public final class CredentialContainer {
     private boolean isGettingCredentials = false;
 
     /**
-     *
+     * A variable to indicate whether its the first time loging in
      */
     private boolean firstRound = true;
 
@@ -57,7 +57,11 @@ public final class CredentialContainer {
      * The path of the login screens FXML
      */
     private static final String LOGIN_SCREEN_PATH = "";
-
+    
+    /**
+     * gets the value of the Boolean property that indicates if the credentials are ready
+     * @return true if the credentials are ready
+     */
     protected BooleanProperty getCredentialReadyProperty() {
         return credentialReady;
     }
@@ -65,7 +69,11 @@ public final class CredentialContainer {
     private CredentialContainer() {
 
     }
-
+    
+    /**
+     * Gets the instance of the CredentialContainer
+     * @return the CredentialContainer
+     */
     public static CredentialContainer getInstance() {
         if (instance != null) {
             return instance;
@@ -98,7 +106,7 @@ public final class CredentialContainer {
      * If the credentials have not been accessed for one hour they will
      * be reset
      *
-     * @return
+     * @return true if the credentials have not been accessed for an hour
      */
     public boolean checkTimeValid() {
         if (this.lastAccess > 0 && this.lastAccess > System.currentTimeMillis() - 3600000) {

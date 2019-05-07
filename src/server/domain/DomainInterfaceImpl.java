@@ -15,12 +15,16 @@ import server.persistance.PersistanceInterfaceImpl;
  */
 public class DomainInterfaceImpl implements DomainInterface {
 
+    /**
+     * An instance of the PersistanceInterfaceImpl
+     */
     private PersistanceInterface persistanceInterface = new PersistanceInterfaceImpl();
-    
-        /**
-     * parse query to data-layer and get response
-     * @param query matching the format of the agreed-upon in the excelsheet "Stukture.xlsx"
-     * @return List<String[]> a list of the returned tuples
+
+
+    /**
+     * Parses the query by the command in the query
+     * @param query The Query for the database
+     * @return The data from the database
      */
     @Override
     public List<String[]> parseQuery(String[] query) {

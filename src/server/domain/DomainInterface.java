@@ -14,9 +14,9 @@ import java.util.List;
 public interface DomainInterface {
     
     /**
-     * parse query to data-layer and get response
-     * @param query matching the format of the agreed-upon in the excelsheet "Stukture.xlsx"
-     * @return List<String[]> a list of the returned tuples
+     * Parse the query by the command in the query
+     * @param query The query for the database
+     * @return The data from the database
      */
     public List<String[]> parseQuery(String[] query);
     

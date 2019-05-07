@@ -21,27 +21,54 @@ import javafx.stage.Stage;
  */
 public class MessageEntryPopupFXMLController implements Initializable {
 
+    /**
+     * The icon for the cross that exits the programm
+     */
     @FXML
     private FontAwesomeIconView cross;
+    
+    /**
+     * The title of the MessageEntry
+     */
     @FXML
     private Label title;
+    
+    /**
+     * The message of the the MessageEntry
+     */
     @FXML
     private Label message;
+    
+    /**
+     * The date of the MessageEntry
+     */
     @FXML
     private Label date;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
+    /**
+     * Closes the popup
+     * @param event 
+     */
     @FXML
     private void close(MouseEvent event) {
         ((Stage) cross.getScene().getWindow()).close();
     }
 
+    /**
+     * Sets the data of the MessageEntry popup
+     * @param titleString
+     * @param messageString
+     * @param dateString
+     */
     public void setData(String titleString, String messageString, String dateString) {
         title.setText(titleString);
         message.setText(messageString);
