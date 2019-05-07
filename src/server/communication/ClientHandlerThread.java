@@ -6,12 +6,7 @@
 package server.communication;
 
 import com.frohno.pseudossl.PseudoSSLClient;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -20,10 +15,11 @@ import java.util.List;
 public class ClientHandlerThread extends Thread {
 
     private final Socket clientSocket;
-    
+
     /**
      * Constructs the ClientHandlerSocket with the given Socket
-     * @param clientSocket 
+     *
+     * @param clientSocket
      */
     public ClientHandlerThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -34,9 +30,9 @@ public class ClientHandlerThread extends Thread {
      */
     @Override
     public void run() {
-
         PseudoSSLClient pseudoSSLClient = new PseudoSSLClient(clientSocket);
-        pseudoSSLClient.sendObject(DomainHandler.getDomainHandler().parseQuery((String[]) pseudoSSLClient.recieveObject())); 
+        DomainHandler domainHandler = new DomainHandler(clientSocket.getInetAddress().getHostAddress());
+        pseudoSSLClient.sendObject(domainHandler.parseQuery((String[]) pseudoSSLClient.recieveObject()));
 
     }
 
