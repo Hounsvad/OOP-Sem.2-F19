@@ -11,6 +11,7 @@ and open the template in the editor.
 * {
     -fx-primary : #2E4057;
     -fx-secondary : #048BA8;
+    -fx-background : #F4F4F4;
 }
 
 .glyph-icon
@@ -204,9 +205,14 @@ and open the template in the editor.
 }
 
 .jfx-combo-box .label{
-    -fx-text-fill: -fx-secondary;
+    -fx-text-fill: WHITE;
 }
+.jfx-combo-box 
 
 .jfx-combo-box .list-cell {
     -fx-text-fill: -fx-secondary;
+}
+
+.border-pane{
+    -fx-background-color: -fx-background;
 }

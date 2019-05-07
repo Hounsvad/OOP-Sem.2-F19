@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -13,10 +12,10 @@
    <center>
       <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="1020.0" BorderPane.alignment="CENTER">
          <bottom>
-            <HBox prefHeight="200.0" prefWidth="1020.0" BorderPane.alignment="CENTER" />
+            <AnchorPane fx:id="datePickerPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="1020.0" BorderPane.alignment="CENTER" />
          </bottom>
          <center>
-            <AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="940.0" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="calendarPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="940.0" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
                </BorderPane.margin>
@@ -32,7 +31,7 @@
                   <Font size="27.0" />
                </font>
             </Label>
-            <JFXListView fx:id="PatientView" fixedCellSize="0.0" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="ALWAYS" />
+            <JFXListView fx:id="PatientView" fixedCellSize="0.0" onMouseClicked="#getCalendarEvents" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </right>
