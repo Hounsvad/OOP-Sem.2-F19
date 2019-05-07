@@ -21,30 +21,13 @@ import javafx.stage.StageStyle;
  * @author Oliver
  */
 public class ActivityEntry {
-    
-    /**
-     * The type of the entry
-     */
+
     private final String typeOfEntry;
-    
-    /**
-     * the date of the entry
-     */
     private final String dateOfEntryString;
-    
-    /**
-     * the specifics of the entry
-     */
     private final String specificsOfEntry;
     private final String ip;
 
-    /**
-     * Constructs an ActivityEntry
-     * @param typeOfEntry the type of the entry
-     * @param dateOfEntry the date of the entry
-     * @param specificsOfEntry the specifics of the entry
-     */
-    public ActivityEntry(String typeOfEntry, Date dateOfEntry, String specificsOfEntry) {
+    public ActivityEntry(String typeOfEntry, Date dateOfEntry, String specificsOfEntry, String ip) {
         this.typeOfEntry = typeOfEntry;
         this.dateOfEntryString = String.format("%1$" + 2 + "s", dateOfEntry.getHours()).replace(' ', '0') + ":"
                 + String.format("%1$" + 2 + "s", dateOfEntry.getMinutes()).replace(' ', '0') + ":"
@@ -55,11 +38,7 @@ public class ActivityEntry {
         this.specificsOfEntry = specificsOfEntry;
         this.ip = ip;
     }
-    
-    /**
-     * A custom toString Method
-     * @return the Activity as a String
-     */
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(specificsOfEntry);
@@ -69,10 +48,7 @@ public class ActivityEntry {
         }
         return getBoldString(typeOfEntry) + "\n" + sb.toString() + "\n" + dateOfEntryString;
     }
-    
-    /**
-     * Opens a detailed popup of the entry
-     */
+
     public void showPopup() {
         Platform.runLater(()
                 -> {

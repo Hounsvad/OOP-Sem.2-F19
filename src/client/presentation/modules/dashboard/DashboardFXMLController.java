@@ -24,21 +24,11 @@ import javafx.scene.text.Text;
  * @author Oliver
  */
 public class DashboardFXMLController implements Initializable {
-    
-    /**
-     * The name of the user
-     */
+
     @FXML
     private Text name;
-    
-    /**
-     * The Listview for the activity entries
-     */
     @FXML
     private JFXListView<ActivityEntry> activityView;
-    /**
-     * The ListView for the Message entries
-     */
     @FXML
     private JFXListView<MessageEntry> messageView;
 
@@ -46,7 +36,7 @@ public class DashboardFXMLController implements Initializable {
     private final CredentialContainer credentialContainer = CredentialContainer.getInstance();
 
     /**
-     * Initializes the controller class
+     * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,32 +50,14 @@ public class DashboardFXMLController implements Initializable {
                 activityView.getSelectionModel().getSelectedItem().showPopup();
             } catch (NullPointerException e) {
 
-            /**
-             * Opens the popup for the clicked on activity entry
-             * @param event 
-             */
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    activityView.getSelectionModel().getSelectedItem().showPopup();
-                } catch (NullPointerException e) {
-
-                }
             }
         });
-        messageView.getItems().addAll(messageEntries);
-        messageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            
-            /**
-             * Opens the popup for the clicked on message entry
-             * @param event 
-             */
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    messageView.getSelectionModel().getSelectedItem().showPopup();
-                } catch (NullPointerException e) {
-                }
+
+        messageView.setOnMouseClicked((MouseEvent event) -> {
+            try {
+                messageView.getSelectionModel().getSelectedItem().showPopup();
+            } catch (NullPointerException e) {
+                //Do nothing
             }
         });
     }
