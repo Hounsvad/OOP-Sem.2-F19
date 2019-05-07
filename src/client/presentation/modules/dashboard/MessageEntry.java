@@ -67,7 +67,7 @@ public class MessageEntry {
      */
     @Override
     public String toString() {
-        return getBoldString(sender) + ": "+subject + "\n" + message + "\n" + sentDateString;
+        return getBoldString(sender) + ": " + subject + "\n" + message + "\n" + sentDateString;
     }
     
     /**
@@ -75,18 +75,37 @@ public class MessageEntry {
      */
     public void showPopup() {
         Platform.runLater(()
-        -> {
+                -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MessageEntryPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 MessageEntryPopupFXMLController controller = fxmlLoader.<MessageEntryPopupFXMLController>getController();
-                controller.setData(sender + ": " + subject, message , sentDateString);
+                controller.setData(sender + ": " + subject, message, sentDateString);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.initStyle(StageStyle.UNDECORATED);
+                root.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
                 stage.setScene(new Scene(root));
                 stage.show();
-            } catch (IOException e) {}
+            } catch (IOException e) {
+            }
+        });
+    }
+
+    public static void showCreationPopup() {
+        Platform.runLater(()
+                -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(MessageEntry.class.getResource("MessageEntryCreationPopupFXML.fxml"));
+                Parent root = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initStyle(StageStyle.UNDECORATED);
+                root.getStylesheets().add(MessageEntry.class.getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+            }
         });
     }
 }

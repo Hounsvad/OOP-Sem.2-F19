@@ -46,9 +46,9 @@ public class StringUtils {
         return sb.toString();
     }
     /**
-     * Hashes a String
-     * @param input The String to be hashed
-     * @return The hashed String
+     * 
+     * @param input
+     * @return input hashed in sha256 
      */
     public static String hash(String input) {
         return Hashing.sha256().hashString(input, Charset.forName("UTF-8")).toString();

@@ -55,7 +55,9 @@ public class CommunicationHandler {
      */
     public List<String[]> sendQuery(String[] query) {
         List<String[]> returnVariable = communicationInterface.sendQuery(query);
-        name = returnVariable == null ? "error" : returnVariable.get(0)[1];
+        if (query[0] == "login") {
+            name = returnVariable == null ? "" : returnVariable.get(0)[1];
+        }
         return returnVariable;
     }
 

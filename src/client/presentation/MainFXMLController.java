@@ -5,8 +5,11 @@
  */
 package client.presentation;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
@@ -14,8 +17,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -113,13 +118,19 @@ public class MainFXMLController implements Initializable {
             menuTranslation.play();
         });
 
-
-        buttonDashboard.setOnAction((e) -> loadSubScene("modules/dashboard/DashboardFXML.fxml"));
-        buttonCalendar.setOnAction((e) -> loadSubScene("modules/calendar/CalendarFXML.fxml"));
-        buttonJournal.setOnAction((e) -> loadSubScene("modules/journal/JournalFXML.fxml"));
-        buttonDashboardLabel.setOnAction((e) -> loadSubScene("modules/dashboard/DashboardFXML.fxml"));
-        buttonCalendarLabel.setOnAction((e) -> loadSubScene("modules/calendar/CalendarFXML.fxml"));
-        buttonJournalLabel.setOnAction((e) -> loadSubScene("modules/journal/JournalFXML.fxml"));
+//        buttonCalendar.setOnAction((e) -> loadSubScene("modules/calendar/CalendarFXML.fxml"));
+//        buttonJournal.setOnAction((e) -> loadSubScene("modules/journal/JournalFXML.fxml"));
+//
+//        buttonCalendarLabel.setOnAction((e) -> loadSubScene("modules/calendar/CalendarFXML.fxml"));
+//        buttonJournalLabel.setOnAction((e) -> loadSubScene("modules/journal/JournalFXML.fxml"));
+        //addMenuItems(CommunicationHandler.getInstance().sendQuery(new String[]{"getMenuItems", CredentialContainer.getInstance().getUsername(), CredentialContainer.getInstance().getPassword()}));
+        addMenuItems(new ArrayList<String[]>() {
+            {
+                add(new String[]{"Calendar", "CALENDAR", "modules/calendar/CalendarFXML.fxml"});
+                add(new String[]{"Journal", "FILE_TEXT", "modules/journal/JournalFXML.fxml"});
+                add(new String[]{"Admin", "COG", "modules/admin/AdminFXML.fxml"}); //FXML TO BE CHANGED
+            }
+        });
         loadSubScene("modules/dashboard/DashboardFXML.fxml");
     }
 
@@ -132,6 +143,45 @@ public class MainFXMLController implements Initializable {
             subScene.setRoot(FXMLLoader.load(getClass().getResource(path)));
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    private void addMenuItems(List<String[]> input) {
+        //Bind Action for standard items
+        buttonDashboard.setOnAction((e) -> loadSubScene("modules/dashboard/DashboardFXML.fxml"));
+        buttonDashboardLabel.setOnAction((e) -> loadSubScene("modules/dashboard/DashboardFXML.fxml"));
+
+        for (String[] tuple : input) {
+            //Create Label
+            Button label = new Button();
+            label.setPrefWidth(140);
+            label.setPrefHeight(60);
+            label.setMaxWidth(Double.MAX_VALUE);
+            label.setMaxHeight(Double.MAX_VALUE);
+            label.setAlignment(Pos.CENTER_LEFT);
+            label.setGraphic(new Label(tuple[0]));
+            ((Label) label.getGraphic()).setFont(((Label) buttonDashboardLabel.getGraphic()).getFont());
+            menuGrid.getChildren().add(label);
+            GridPane.setColumnIndex(label, 0);
+            GridPane.setRowIndex(label, input.indexOf(tuple) + 1);
+
+            //Create icon
+            Button icon = new Button();
+            icon.setPrefWidth(60);
+            icon.setPrefHeight(60);
+            icon.setMaxWidth(Double.MAX_VALUE);
+            icon.setMaxHeight(Double.MAX_VALUE);
+            icon.setAlignment(Pos.CENTER);
+            icon.setGraphic(new FontAwesomeIconView());
+            ((FontAwesomeIconView) icon.getGraphic()).glyphNameProperty().set(tuple[1]);
+            ((FontAwesomeIconView) icon.getGraphic()).glyphSizeProperty().set(40);
+            menuGrid.getChildren().add(icon);
+            GridPane.setColumnIndex(icon, 1);
+            GridPane.setRowIndex(icon, input.indexOf(tuple) + 1);
+
+            //Bind Action
+            label.setOnAction((e) -> loadSubScene(tuple[2]));
+            icon.setOnAction((e) -> loadSubScene(tuple[2]));
         }
     }
 }
