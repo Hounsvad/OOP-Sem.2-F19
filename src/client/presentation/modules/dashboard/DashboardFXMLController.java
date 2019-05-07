@@ -70,13 +70,14 @@ public class DashboardFXMLController implements Initializable {
     private void updateData() {
         try {
             List<ActivityEntry> activityEntries = new ArrayList<>();
-            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> activityEntries.add(new ActivityEntry(tuple[1], new Date(Integer.parseInt(tuple[0])), tuple[2], tuple[3])));
+            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> activityEntries.add(new ActivityEntry(tuple[1], new Date(Long.parseLong(tuple[0])), tuple[2], tuple[3])));
             activityView.getItems().addAll(activityEntries);
 
             List<MessageEntry> messageEntries = new ArrayList<>();
-            communicationHandler.sendQuery(new String[]{"getMessages", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> messageEntries.add(new MessageEntry(tuple[2], tuple[0] + "(" + tuple[1] + ")", tuple[3], new Date(Integer.parseInt(tuple[4])))));
+            communicationHandler.sendQuery(new String[]{"getMessages", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> messageEntries.add(new MessageEntry(tuple[2], tuple[0] + "(" + tuple[1] + ")", tuple[3], new Date(Long.parseLong(tuple[4])))));
             messageView.getItems().addAll(messageEntries);
         } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 }

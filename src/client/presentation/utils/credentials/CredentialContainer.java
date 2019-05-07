@@ -11,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 /**
  *
  * @author Hounsvad
@@ -57,9 +56,11 @@ public final class CredentialContainer {
      * The path of the login screens FXML
      */
     private static final String LOGIN_SCREEN_PATH = "";
-    
+
     /**
-     * gets the value of the Boolean property that indicates if the credentials are ready
+     * gets the value of the Boolean property that indicates if the credentials
+     * are ready
+     *
      * @return true if the credentials are ready
      */
     protected BooleanProperty getCredentialReadyProperty() {
@@ -69,9 +70,10 @@ public final class CredentialContainer {
     private CredentialContainer() {
 
     }
-    
+
     /**
      * Gets the instance of the CredentialContainer
+     *
      * @return the CredentialContainer
      */
     public static CredentialContainer getInstance() {
@@ -110,12 +112,12 @@ public final class CredentialContainer {
      */
     public boolean checkTimeValid() {
         if (this.lastAccess > 0 && this.lastAccess > System.currentTimeMillis() - 3600000) {
-            return false;
+            return true;
         }
         this.password = null;
         this.lastAccess = 0l;//This is a long
         credentialReady.set(false);
-        return true;
+        return false;
     }
 
     /**

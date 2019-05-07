@@ -17,17 +17,26 @@ import java.util.List;
 public class StringUtils {
 
     /**
-     * The offset on the Ascii table to convert a lowercase character to a Math Bold Latin character
+     * The offset on the Unicode table to convert a lowercase character to a
+     * Math Sans-Serif Bold character
      */
-    private static final int BOLD_ASCII_OFFSET_LOWERCASE = 120205;
-    
+    private static final int BOLD_UNICODE_OFFSET_LOWERCASE = 120205;
+
     /**
-     * The offset on the Ascii table to convert a uppercase character to a Math Bold Latin character
+     * The offset on the Unicode table to convert a uppercase character to a
+     * Math Sans-Serif Bold character
      */
-    private static final int BOLD_ASCII_OFFSET_UPPERCASE = 119743;
+    private static final int BOLD_UNICODE_OFFSET_UPPERCASE = 120211;
+
+    /**
+     * The offset on the Unicode table to convert a number character to a Math
+     * Sans-Serif Bold digit
+     */
+    private static final int BOLD_UNICODE_OFFSET_NUMBER = 120764;
 
     /**
      * Converts a string into a string written with bold characters
+     *
      * @param s The String input
      * @return The input string in Math Bold Latin characters instead of normal
      */
@@ -36,19 +45,22 @@ public class StringUtils {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < input.size(); i++) {
             if (Character.isLowerCase(input.get(i))) {
-                sb.append(Character.toChars(BOLD_ASCII_OFFSET_LOWERCASE + input.get(i)));
+                sb.append(Character.toChars(BOLD_UNICODE_OFFSET_LOWERCASE + input.get(i)));
             } else if (Character.isUpperCase(input.get(i))) {
-                sb.append(Character.toChars(BOLD_ASCII_OFFSET_UPPERCASE + input.get(i)));
+                sb.append(Character.toChars(BOLD_UNICODE_OFFSET_UPPERCASE + input.get(i)));
+            } else if (Character.isDigit(input.get(i))) {
+                sb.append(Character.toChars(BOLD_UNICODE_OFFSET_NUMBER + input.get(i)));
             } else {
                 sb.append(input.get(i));
             }
         }
         return sb.toString();
     }
+
     /**
-     * 
+     *
      * @param input
-     * @return input hashed in sha256 
+     * @return input hashed in sha256
      */
     public static String hash(String input) {
         return Hashing.sha256().hashString(input, Charset.forName("UTF-8")).toString();

@@ -56,7 +56,6 @@ public class DomainInterfaceImpl implements DomainInterface {
             put("getMenuItems", "");
             put("getUserActivity", "002-007");
 
-
         }
     };
 
@@ -87,10 +86,10 @@ public class DomainInterfaceImpl implements DomainInterface {
         try {
             List<String[]> data = persistenceInterface.parseQuery("checkCredentials", query[1], query[2]);
 
-            userId = data.get(0)[1];
-            rights = persistenceInterface.parseQuery("getUserRoles", userId).stream().map(t -> t[0]).collect(Collectors.toList());
-
             if (!data.isEmpty()) {
+                userId = data.get(0)[1];
+                rights = persistenceInterface.parseQuery("getUserRoles", userId).stream().map(t -> t[0]).collect(Collectors.toList());
+
                 if (hasRights(query[0])) {
                     switch (query[0]) {
                         case "login":
@@ -138,7 +137,8 @@ public class DomainInterfaceImpl implements DomainInterface {
                             sendPassword(query[4], result.get(0)[0], password);
                             return result;
                         case "userList":
-                            return persistenceInterface.parseQuery("getUsers", persistenceInterface.parseQuery("getUserDepartment", userId).get(0)[0]);
+                            List<String[]> s = persistenceInterface.parseQuery("getUserDepartment", userId);
+                            return persistenceInterface.parseQuery("getUsers", s.get(0)[0]);
                         case "alterUserfullName":
                             persistenceInterface.parseQuery("alterUserFullName", query[3], query[4]);
                             return constructReturn("Success", "Full name of user altered");
@@ -207,7 +207,7 @@ public class DomainInterfaceImpl implements DomainInterface {
     }
 
     private void addActivity(String type, String specifics, String ip, String userId) {
-        persistenceInterface.parseQuery(new String[]{type, specifics, ip, userId});
+        persistenceInterface.parseQuery("addActivity", type, specifics, ip, userId);
     }
 
     private boolean hasRights(String action) {

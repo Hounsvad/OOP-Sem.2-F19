@@ -119,7 +119,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 queryString = "INSERT INTO id VALUES((SELECT MAX(id) FROM id)+1, '" + query[2] + "'); INSERT INTO users VALUES ('" + query[1] + "', '" + query[3] + "', " + query[4] + ", (SELECT MAX(id.id)from id)); SELECT MAX(id.id)from id";
                 break;
             case "getUsers":
-                queryString = "SELECT username, users.id, full_name FROM users, id WHERE id.id = users.id AND users.department = '" + query[1] + "' order by users.id";
+                queryString = "SELECT username, users.id, full_name FROM users, id WHERE id.id = users.id AND users.department = '" + query[1] + "' ORDER BY users.id";
                 break;
             case "alterUserFullName":
                 queryString = "UPDATE id SET full_name = '" + query[2] + "' WHERE id = " + query[1];
@@ -152,7 +152,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 queryString = "INSERT INTO activity (user_id, type, specifics, ip) VALUES (" + query[4] + ", '" + query[1] + "', '" + query[2] + "', '" + query[3] + "')";
                 break;
             case "getActivity":
-                queryString = "SELECT date, type, specifics, ip FROM activity WHERE date > (date_part('epoch'::text, now()) * (1000)::double precision) AND user_id = " + query[1];
+                queryString = "SELECT date, type, specifics, ip FROM activity WHERE date > (date_part('epoch'::text, now()) * (1000)::double precision)-25922000000 AND user_id = " + query[1] + "ORDER BY date desc";
                 break;
             case "sendMessage":
                 queryString = "INSERT INTO messages(sender_id, recipient_id, title, message) VALUES (" + query[1] + ", " + query[2] + ", '" + query[3] + "', '" + query[4] + "')";
@@ -192,7 +192,8 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
 
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
+            output = new ArrayList<>();
         } finally {
             try {
                 if (conn != null) {
