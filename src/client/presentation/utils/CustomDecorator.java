@@ -10,11 +10,19 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 
 /**
- *
+ * A Decorator class used to make the top buttons non-traversable and lets the exit button exit the system
  * @author Oliver
  */
 public class CustomDecorator extends JFXDecorator {
-
+    
+    /**
+     * Constructs the CustomDecorator 
+     * @param stage The stage for which the Decorator is used
+     * @param node The node for which the Decorator is used
+     * @param fullScreen Whether the window is in fullscreen or not
+     * @param max ???
+     * @param min ???
+     */
     public CustomDecorator(Stage stage, Node node, boolean fullScreen, boolean max, boolean min) {
         super(stage, node, fullScreen, max, min);
         //make UnTraversable

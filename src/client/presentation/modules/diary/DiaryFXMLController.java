@@ -18,21 +18,46 @@ import javafx.scene.layout.AnchorPane;
  */
 public class DiaryFXMLController implements Initializable {
 
+    /**
+     * The ListView for the AutomaticEntries
+     */
     @FXML
     private JFXListView<LogEntry> automaticEntriesView;
+    
+    /**
+     * The ListView for the MedicinalEntries
+     */
     @FXML
     private JFXListView<MedicinalEntry> medicinalEntriesView;
+    
+    /**
+     * The Listview for the ManualEntries
+     */
     @FXML
     private JFXListView<ManualEntry> manualEntriesView;
+    
+    /**
+     * The ListView for the Patients
+     */
     @FXML
     private JFXListView<Patient> PatientView;
+    
+    /**
+     * The AnchorPane used as a button to add a MedicinalEntry
+     */
     @FXML
     private AnchorPane addMedicinalEntryButton;
+    
+    /**
+     * The AnchorPane used as a button to add a ManualEntry
+     */
     @FXML
     private AnchorPane addManualEntryButton;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class
+     * @param url
+     * @param rb 
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -41,10 +66,18 @@ public class DiaryFXMLController implements Initializable {
         });
     }
 
+    /**
+     * Adds a MedicinalEntry
+     * @param event 
+     */
     @FXML
     private void addMedicinalEntry(MouseEvent event) {
     }
-
+    
+    /**
+     * Adds a ManualEntry
+     * @param event 
+     */
     @FXML
     private void addManualEntry(MouseEvent event) {
     }

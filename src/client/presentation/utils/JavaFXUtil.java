@@ -15,9 +15,10 @@ import javafx.scene.layout.GridPane;
 public class JavaFXUtil {
 
     /**
-     * @param gridPane
-     * @param col
-     * @param row
+     * Gets a Node from a GridPane
+     * @param gridPane the GridPane
+     * @param col the column in the GridPane
+     * @param row the row in the GridPane
      * @return Node at col and row value in gridPane
      */
     public static Node getNodeFromGridPane(GridPane gridPane, int col, int row) {

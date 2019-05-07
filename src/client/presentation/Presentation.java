@@ -18,8 +18,14 @@ import javafx.stage.StageStyle;
  */
 public class Presentation extends Application {
 
-
+    /**
+     * The offset on the x axis
+     */
     private double xOffset = 0;
+    
+    /**
+     * The offset on the y axis
+     */
     private double yOffset = 0;
 
     /**

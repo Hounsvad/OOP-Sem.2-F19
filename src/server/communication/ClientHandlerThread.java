@@ -20,11 +20,18 @@ import java.util.List;
 public class ClientHandlerThread extends Thread {
 
     private final Socket clientSocket;
-
+    
+    /**
+     * Constructs the ClientHandlerSocket with the given Socket
+     * @param clientSocket 
+     */
     public ClientHandlerThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
     }
 
+    /**
+     * Overrides the Run method for the thread
+     */
     @Override
     public void run() {
 

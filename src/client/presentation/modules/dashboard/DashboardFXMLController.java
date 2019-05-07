@@ -23,16 +23,26 @@ import javafx.scene.text.Text;
  * @author Oliver
  */
 public class DashboardFXMLController implements Initializable {
-
+    
+    /**
+     * The name of the user
+     */
     @FXML
     private Text name;
+    
+    /**
+     * The Listview for the activity entries
+     */
     @FXML
     private JFXListView<ActivityEntry> activityView;
+    /**
+     * The ListView for the Message entries
+     */
     @FXML
     private JFXListView<MessageEntry> messageView;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -74,6 +84,10 @@ public class DashboardFXMLController implements Initializable {
         activityView.getItems().addAll(activityEntries);
         activityView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+            /**
+             * Opens the popup for the clicked on activity entry
+             * @param event 
+             */
             @Override
             public void handle(MouseEvent event) {
                 try {
@@ -85,7 +99,11 @@ public class DashboardFXMLController implements Initializable {
         });
         messageView.getItems().addAll(messageEntries);
         messageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
+            
+            /**
+             * Opens the popup for the clicked on message entry
+             * @param event 
+             */
             @Override
             public void handle(MouseEvent event) {
                 try {
