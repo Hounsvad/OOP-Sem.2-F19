@@ -5,15 +5,15 @@
  */
 package client.communication;
 
+import com.frohno.pseudossl.PseudoSSLClient;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.*;
 
+
 /**
  *
- * @author duffy
+ * @author hende den sidste 
  */
 public class CommunicationInterfaceImpl implements CommunicationInterface {
     
@@ -89,13 +89,10 @@ public class CommunicationInterfaceImpl implements CommunicationInterface {
         if (checkQuery(query)) {
             try {
                 Socket clientSocket = new Socket("localhost", 1025);
-                ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
-                ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream());
-                output.writeObject(query);
-                return ((List<String[]>) input.readObject());
+                PseudoSSLClient ps = new PseudoSSLClient(clientSocket);
+                ps.sendObject(query);
+                return (List<String[]>) ps.recieveObject();
             } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
         }

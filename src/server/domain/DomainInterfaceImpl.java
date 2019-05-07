@@ -20,6 +20,7 @@ public class DomainInterfaceImpl implements DomainInterface {
      */
     private PersistanceInterface persistanceInterface = new PersistanceInterfaceImpl();
 
+
     /**
      * Parses the query by the command in the query
      * @param query The Query for the database

@@ -5,6 +5,7 @@
  */
 package server.communication;
 
+import com.frohno.pseudossl.PseudoSSLClient;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -16,10 +17,8 @@ import java.util.List;
  *
  * @author duffy
  */
-public class ClientHandlerThread implements Runnable {
-    /**
-     * The socket the client uses 
-     */
+public class ClientHandlerThread extends Thread {
+
     private final Socket clientSocket;
     
     /**
@@ -36,18 +35,8 @@ public class ClientHandlerThread implements Runnable {
     @Override
     public void run() {
 
-        try {
-            ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream());
-            ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
-            String[] query = (String[]) input.readObject();
-            List<String[]> sendVariable = DomainHandler.getDomainHandler().parseQuery(query);
-            output.writeObject(sendVariable == null ? null : new ArrayList<String[]>(sendVariable));
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
+        PseudoSSLClient pseudoSSLClient = new PseudoSSLClient(clientSocket);
+        pseudoSSLClient.sendObject(DomainHandler.getDomainHandler().parseQuery((String[]) pseudoSSLClient.recieveObject())); 
 
     }
 
