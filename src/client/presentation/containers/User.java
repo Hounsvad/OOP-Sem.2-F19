@@ -13,7 +13,7 @@ public class User {
     private final String fullName;
     private final String userID;
 
-    public User(String userName, String fullName, String userID) {
+    public User(String userName, String userID, String fullName) {
         this.userName = userName;
         this.fullName = fullName;
         this.userID = userID;

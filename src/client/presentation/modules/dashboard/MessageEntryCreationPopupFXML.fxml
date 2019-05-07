@@ -18,11 +18,11 @@
          </font>
       </Label>
       <Label layoutX="36.0" layoutY="89.0" text="Recipient:" textFill="#048ba8" />
-      <JFXComboBox fx:id="recipients" focusColor="#048ba8" layoutX="119.0" layoutY="83.0" prefHeight="31.0" prefWidth="384.0" unFocusColor="#048ba8" />
+      <JFXComboBox fx:id="recipients" focusColor="#048ba8" layoutX="119.0" layoutY="83.0" prefHeight="31.0" prefWidth="384.0" stylesheets="@../../css/generalStyleSheet.css" unFocusColor="#048ba8" />
       <Label layoutX="48.0" layoutY="142.0" text="Subject:" textFill="#048ba8" />
-      <JFXTextField fx:id="subject" focusColor="#048ba8" layoutX="119.0" layoutY="130.0" prefHeight="31.0" prefWidth="384.0" unFocusColor="#048ba8" />
+      <JFXTextField fx:id="subject" focusColor="#048ba8" layoutX="119.0" layoutY="130.0" prefHeight="31.0" prefWidth="384.0" stylesheets="@../../css/generalStyleSheet.css" unFocusColor="#048ba8" />
       <Label layoutX="39.0" layoutY="193.0" text="Message:" textFill="#048ba8" />
-      <JFXTextArea fx:id="message" focusColor="#048ba8" layoutX="119.0" layoutY="193.0" prefHeight="354.0" prefWidth="384.0" unFocusColor="#048ba8" />
+      <JFXTextArea fx:id="message" focusColor="#048ba8" layoutX="119.0" layoutY="193.0" prefHeight="354.0" prefWidth="384.0" stylesheets="@../../css/generalStyleSheet.css" unFocusColor="#048ba8" />
       <JFXButton layoutX="503.0" layoutY="582.0" onAction="#close" text="Cancel" />
       <JFXButton layoutX="429.0" layoutY="582.0" onAction="#send" text="Send" />
     </children>

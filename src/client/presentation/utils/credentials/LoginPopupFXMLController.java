@@ -54,7 +54,7 @@ public class LoginPopupFXMLController implements Initializable {
      */
     @FXML
     private JFXTextField username;
-    
+
     /**
      * The text field for the password
      */
@@ -66,13 +66,13 @@ public class LoginPopupFXMLController implements Initializable {
      */
     @FXML
     private Label message;
-    
+
     /**
      * The pane for the loading animation
      */
     @FXML
     private Pane loadpane;
-    
+
     /**
      * The image view for the blurred login screen
      */
@@ -86,8 +86,9 @@ public class LoginPopupFXMLController implements Initializable {
 
     /**
      * Initializes the controller class
+     *
      * @param url
-     * @param rb 
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -112,17 +113,18 @@ public class LoginPopupFXMLController implements Initializable {
         });
         containerInstance = CredentialContainer.getInstance();
     }
-    
+
     /**
      * Cheeky way around the login - DELETE IN FINAL VERSION
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void skip(ContextMenuEvent event) {
         loadMain();
         closeStage();
     }
-    
+
     /**
      * Handles the login
      * Opens the main program if your login was successful
@@ -133,7 +135,7 @@ public class LoginPopupFXMLController implements Initializable {
         loadpane.setVisible(true);
         new Thread(() -> {
             List<String[]> sqlReturn = CommunicationHandler.getInstance().sendQuery(new String[]{"login", username.getText(), StringUtils.hash(password.getText())});
-            if (sqlReturn != null && !sqlReturn.isEmpty()) {
+            if (sqlReturn != null && !sqlReturn.isEmpty() && !sqlReturn.get(0)[0].equalsIgnoreCase("error")) {
                 CredentialContainer.getInstance().setUsername(username.getText());
                 CredentialContainer.getInstance().setPassword(StringUtils.hash(password.getText()));
                 Platform.runLater(() -> {
@@ -142,7 +144,7 @@ public class LoginPopupFXMLController implements Initializable {
                     }
                     closeStage();
                 });
-                
+
             } else if (username.getText().isEmpty() || password.getText().isEmpty()) {
                 Platform.runLater(()
                         -> {
@@ -159,7 +161,7 @@ public class LoginPopupFXMLController implements Initializable {
                     username.getStyleClass().add("wrong-credentials");
                     password.getStyleClass().add("wrong-credentials");
                 });
-                
+
             }
             Platform.runLater(()
                     -> {
@@ -167,7 +169,7 @@ public class LoginPopupFXMLController implements Initializable {
             });
         }).start();
     }
-    
+
     /**
      * Closes the application when cancelling the login
      */
@@ -175,23 +177,24 @@ public class LoginPopupFXMLController implements Initializable {
     private void handleCancelButtonAction() {
         System.exit(0);
     }
-    
+
     /**
      * Hashes the input
+     *
      * @param input The string that gets hashed
      * @return the hashed input
      */
     private String hash(String input) {
         return Hashing.sha256().hashString(input, Charset.forName("UTF8")).toString();
     }
-    
+
     /**
      * Closes the stage
      */
     private void closeStage() {
         ((Stage) username.getScene().getWindow()).close();
     }
-    
+
     /**
      * Initializes the main application screen
      */
