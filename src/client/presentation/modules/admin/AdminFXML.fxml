@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.presentation.modules.journal.JournalFXMLController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.presentation.modules.admin.AdminFXMLController">
    <center>
       <BorderPane maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="1020.0" styleClass="border-pane" stylesheets="@../../css/generalStyleSheet.css" BorderPane.alignment="CENTER">
          <top>

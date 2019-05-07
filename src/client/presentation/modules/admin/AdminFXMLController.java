@@ -5,7 +5,10 @@ package client.presentation.modules.admin;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -20,6 +23,26 @@ public class AdminFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    }
+    
+        @FXML
+    private void departmentPicked(ActionEvent event) {
+    }
+
+    @FXML
+    private void saveAssignments(MouseEvent event) {
+    }
+
+    @FXML
+    private void userSelected(MouseEvent event) {
+    }
+
+    @FXML
+    private void saveRoles(MouseEvent event) {
+    }
+
+    @FXML
+    private void addUserButtonClicked(MouseEvent event) {
     }
 
 }

@@ -23,7 +23,7 @@ public class ManualEntry {
         Platform.runLater(()
                 -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(MedicinalEntry.class.getResource("ManualEntryCreationPopupFXML.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(ManualEntry.class.getResource("ManualEntryCreationPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
@@ -32,6 +32,7 @@ public class ManualEntry {
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException e) {
+                e.printStackTrace();
             }
         });
     }

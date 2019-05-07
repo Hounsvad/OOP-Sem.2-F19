@@ -51,12 +51,14 @@ public class JournalFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         updateData();
     }
-
-    private void addMedicinalEntry(MouseEvent event) {
+    
+    @FXML
+    private void addMedicinalEntry() {
         MedicinalEntry.showCreationPopup();
     }
-
-    private void addManualEntry(MouseEvent event) {
+    
+    @FXML
+    private void addManualEntry() {
         ManualEntry.showCreationPopup();
     }
 
@@ -88,23 +90,4 @@ public class JournalFXMLController implements Initializable {
         }
     }
 
-    @FXML
-    private void departmentPicked(ActionEvent event) {
-    }
-
-    @FXML
-    private void saveAssignments(MouseEvent event) {
-    }
-
-    @FXML
-    private void userSelected(MouseEvent event) {
-    }
-
-    @FXML
-    private void saveRoles(MouseEvent event) {
-    }
-
-    @FXML
-    private void addUserButtonClicked(MouseEvent event) {
-    }
 }
