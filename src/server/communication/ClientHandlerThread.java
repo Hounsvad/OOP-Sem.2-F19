@@ -5,12 +5,12 @@
  */
 package server.communication;
 
-import com.frohno.pseudossl.PseudoSSLClient;
+import com.frohno.pseudossl.PseudoSSLServer;
 import java.net.Socket;
 
 /**
  *
- * @author duffy
+ * @author hende den sidste
  */
 public class ClientHandlerThread extends Thread {
 
@@ -30,9 +30,9 @@ public class ClientHandlerThread extends Thread {
      */
     @Override
     public void run() {
-        PseudoSSLClient pseudoSSLClient = new PseudoSSLClient(clientSocket);
+        PseudoSSLServer pseudoSSLServer = new PseudoSSLServer(clientSocket);
         DomainHandler domainHandler = new DomainHandler(clientSocket.getInetAddress().getHostAddress());
-        pseudoSSLClient.sendObject(domainHandler.parseQuery((String[]) pseudoSSLClient.recieveObject()));
+        pseudoSSLServer.sendObject(domainHandler.parseQuery((String[]) pseudoSSLServer.recieveObject()));
 
     }
 
