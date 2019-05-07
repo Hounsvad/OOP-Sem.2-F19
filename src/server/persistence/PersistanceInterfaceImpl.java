@@ -185,7 +185,6 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             output = new ArrayList<>();
             while (sqlReturnValues.next()) {
                 String[] temp = new String[columnCount];
-                System.out.println(columnCount);
                 for (int i = 1; i <= columnCount; i++) {
                     temp[i - 1] = sqlReturnValues.getString(i);
                 }
