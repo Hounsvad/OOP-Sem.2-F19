@@ -5,10 +5,10 @@
  */
 package client.presentation;
 
+import client.presentation.utils.credentials.CredentialContainer;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
@@ -118,19 +118,7 @@ public class MainFXMLController implements Initializable {
             menuTranslation.play();
         });
 
-//        buttonCalendar.setOnAction((e) -> loadSubScene("modules/calendar/CalendarFXML.fxml"));
-//        buttonJournal.setOnAction((e) -> loadSubScene("modules/journal/JournalFXML.fxml"));
-//
-//        buttonCalendarLabel.setOnAction((e) -> loadSubScene("modules/calendar/CalendarFXML.fxml"));
-//        buttonJournalLabel.setOnAction((e) -> loadSubScene("modules/journal/JournalFXML.fxml"));
-        //addMenuItems(CommunicationHandler.getInstance().sendQuery(new String[]{"getMenuItems", CredentialContainer.getInstance().getUsername(), CredentialContainer.getInstance().getPassword()}));
-        addMenuItems(new ArrayList<String[]>() {
-            {
-                add(new String[]{"Calendar", "CALENDAR", "modules/calendar/CalendarFXML.fxml"});
-                add(new String[]{"Journal", "FILE_TEXT", "modules/journal/JournalFXML.fxml"});
-                add(new String[]{"Admin", "COG", "modules/admin/AdminFXML.fxml"}); //FXML TO BE CHANGED
-            }
-        });
+        addMenuItems(CommunicationHandler.getInstance().sendQuery(new String[]{"getMenuItems", CredentialContainer.getInstance().getUsername(), CredentialContainer.getInstance().getPassword()}));
         loadSubScene("modules/dashboard/DashboardFXML.fxml");
     }
 

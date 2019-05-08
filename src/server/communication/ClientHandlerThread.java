@@ -35,7 +35,6 @@ public class ClientHandlerThread extends Thread {
         DomainHandler domainHandler = new DomainHandler(clientSocket.getInetAddress().getHostAddress());
         String[] query = (String[]) pseudoSSLServer.recieveObject();
         List<String[]> returnValue = domainHandler.parseQuery(query);
-        System.out.println(returnValue == null);
         pseudoSSLServer.sendObject(returnValue);
 
     }

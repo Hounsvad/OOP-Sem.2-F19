@@ -71,7 +71,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
     public List<String[]> parseQuery(String... query) {
 
         ResultSet sqlReturnValues;
-        List<String[]> output = null;
+        List<String[]> output = new ArrayList<>();
         Statement stmt = null;
         String queryString;
         //readying sql driver and connection
@@ -176,7 +176,11 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 queryString = "SELECT department_id, name FROM departments";
                 break;
             default:
-                return null;
+                return new ArrayList<String[]>() {
+                    {
+                        add(new String[]{"Error", "Unexpected error"});
+                    }
+                };
         }
 
         try {
@@ -193,7 +197,11 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             }
         } catch (SQLException ex) {
             //ex.printStackTrace();
-            output = new ArrayList<>();
+            output = new ArrayList<String[]>() {
+                    {
+                        add(new String[]{"Error", "Unexpected sql error"});
+                    }
+                };
         } finally {
             try {
                 if (conn != null) {
@@ -201,7 +209,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 }
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
         return output;
