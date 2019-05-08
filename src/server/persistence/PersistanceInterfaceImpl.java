@@ -78,7 +78,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
         try {
             DriverManager.registerDriver(new org.postgresql.Driver());
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://" + configFileMap.get("url") + ":" + configFileMap.get("port") + "/" + configFileMap.get("databaseName"), configFileMap.get("username"), configFileMap.get("password"));
+            conn = DriverManager.getConnection("jdbc:postgresql://" + configFileMap.get("url") + ":" + configFileMap.get("port") + "/" + configFileMap.get("databaseName") + "?sslmode=require", configFileMap.get("username"), configFileMap.get("password"));
             stmt = conn.createStatement();
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -198,10 +198,10 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
         } catch (SQLException ex) {
             //ex.printStackTrace();
             output = new ArrayList<String[]>() {
-                    {
-                        add(new String[]{"Error", "Unexpected sql error"});
-                    }
-                };
+                {
+                    add(new String[]{"Error", "Unexpected sql error"});
+                }
+            };
         } finally {
             try {
                 if (conn != null) {
