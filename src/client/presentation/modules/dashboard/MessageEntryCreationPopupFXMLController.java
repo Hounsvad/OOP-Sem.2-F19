@@ -40,9 +40,11 @@ public class MessageEntryCreationPopupFXMLController extends Popup {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         List<User> userList = new ArrayList<>();
-        userList.add(new User("olnor18", "Oliver Lind Nordestgaard", "DEADBEAF001"));
-        userList.add(new User("frhou18", "Frederik Alexander Hounsvad", "DEADBEAF002"));
-        //communicationHandler.sendQuery(new String[]{"userList", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> userList.add(new User(tuple[0], tuple[1], tuple[3])));
+        String[] query = new String[]{"userList", credentialContainer.getUsername(), credentialContainer.getPassword()};
+        List<String[]> returnValue = communicationHandler.sendQuery(query);
+        for (String[] tuple : returnValue) {
+            userList.add(new User(tuple[0], tuple[1], tuple[2]));
+        }
         recipients.getItems().addAll(userList);
     }
 

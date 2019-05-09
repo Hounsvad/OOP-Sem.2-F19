@@ -41,12 +41,7 @@ public class ActivityEntry {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(specificsOfEntry);
-        int i = 0;
-        while (i + 23 < sb.length() && (i = sb.lastIndexOf(" ", i + 23)) != -1) {
-            sb.replace(i, i + 1, "\n");
-        }
-        return getBoldString(typeOfEntry) + "\n" + sb.toString() + "\n" + dateOfEntryString;
+        return getBoldString(typeOfEntry) + "\n" + ip + "\n" + dateOfEntryString;
     }
 
     public void showPopup() {
@@ -56,10 +51,11 @@ public class ActivityEntry {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ActivityEntryPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 ActivityEntryPopupFXMLController controller = fxmlLoader.<ActivityEntryPopupFXMLController>getController();
-                controller.setData(typeOfEntry, specificsOfEntry, "Query: ladidada", dateOfEntryString, ip);
+                controller.setData(typeOfEntry, specificsOfEntry, dateOfEntryString, ip);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.initStyle(StageStyle.UNDECORATED);
+                root.getStylesheets().add(MessageEntry.class.getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException e) {

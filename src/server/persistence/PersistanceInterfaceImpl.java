@@ -71,14 +71,14 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
     public List<String[]> parseQuery(String... query) {
 
         ResultSet sqlReturnValues;
-        List<String[]> output = null;
+        List<String[]> output = new ArrayList<>();
         Statement stmt = null;
         String queryString;
         //readying sql driver and connection
         try {
             DriverManager.registerDriver(new org.postgresql.Driver());
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://" + configFileMap.get("url") + ":" + configFileMap.get("port") + "/" + configFileMap.get("databaseName"), configFileMap.get("username"), configFileMap.get("password"));
+            conn = DriverManager.getConnection("jdbc:postgresql://" + configFileMap.get("url") + ":" + configFileMap.get("port") + "/" + configFileMap.get("databaseName") + "?sslmode=require", configFileMap.get("username"), configFileMap.get("password"));
             stmt = conn.createStatement();
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -119,7 +119,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 queryString = "INSERT INTO id VALUES((SELECT MAX(id) FROM id)+1, '" + query[2] + "'); INSERT INTO users VALUES ('" + query[1] + "', '" + query[3] + "', " + query[4] + ", (SELECT MAX(id.id)from id)); SELECT MAX(id.id)from id";
                 break;
             case "getUsers":
-                queryString = "SELECT username, users.id, full_name FROM users, id WHERE id.id = users.id AND users.department = '" + query[1] + "' order by users.id";
+                queryString = "SELECT username, users.id, full_name FROM users, id WHERE id.id = users.id AND users.department = '" + query[1] + "' ORDER BY users.id";
                 break;
             case "alterUserFullName":
                 queryString = "UPDATE id SET full_name = '" + query[2] + "' WHERE id = " + query[1];
@@ -152,7 +152,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 queryString = "INSERT INTO activity (user_id, type, specifics, ip) VALUES (" + query[4] + ", '" + query[1] + "', '" + query[2] + "', '" + query[3] + "')";
                 break;
             case "getActivity":
-                queryString = "SELECT date, type, specifics, ip FROM activity WHERE date > (date_part('epoch'::text, now()) * (1000)::double precision) AND user_id = " + query[1];
+                queryString = "SELECT date, type, specifics, ip FROM activity WHERE date > (date_part('epoch'::text, now()) * (1000)::double precision)-25922000000 AND user_id = " + query[1] + "ORDER BY date desc";
                 break;
             case "sendMessage":
                 queryString = "INSERT INTO messages(sender_id, recipient_id, title, message) VALUES (" + query[1] + ", " + query[2] + ", '" + query[3] + "', '" + query[4] + "')";
@@ -176,7 +176,11 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 queryString = "SELECT department_id, name FROM departments";
                 break;
             default:
-                return null;
+                return new ArrayList<String[]>() {
+                    {
+                        add(new String[]{"Error", "Unexpected error"});
+                    }
+                };
         }
 
         try {
@@ -192,7 +196,12 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
 
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
+            output = new ArrayList<String[]>() {
+                {
+                    add(new String[]{"Error", "Unexpected sql error"});
+                }
+            };
         } finally {
             try {
                 if (conn != null) {
@@ -200,7 +209,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 }
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
         return output;
