@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
@@ -52,6 +53,9 @@ public class MessageEntryCreationPopupFXMLController extends Popup {
     private void send() {
         if (recipients.getSelectionModel().getSelectedItem() != null && !subject.getText().isEmpty() && !message.getText().isEmpty()) {
             communicationHandler.sendQuery(new String[]{"sendMessage", credentialContainer.getUsername(), credentialContainer.getPassword(), recipients.getSelectionModel().getSelectedItem().getUserID(), subject.getText(), message.getText()});
+            new Thread(() -> {
+                Platform.runLater(() -> ((DashboardFXMLController) getModuleController()).updateData());
+            }).start();
             close();
         } else {
             JFXAlert alert = new JFXAlert<>(((Stage) message.getScene().getWindow()));
