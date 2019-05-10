@@ -13,6 +13,12 @@ public class UserExtended {
     private final String fullName;
     private final String userID;
 
+    /**
+     *
+     * @param userName
+     * @param userID
+     * @param fullName
+     */
     public UserExtended(String userName, String userID, String fullName) {
         this.userName = userName;
         this.fullName = fullName;
@@ -24,6 +30,10 @@ public class UserExtended {
         return fullName + " (" + userName + ")";
     }
 
+    /**
+     *
+     * @return
+     */
     public String getUserID() {
         return userID;
     }

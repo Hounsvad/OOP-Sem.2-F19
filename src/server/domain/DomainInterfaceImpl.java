@@ -58,6 +58,7 @@ public class DomainInterfaceImpl implements DomainInterface {
             put("getMenuItems", "");
             put("getUserActivity", "002-007");
             put("getUsersByDepartment", "000-000");
+            put("getPatientsByDepartment", "000-000");
 
         }
     };
@@ -133,6 +134,8 @@ public class DomainInterfaceImpl implements DomainInterface {
                         case "addPatient":
                             persistenceInterface.parseQuery("addPatient", query[3], persistenceInterface.parseQuery("getUserDepartment", userId).get(0)[0]);
                             return constructReturn("Success", "Patienty");
+                        case "getPatientsByDepartment":
+                            return persistenceInterface.parseQuery("getPatientsByDepartment", query[3]);
                         case "getPatients":
                             return persistenceInterface.parseQuery("getPatients", userId);
                         case "addUser":

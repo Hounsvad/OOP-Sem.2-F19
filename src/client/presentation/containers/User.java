@@ -13,6 +13,12 @@ public class User {
     private final String fullName;
     private final String userID;
 
+    /**
+     *
+     * @param userName
+     * @param userID
+     * @param fullName
+     */
     public User(String userName, String userID, String fullName) {
         this.userName = userName;
         this.fullName = fullName;
@@ -24,6 +30,10 @@ public class User {
         return fullName + " (" + userName + ")";
     }
 
+    /**
+     *
+     * @return
+     */
     public String getUserID() {
         return userID;
     }
