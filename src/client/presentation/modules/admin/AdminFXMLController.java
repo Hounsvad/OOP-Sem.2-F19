@@ -3,6 +3,10 @@
  */
 package client.presentation.modules.admin;
 
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextField;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -17,20 +21,47 @@ import javafx.scene.input.MouseEvent;
  */
 public class AdminFXMLController implements Initializable {
 
+    @FXML
+    private JFXComboBox<?> departmentPicker;
+    @FXML
+    private FontAwesomeIconView saveAssignments;
+    @FXML
+    private JFXListView<?> assignmentView;
+    @FXML
+    private FontAwesomeIconView saveRoles;
+    @FXML
+    private JFXListView<?> roleView;
+    @FXML
+    private FontAwesomeIconView saveDetails;
+    @FXML
+    private JFXTextField userId;
+    @FXML
+    private JFXTextField userUsername;
+    @FXML
+    private JFXTextField userName;
+    @FXML
+    private JFXComboBox<?> userDepartment;
+    @FXML
+    private FontAwesomeIconView addNew;
+    @FXML
+    private JFXTextField newUserUsername;
+    @FXML
+    private JFXTextField newName;
+    @FXML
+    private JFXComboBox<?> newUserDepartment;
+    @FXML
+    private JFXListView<?> UserView;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
-    
-        @FXML
-    private void departmentPicked(ActionEvent event) {
+
     }
 
     @FXML
-    private void saveAssignments(MouseEvent event) {
+    private void departmentPicked(ActionEvent event) {
     }
 
     @FXML
@@ -38,11 +69,19 @@ public class AdminFXMLController implements Initializable {
     }
 
     @FXML
-    private void saveRoles(MouseEvent event) {
+    private void saveAssignmentsClicked(MouseEvent event) {
     }
 
     @FXML
-    private void addUserButtonClicked(MouseEvent event) {
+    private void saveRolesClicked(MouseEvent event) {
+    }
+
+    @FXML
+    private void saveDetailsClicked(MouseEvent event) {
+    }
+
+    @FXML
+    private void addNewClicked(MouseEvent event) {
     }
 
 }

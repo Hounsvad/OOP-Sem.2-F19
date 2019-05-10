@@ -8,10 +8,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.presentation.modules.admin.AdminFXMLController">
@@ -20,7 +21,7 @@
          <top>
             <AnchorPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="1020.0" style="-fx-background-color: #048BA8;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXComboBox fx:id="departmentPicker" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#departmentPicked" prefHeight="34.0" prefWidth="1010.0" promptText="Department" style="-fx-prompt-text-fill: WHITE;" styleClass="jfx-combo-box" stylesheets="@../../css/generalStyleSheet.css" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
+                  <JFXComboBox fx:id="departmentPicker" layoutY="8.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#departmentPicked" prefHeight="26.0" prefWidth="1010.0" promptText="Department" style="-fx-prompt-text-fill: WHITE;" styleClass="jfx-combo-box" stylesheets="@../../css/generalStyleSheet.css" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="8.0" />
                </children>
             </AnchorPane>
          </top>
@@ -36,10 +37,10 @@
                                     <Font size="27.0" />
                                  </font>
                               </Label>
-                              <FontAwesomeIconView glyphName="SAVE" onMouseClicked="#saveAssignments" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
+                              <FontAwesomeIconView fx:id="saveAssignments" glyphName="SAVE" onMouseClicked="#saveAssignmentsClicked" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
                            </children>
                         </AnchorPane>
-                        <JFXListView fx:id="UserView1" fixedCellSize="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#userSelected" prefHeight="700.0" prefWidth="250.0" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="SOMETIMES" />
+                        <JFXListView fx:id="assignmentView" fixedCellSize="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="250.0" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="SOMETIMES" />
                      </children>
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" top="10.0" />
@@ -49,41 +50,97 @@
                      <children>
                         <AnchorPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: #048BA8;">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" text="Roles" textAlignment="CENTER" textFill="#f4f4f4" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
+                              <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutX="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" text="Roles" textAlignment="CENTER" textFill="#f4f4f4" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
                                  <font>
                                     <Font size="27.0" />
                                  </font>
                               </Label>
-                              <FontAwesomeIconView glyphName="SAVE" onMouseClicked="#saveRoles" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
+                              <FontAwesomeIconView fx:id="saveRoles" glyphName="SAVE" onMouseClicked="#saveRolesClicked" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
                            </children>
                         </AnchorPane>
-                        <JFXListView fx:id="UserView11" fixedCellSize="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#userSelected" prefHeight="700.0" prefWidth="250.0" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="SOMETIMES" />
+                        <JFXListView fx:id="roleView" fixedCellSize="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="250.0" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="SOMETIMES" />
                      </children>
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" top="10.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="480.0" HBox.hgrow="SOMETIMES">
-                     <children>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="480.0" style="-fx-background-color: #048BA8;">
-                           <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" text="Details" textAlignment="CENTER" textFill="#f4f4f4" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
-                                 <font>
-                                    <Font size="27.0" />
-                                 </font>
-                              </Label>
-                              <FontAwesomeIconView glyphName="SAVE" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
-                           </children>
-                        </AnchorPane>
-                        <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="480.0" style="-fx-background-color: #1B2634;" VBox.vgrow="SOMETIMES">
-                           <children>
-                              <JFXTextField labelFloat="true" layoutX="14.0" layoutY="14.0" promptText="Username" text="asd" />
-                           </children>
-                        </Pane>
-                     </children>
+                  <VBox HBox.hgrow="SOMETIMES">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
+                     <children>
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="365.0" prefWidth="480.0" style="-fx-background-color: #1B2634;" VBox.vgrow="SOMETIMES">
+                           <children>
+                              <AnchorPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="480.0" style="-fx-background-color: #048BA8;">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutX="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" text="Details" textAlignment="CENTER" textFill="#f4f4f4" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="27.0" />
+                                       </font>
+                                    </Label>
+                                    <FontAwesomeIconView fx:id="saveDetails" glyphName="SAVE" onMouseClicked="#saveDetailsClicked" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane>
+                                 <children>
+                                    <GridPane hgap="50.0" layoutX="15.0" layoutY="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="460.0" vgap="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="26.333328247070312" minHeight="10.0" prefHeight="26.333328247070312" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="28.666671752929688" minHeight="10.0" prefHeight="28.666671752929688" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <JFXTextField fx:id="userId" editable="false" focusTraversable="false" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText=" Id" GridPane.columnIndex="1" />
+                                          <JFXTextField fx:id="userUsername" editable="false" focusTraversable="false" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText="Username" />
+                                          <JFXTextField fx:id="userName" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText="Full Name" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                                          <JFXComboBox fx:id="userDepartment" focusColor="#048ba8" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText="Department" style="-fx-prompt-text-fill: #048ba8; -fx-text-fill: #39A9C0;" unFocusColor="#047f97" GridPane.columnSpan="2" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox prefHeight="370.0" prefWidth="100.0" VBox.vgrow="SOMETIMES">
+                           <children>
+                              <AnchorPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="480.0" style="-fx-background-color: #048BA8;">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutX="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" text="New User" textAlignment="CENTER" textFill="#f4f4f4" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="27.0" />
+                                       </font>
+                                    </Label>
+                                    <FontAwesomeIconView fx:id="addNew" glyphName="USER_PLUS" onMouseClicked="#addNewClicked" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1B2634;" VBox.vgrow="SOMETIMES">
+                                 <children>
+                                    <GridPane hgap="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="460.0" vgap="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <JFXTextField fx:id="newUserUsername" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText="Username" />
+                                          <JFXTextField fx:id="newName" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText="Full Name" GridPane.rowIndex="2" />
+                                          <JFXComboBox fx:id="newUserDepartment" focusColor="#048ba8" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText="Department" style="-fx-prompt-text-fill: #048ba8; -fx-text-fill: #39A9C0;" unFocusColor="#047f97" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                     </children>
                   </VBox>
                </children>
             </HBox>
@@ -100,11 +157,6 @@
                         <Font size="27.0" />
                      </font>
                   </Label>
-                  <AnchorPane fx:id="addUserButton" onMouseClicked="#addUserButtonClicked" AnchorPane.rightAnchor="0.0">
-                     <children>
-                        <SVGPath content="M39.429,17.5C39.744,17.5 40,17.756 40,18.071C40,19.034 40,20.966 40,21.929C40,22.08 39.94,22.225 39.833,22.333C39.725,22.44 39.58,22.5 39.429,22.5C36.414,22.5 22.5,22.5 22.5,22.5C22.5,22.5 22.5,36.414 22.5,39.429C22.5,39.58 22.44,39.725 22.333,39.833C22.225,39.94 22.08,40 21.929,40C20.966,40 19.034,40 18.071,40C17.92,40 17.775,39.94 17.667,39.833C17.56,39.725 17.5,39.58 17.5,39.429C17.5,36.414 17.5,22.5 17.5,22.5C17.5,22.5 3.586,22.5 0.571,22.5C0.42,22.5 0.275,22.44 0.167,22.333C0.06,22.225 0,22.08 0,21.929C0,20.966 0,19.034 0,18.071C0,17.92 0.06,17.775 0.167,17.667C0.275,17.56 0.42,17.5 0.571,17.5C3.586,17.5 17.5,17.5 17.5,17.5C17.5,17.5 17.5,3.586 17.5,0.571C17.5,0.42 17.56,0.275 17.667,0.167C17.775,0.06 17.92,0 18.071,0C19.042,0 21.001,0 21.971,0C22.123,0 22.268,0.06 22.375,0.167C22.482,0.275 22.543,0.42 22.543,0.571C22.543,3.586 22.543,17.5 22.543,17.5C22.543,17.5 36.419,17.5 39.429,17.5Z" fill="#f4f4f4" scaleX="0.875" scaleY="0.875" smooth="false" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
                </children>
             </AnchorPane>
             <JFXListView fx:id="UserView" fixedCellSize="0.0" onMouseClicked="#userSelected" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="ALWAYS" />

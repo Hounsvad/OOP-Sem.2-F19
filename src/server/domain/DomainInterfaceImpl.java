@@ -57,6 +57,8 @@ public class DomainInterfaceImpl implements DomainInterface {
             put("getMessages", "");
             put("getMenuItems", "");
             put("getUserActivity", "002-007");
+            put("getUsersByDepartment", "000-000");
+            put("getPatientsByDepartment", "000-000");
 
         }
     };
@@ -132,6 +134,8 @@ public class DomainInterfaceImpl implements DomainInterface {
                         case "addPatient":
                             persistenceInterface.parseQuery("addPatient", query[3], persistenceInterface.parseQuery("getUserDepartment", userId).get(0)[0]);
                             return constructReturn("Success", "Patienty");
+                        case "getPatientsByDepartment":
+                            return persistenceInterface.parseQuery("getPatientsByDepartment", query[3]);
                         case "getPatients":
                             return persistenceInterface.parseQuery("getPatients", userId);
                         case "addUser":
@@ -139,6 +143,8 @@ public class DomainInterfaceImpl implements DomainInterface {
                             List<String[]> result = persistenceInterface.parseQuery("addUser", query[3], query[4], Hashing.sha256().hashString(password, Charset.forName("UTF-8")).toString(), query[5]);
                             sendPassword(query[4], result.get(0)[0], password);
                             return result;
+                        case "userListByDepartment":
+                            return persistenceInterface.parseQuery("getUsers", query[3]);
                         case "userList":
                             List<String[]> s = persistenceInterface.parseQuery("getUserDepartment", userId);
                             return persistenceInterface.parseQuery("getUsers", s.get(0)[0]);
@@ -214,11 +220,11 @@ public class DomainInterfaceImpl implements DomainInterface {
     }
 
     private boolean hasRights(String action) {
-        return actions.get(action).isEmpty() || rights.contains(actions.get(action));
+        return actions.get(action).isEmpty() || rights.contains(actions.get(action)) || rights.contains("000-000");
     }
 
     private boolean isAssignedPatient(String id) {
-        return persistenceInterface.parseQuery("getPatients", userId).stream().map(t -> t[0]).collect(Collectors.toList()).contains(id);
+        return persistenceInterface.parseQuery("getPatients", userId).stream().map(t -> t[0]).collect(Collectors.toList()).contains(id) || rights.contains("000-000");
     }
 
     private void sendPassword(String username, String domain, String password) {

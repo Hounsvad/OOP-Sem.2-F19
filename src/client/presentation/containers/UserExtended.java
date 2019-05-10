@@ -7,7 +7,7 @@ package client.presentation.containers;
  *
  * @author Oliver
  */
-public class User {
+public class UserExtended {
 
     private final String userName;
     private final String fullName;
@@ -19,7 +19,7 @@ public class User {
      * @param userID
      * @param fullName
      */
-    public User(String userName, String userID, String fullName) {
+    public UserExtended(String userName, String userID, String fullName) {
         this.userName = userName;
         this.fullName = fullName;
         this.userID = userID;
