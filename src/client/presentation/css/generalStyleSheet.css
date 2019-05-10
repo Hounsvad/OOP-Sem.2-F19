@@ -41,13 +41,6 @@ and open the template in the editor.
     -fx-stroke: -fx-secondary;
 }
 
-.wrong-credentials
-{
-    -jfx-unfocus-color: #ef5350;
-    -jfx-focus-color: #ef5350;
-    -fx-text-fill:#ef5350
-}
-
 .jfx-text-field, .jfx-password-field {
     -fx-text-fill : derive(-fx-secondary, 40%);
     -fx-prompt-text-fill: derive(-fx-secondary, -10%);
@@ -58,6 +51,14 @@ and open the template in the editor.
 .jfx-text-field:focused, .jfx-password-field:focused {
     -fx-prompt-text-fill: -fx-secondary;
     -jfx-unfocus-color: derive(-fx-secondary, -20%);
+}
+
+.wrong-credentials
+{
+    -fx-prompt-text-fill: #ef5350;
+    -jfx-unfocus-color: #ef5350;
+    -jfx-focus-color: #ef5350;
+    -fx-text-fill:#ef5350
 }
 
 /*Decorator*/

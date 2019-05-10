@@ -22,7 +22,7 @@ public class Presentation extends Application {
      * The offset on the x axis
      */
     private double xOffset = 0;
-    
+
     /**
      * The offset on the y axis
      */
@@ -48,6 +48,7 @@ public class Presentation extends Application {
         });
         stage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
