@@ -4,12 +4,15 @@
 package client.presentation.utils.credentials;
 
 import java.io.IOException;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -35,7 +38,7 @@ public final class CredentialContainer {
     /**
      * The stored time for last access
      */
-    private Long lastAccess = 0l;
+    private long lastAccess = 0l;
 
     /**
      * A variable to indicate whether the password is being retrieved or not
@@ -55,7 +58,12 @@ public final class CredentialContainer {
     /**
      * The path of the login screens FXML
      */
-    private static final String LOGIN_SCREEN_PATH = "";
+    private static final String LOGIN_SCREEN_PATH = "LoginPopupFXML.fxml";
+
+    /**
+     * The delay after which stored credentials are invalid and deleted
+     */
+    private static final long DELAY = 3600000;
 
     /**
      * gets the value of the Boolean property that indicates if the credentials
@@ -63,7 +71,7 @@ public final class CredentialContainer {
      *
      * @return true if the credentials are ready
      */
-    protected BooleanProperty getCredentialReadyProperty() {
+    public BooleanProperty getCredentialReadyProperty() {
         return credentialReady;
     }
 
@@ -88,19 +96,25 @@ public final class CredentialContainer {
      * Opens the login window
      */
     public void openLoginWindow() {
-        if (!isGettingCredentials) {
-            isGettingCredentials = true;
-            FXMLLoader loader = new FXMLLoader();
-            Stage login = new Stage();
-            try {
-                Parent root = loader.load(getClass().getResource(LOGIN_SCREEN_PATH));
-                Scene s = new Scene(root);
-                login.setScene(s);
-                login.show();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+        Platform.runLater(() -> {
+            if (!isGettingCredentials) {
+                isGettingCredentials = true;
+                FXMLLoader loader = new FXMLLoader();
+                Stage login = new Stage();
+                try {
+                    Parent root = loader.load(getClass().getResource(LOGIN_SCREEN_PATH));
+                    Scene s = new Scene(root);
+                    s.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+                    login.initStyle(StageStyle.UNDECORATED);
+                    login.initModality(Modality.APPLICATION_MODAL);
+                    login.setScene(s);
+                    login.show();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
-        }
+        });
+
     }
 
     /**
@@ -111,12 +125,28 @@ public final class CredentialContainer {
      * @return true if the credentials have not been accessed for an hour
      */
     public boolean checkTimeValid() {
-        if (this.lastAccess > 0 && this.lastAccess > System.currentTimeMillis() - 3600000) {
+
+        //Find the previous TimeChecker thread and kill it
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().equals("TimeChecker")) {
+                t.interrupt();
+            }
+        }
+
+        if (this.lastAccess > 0 && this.lastAccess > System.currentTimeMillis() - DELAY) {
+            new Thread(() -> {
+                try {
+                    Thread.sleep(DELAY + 10); //Added 10 millis futher delay, so that i can't possibly call itself before delay
+                    checkTimeValid();
+                } catch (InterruptedException ex) {
+                }
+            }, "TimeChecker").start();
             return true;
         }
         this.password = null;
-        this.lastAccess = 0l;//This is a long
+        this.lastAccess = 0;
         credentialReady.set(false);
+        openLoginWindow();
         return false;
     }
 
