@@ -87,10 +87,10 @@ public class DashboardFXMLController implements Initializable {
 
     @FXML
     private void addNewMessage(MouseEvent event) {
-        MessageEntry.showCreationPopup();
+        new MessageEntry(this);
     }
 
-    private void updateData() {
+    public void updateData() {
         //Check if there are cached values, and use those until the new values arrive
         if (activityEntriesCache != null && messageEntriesCache != null) {
             activityView.getItems().clear();

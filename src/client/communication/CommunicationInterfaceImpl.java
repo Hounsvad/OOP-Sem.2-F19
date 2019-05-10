@@ -23,7 +23,7 @@ public class CommunicationInterfaceImpl implements CommunicationInterface {
      * @return the data from the database
      */
     @Override
-    public List<String[]> sendQuery(String[] query) {
+    public synchronized List<String[]> sendQuery(String[] query) {
 
         try {
             Socket clientSocket = new Socket("localhost", 1025);

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Date;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -42,6 +43,8 @@ public class MessageEntry {
      */
     private final String sentDateString;
 
+    private final Initializable moduleController;
+
     /**
      * Constructs a new MessageEntry
      *
@@ -60,6 +63,16 @@ public class MessageEntry {
                 + String.format("%1$" + 2 + "s", sentDate.getDate()).replace(' ', '0') + "/"
                 + String.format("%1$" + 2 + "s", sentDate.getMonth() + 1).replace(' ', '0') + "/"
                 + (sentDate.getYear() + 1900);
+        this.moduleController = null;
+    }
+
+    public MessageEntry(Initializable moduleController) {
+        this.subject = "";
+        this.sender = "";
+        this.message = "";
+        this.sentDateString = "";
+        this.moduleController = moduleController;
+        showCreationPopup();
     }
 
     /**
@@ -94,12 +107,13 @@ public class MessageEntry {
         });
     }
 
-    public static void showCreationPopup() {
+    public void showCreationPopup() {
         Platform.runLater(()
                 -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(MessageEntry.class.getResource("MessageEntryCreationPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
+                fxmlLoader.<MessageEntryCreationPopupFXMLController>getController().setModuleController(moduleController);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.initStyle(StageStyle.UNDECORATED);
