@@ -6,6 +6,7 @@ package server.domain;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
+import java.util.UUID;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -321,7 +322,7 @@ public class EmailHandler {
                 + "    </style>\n"
                 + "  </head>\n"
                 + "  <body class=\"\">\n"
-                + "    <span class=\"preheader\">Sanitas Overview</span>\n"
+                + "    <span class=\"preheader\"></span>\n"
                 + "    <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"body\">\n"
                 + "      <tr>\n"
                 + "        <td>&nbsp;</td>\n"
@@ -401,7 +402,12 @@ public class EmailHandler {
 
         try {
 
-            Message message = new MimeMessage(session);
+            Message message = new MimeMessage(session) {
+                @Override
+                protected void updateMessageID() throws MessagingException {
+                    setHeader("Message-ID", UUID.randomUUID().toString() + "-" + "Sanitas-Overview");
+                }
+            };
             message.setFrom(new InternetAddress("sanitasoverview@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(reciptient));
             message.setSubject("Password Reset");
