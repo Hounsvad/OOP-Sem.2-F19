@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
@@ -34,6 +37,11 @@ public class DashboardFXMLController implements Initializable {
 
     private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
     private final CredentialContainer credentialContainer = CredentialContainer.getInstance();
+
+    private static List<ActivityEntry> activityEntriesCache;
+    private static List<MessageEntry> messageEntriesCache;
+
+    private static ChangeListener changeListener;
 
     /**
      * Initializes the controller class.
@@ -60,6 +68,21 @@ public class DashboardFXMLController implements Initializable {
                 //Do nothing
             }
         });
+
+        changeListener = new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> a, Boolean b, Boolean c) {
+                if (b == true && c == false) {
+                    clearAll();
+                } else if (b == false && c == true) {
+                    updateData();
+                }
+            }
+        };
+
+        //Make sure that there is only one active listener from this class
+        CredentialContainer.getInstance().getCredentialReadyProperty().removeListener(changeListener);
+        CredentialContainer.getInstance().getCredentialReadyProperty().addListener(changeListener);
     }
 
     @FXML
@@ -68,16 +91,61 @@ public class DashboardFXMLController implements Initializable {
     }
 
     private void updateData() {
-        try {
-            List<ActivityEntry> activityEntries = new ArrayList<>();
-            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> activityEntries.add(new ActivityEntry(tuple[1], new Date(Long.parseLong(tuple[0])), tuple[2], tuple[3])));
-            activityView.getItems().addAll(activityEntries);
-
-            List<MessageEntry> messageEntries = new ArrayList<>();
-            communicationHandler.sendQuery(new String[]{"getMessages", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> messageEntries.add(new MessageEntry(tuple[2], tuple[0] + "(" + tuple[1] + ")", tuple[3], new Date(Long.parseLong(tuple[4])))));
-            messageView.getItems().addAll(messageEntries);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
+        //Check if there are cached values, and use those until the new values arrive
+        if (activityEntriesCache != null && messageEntriesCache != null) {
+            activityView.getItems().clear();
+            messageView.getItems().clear();
+            activityView.getItems().addAll(activityEntriesCache);
+            messageView.getItems().addAll(messageEntriesCache);
         }
+
+        //Find the previous Updater thread, if any and kill it
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().equals("DashboardUpdater")) {
+                t.interrupt();
+            }
+        }
+
+        //New thread to get and update the values and store the new values in a cache
+        new Thread(() -> {
+            try {
+                List<ActivityEntry> activityEntries = new ArrayList<>();
+                List<MessageEntry> messageEntries = new ArrayList<>();
+
+                //Get new values
+                try {
+                    communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> activityEntries.add(new ActivityEntry(tuple[1], new Date(Long.parseLong(tuple[0])), tuple[2], tuple[3])));
+                    communicationHandler.sendQuery(new String[]{"getMessages", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> messageEntries.add(new MessageEntry(tuple[2], tuple[0] + "(" + tuple[1] + ")", tuple[3], new Date(Long.parseLong(tuple[4])))));
+                } catch (Exception e) {
+                }
+
+                //Update the values to the FX elements and update the cache
+                Platform.runLater(() -> {
+                    try {
+                        activityView.getItems().clear();
+                        messageView.getItems().clear();
+                        activityView.getItems().addAll(activityEntries);
+                        messageView.getItems().addAll(messageEntries);
+
+                        activityEntriesCache = new ArrayList<>(activityEntries);
+                        messageEntriesCache = new ArrayList<>(messageEntries);
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+            } catch (Exception ex) {
+            }
+        }, "DashboardUpdater").
+                start();
+    }
+
+    private void clearAll() {
+        activityEntriesCache = null;
+        messageEntriesCache = null;
+        Platform.runLater(() -> {
+            activityView.getItems().clear();
+            messageView.getItems().clear();
+        });
     }
 }

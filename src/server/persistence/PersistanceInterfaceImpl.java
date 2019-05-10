@@ -55,7 +55,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
     public PersistanceInterfaceImpl() {
         //Load settings from config file
         this.configFileMap = new TreeMap<>();
-        try (Scanner configFileScanner = new Scanner(getClass().getResourceAsStream("recources/DatabaseConfiguration.config"))) {
+        try (Scanner configFileScanner = new Scanner(getClass().getResourceAsStream("/server/recources/DatabaseConfiguration.config"))) {
 
             while (configFileScanner.hasNextLine()) {
                 String[] tokens = configFileScanner.nextLine().split(" := ");
@@ -161,7 +161,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 queryString = "SELECT id.full_name, users.username, messages.title, messages.message, messages.date FROM users, id, messages WHERE id.id = sender_id AND users.id = sender_id AND recipient_id = " + query[1] + " ORDER BY date DESC LIMIT 30";
                 break;
             case "getMenuItems":
-                queryString = "SELECT DISTINCT modules.name, modules.icon, modules.fxml FROM modules, role_assignment WHERE role_assignment.user_id = " + query[1] + " AND (role_assignment.role = modules.role OR role_assignment.role = '000-000')";
+                queryString = "SELECT DISTINCT modules.name, modules.icon, modules.fxml, modules.index FROM modules, role_assignment WHERE role_assignment.user_id = " + query[1] + " AND (role_assignment.role = modules.role OR role_assignment.role = '000-000') ORDER BY index";
                 break;
             case "getUserDepartment":
                 queryString = "SELECT users.department FROM users WHERE users.id=" + query[1];

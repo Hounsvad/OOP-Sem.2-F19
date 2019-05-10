@@ -133,6 +133,13 @@ public class LoginPopupFXMLController implements Initializable {
     @FXML
     private void handleLoginButtonAction() {
         loadpane.setVisible(true);
+        if (username.getText().isEmpty() || password.getText().isEmpty()) {
+            message.setText("Please enter a username and a password!");
+            username.getStyleClass().add("wrong-credentials");
+            password.getStyleClass().add("wrong-credentials");
+            loadpane.setVisible(false);
+            return;
+        }
         new Thread(() -> {
             List<String[]> sqlReturn = CommunicationHandler.getInstance().sendQuery(new String[]{"login", username.getText(), StringUtils.hash(password.getText())});
             if (sqlReturn != null && !sqlReturn.isEmpty() && !sqlReturn.get(0)[0].equalsIgnoreCase("error")) {
@@ -143,14 +150,6 @@ public class LoginPopupFXMLController implements Initializable {
                         loadMain();
                     }
                     closeStage();
-                });
-
-            } else if (username.getText().isEmpty() || password.getText().isEmpty()) {
-                Platform.runLater(()
-                        -> {
-                    message.setText("Please enter a username and a password!");
-                    username.getStyleClass().add("wrong-credentials");
-                    password.getStyleClass().add("wrong-credentials");
                 });
 
             } else {

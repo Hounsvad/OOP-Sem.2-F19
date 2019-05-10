@@ -7,6 +7,7 @@ package server.communication;
 
 import com.frohno.pseudossl.PseudoSSLServer;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,8 +36,7 @@ public class ClientHandlerThread extends Thread {
         DomainHandler domainHandler = new DomainHandler(clientSocket.getInetAddress().getHostAddress());
         String[] query = (String[]) pseudoSSLServer.recieveObject();
         List<String[]> returnValue = domainHandler.parseQuery(query);
-        pseudoSSLServer.sendObject(returnValue);
-
+        pseudoSSLServer.sendObject(new ArrayList<String[]>(returnValue));
     }
 
 }
