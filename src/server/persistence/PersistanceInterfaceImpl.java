@@ -55,7 +55,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
     public PersistanceInterfaceImpl() {
         //Load settings from config file
         this.configFileMap = new TreeMap<>();
-        try (Scanner configFileScanner = new Scanner(getClass().getResourceAsStream("recources/DatabaseConfiguration.config"))) {
+        try (Scanner configFileScanner = new Scanner(getClass().getResourceAsStream("/server/recources/DatabaseConfiguration.config"))) {
 
             while (configFileScanner.hasNextLine()) {
                 String[] tokens = configFileScanner.nextLine().split(" := ");

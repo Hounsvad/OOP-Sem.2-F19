@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import server.persistence.PersistanceInterface;
 import server.persistence.PersistanceInterfaceImpl;
@@ -25,6 +26,7 @@ public class DomainInterfaceImpl implements DomainInterface {
     private String userId = null;
     private String ip = null;
     private List<String> rights = null;
+    private final Map<String, String> smtpConfiguration = new HashMap<>();
     private static final String PASS_CHARS = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz,.-1234567890+?!@#&/";
     private final Map<String, String> actions = new HashMap<String, String>() {
         {
@@ -61,6 +63,7 @@ public class DomainInterfaceImpl implements DomainInterface {
 
     public DomainInterfaceImpl(String ip) {
         this.ip = ip;
+        new Scanner(getClass().getResourceAsStream("/server/recources/SMTPConfiguration.config")).useDelimiter("\r\n").forEachRemaining((s) -> smtpConfiguration.put(s.split(" := ")[0], s.split(" := ")[1]));
     }
 
     /**
@@ -219,8 +222,7 @@ public class DomainInterfaceImpl implements DomainInterface {
     }
 
     private void sendPassword(String username, String domain, String password) {
-        //implement remaining
-        //Oh how i detest email
+        new EmailHandler(smtpConfiguration.get("host"), smtpConfiguration.get("port"), smtpConfiguration.get("username"), smtpConfiguration.get("password")).sendMail(username + "@" + domain, password);
     }
 
     private String generatePassword() {
