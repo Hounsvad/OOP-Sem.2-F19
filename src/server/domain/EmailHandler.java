@@ -339,7 +339,7 @@ public class EmailHandler {
                 + "                      <td>\n"
                 + "                        <p style=\"text-align:center;\"><img src=\"https://i.imgur.com/owFgzll.png\" alt=\"Sanitas Overview Logo\" width=\"150\" height=\"60\"></p>\n"
                 + "                        <h1>Sanitas Overview</h1>\n"
-                + "                        <p>Here is your new password for your user. You can change it in the program later</p>\n"
+                + "                        <p>Here is your new password for your Sanitas Overview account. You can change it in the program later</p>\n"
                 + "                        <p>Password: " + password + "</p>\n"
                 + "                      </td>\n"
                 + "                    </tr>\n"
