@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * A Singleton class
+ *
  * @author Oliver
  */
 public class CommunicationHandler {
@@ -29,7 +30,7 @@ public class CommunicationHandler {
      * The CommunicationInterface
      */
     private CommunicationInterface communicationInterface;
-    
+
     /**
      * Constructs the CommunicationHandler
      */
@@ -39,6 +40,7 @@ public class CommunicationHandler {
 
     /**
      * Creates an instance of the CommunicationHandler if none exists
+     *
      * @return The instanceof the CommunicationHandler
      */
     public static CommunicationHandler getInstance() {
@@ -50,10 +52,11 @@ public class CommunicationHandler {
 
     /**
      * Sends the query to the database
+     *
      * @param query The query for the database
      * @return The data from the database
      */
-    public List<String[]> sendQuery(String[] query) {
+    public List<String[]> sendQuery(String... query) {
         List<String[]> returnVariable = communicationInterface.sendQuery(query);
         if (query[0] == "login") {
             name = returnVariable == null ? "" : returnVariable.get(0)[0];

@@ -14,8 +14,8 @@ public class Patient {
 
     /**
      *
-     * @param fullName
-     * @param patientID
+     * @param fullName  is the full name of the patient
+     * @param patientID is the unique id of the patient
      */
     public Patient(String fullName, String patientID) {
         this.fullName = fullName;
@@ -23,8 +23,9 @@ public class Patient {
     }
 
     /**
+     * Formats the information about the patient to be displayed in a listView
      *
-     * @return the full name of the patient
+     * @return
      */
     @Override
     public String toString() {
