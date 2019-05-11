@@ -23,6 +23,8 @@ import java.util.TreeMap;
  */
 public class PersistanceInterfaceImpl implements PersistanceInterface {
 
+    private static PersistanceInterfaceImpl instance = null;
+
     /**
      * Table and column names
      */
@@ -52,7 +54,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
      */
     private Connection conn = null;
 
-    public PersistanceInterfaceImpl() {
+    private PersistanceInterfaceImpl() {
         //Load settings from config file
         this.configFileMap = new TreeMap<>();
         try (Scanner configFileScanner = new Scanner(getClass().getResourceAsStream("/server/recources/DatabaseConfiguration.config"))) {
@@ -65,22 +67,33 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             e.printStackTrace();
             System.exit(-1);
         }
+        try {
+            DriverManager.registerDriver(new org.postgresql.Driver());
+            Class.forName("org.postgresql.Driver");
+            conn = DriverManager.getConnection("jdbc:postgresql://" + configFileMap.get("url") + ":" + configFileMap.get("port") + "/" + configFileMap.get("databaseName") + "?sslmode=require", configFileMap.get("username"), configFileMap.get("password"));
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static PersistanceInterfaceImpl getInstance() {
+        if (instance == null) {
+            instance = new PersistanceInterfaceImpl();
+        }
+        return instance;
     }
 
     @Override
     public List<String[]> parseQuery(String... query) {
 
         ResultSet sqlReturnValues;
-        List<String[]> output = new ArrayList<>();
+        List<String[]> output;
         Statement stmt = null;
         String queryString;
-        //readying sql driver and connection
         try {
-            DriverManager.registerDriver(new org.postgresql.Driver());
-            Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://" + configFileMap.get("url") + ":" + configFileMap.get("port") + "/" + configFileMap.get("databaseName") + "?sslmode=require", configFileMap.get("username"), configFileMap.get("password"));
+            //readying sql driver and connection
             stmt = conn.createStatement();
-        } catch (SQLException | ClassNotFoundException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
@@ -205,15 +218,6 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     add(new String[]{"Error", "Unexpected sql error"});
                 }
             };
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-
-            } catch (SQLException e) {
-                //e.printStackTrace();
-            }
         }
         return output;
 
