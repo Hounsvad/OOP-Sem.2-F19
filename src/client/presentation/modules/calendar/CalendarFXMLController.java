@@ -104,6 +104,7 @@ public class CalendarFXMLController implements Initializable {
             } else if (selectedObject.getPickResult().getIntersectedNode() instanceof Text) {
                 yearMonthView.setDate(((DateCell) selectedObject.getPickResult().getIntersectedNode().getParent()).getDate());
             }
+            getCalendarEvents();
         });
 
         //Binding the datepicker calendar to the main calendar
