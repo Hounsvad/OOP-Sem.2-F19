@@ -7,6 +7,7 @@ package client.presentation;
 
 import client.communication.CommunicationInterface;
 import client.communication.CommunicationInterfaceImpl;
+import client.presentation.utils.credentials.CredentialContainer;
 import java.util.List;
 
 /**
@@ -53,14 +54,20 @@ public class CommunicationHandler {
     /**
      * Sends the query to the database
      *
-     * @param query The query for the database
+     * @param input The query for the database
      * @return The data from the database
      */
-    public List<String[]> sendQuery(String... query) {
-        List<String[]> returnVariable = communicationInterface.sendQuery(query);
-        if (query[0] == "login") {
-            name = returnVariable == null ? "" : returnVariable.get(0)[0];
+    public List<String[]> sendQuery(String... input) {
+        String[] query = input;
+        if (!input[0].equals("login")) {
+            query = new String[input.length + 2];
+            System.arraycopy(input, 1, query, 3, input.length - 1);
+            query[0] = input[0];
+            query[1] = CredentialContainer.getInstance().getUsername();
+            query[2] = CredentialContainer.getInstance().getPassword();
         }
+        List<String[]> returnVariable = communicationInterface.sendQuery(query);
+        name = returnVariable.get(0)[0];
         return returnVariable;
     }
 

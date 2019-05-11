@@ -41,8 +41,7 @@ public class MessageEntryCreationPopupFXMLController extends Popup {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         List<User> userList = new ArrayList<>();
-        String[] query = new String[]{"userList", credentialContainer.getUsername(), credentialContainer.getPassword()};
-        List<String[]> returnValue = communicationHandler.sendQuery(query);
+        List<String[]> returnValue = communicationHandler.sendQuery("userList");
         for (String[] tuple : returnValue) {
             userList.add(new User(tuple[0], tuple[1], tuple[2]));
         }
@@ -52,7 +51,7 @@ public class MessageEntryCreationPopupFXMLController extends Popup {
     @FXML
     private void send() {
         if (recipients.getSelectionModel().getSelectedItem() != null && !subject.getText().isEmpty() && !message.getText().isEmpty()) {
-            communicationHandler.sendQuery(new String[]{"sendMessage", credentialContainer.getUsername(), credentialContainer.getPassword(), recipients.getSelectionModel().getSelectedItem().getUserID(), subject.getText(), message.getText()});
+            communicationHandler.sendQuery("sendMessage", credentialContainer.getUsername(), credentialContainer.getPassword(), recipients.getSelectionModel().getSelectedItem().getUserID(), subject.getText(), message.getText());
             new Thread(() -> {
                 Platform.runLater(() -> ((DashboardFXMLController) getModuleController()).updateData());
             }).start();

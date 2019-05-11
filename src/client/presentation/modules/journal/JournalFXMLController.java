@@ -9,13 +9,9 @@ import client.presentation.utils.credentials.CredentialContainer;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -24,7 +20,7 @@ import javafx.scene.layout.AnchorPane;
  * @author Hounsvad
  */
 public class JournalFXMLController implements Initializable {
-    
+
     /**
      * The list view for the AutomaticEntries
      */
@@ -62,17 +58,19 @@ public class JournalFXMLController implements Initializable {
 
     /**
      * Initializes the controller class
+     *
      * @param url
-     * @param rb 
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         updateData();
     }
-    
+
     /**
      * Adds a {@link MedicinalEntry}
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void addMedicinalEntry() {
@@ -81,13 +79,14 @@ public class JournalFXMLController implements Initializable {
 
     /**
      * adds a {@link ManualEntry}
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void addManualEntry() {
         ManualEntry.showCreationPopup();
     }
-    
+
     private void getPatient(Patient patient) {
         this.currentPatient = patient;
     }
@@ -97,21 +96,21 @@ public class JournalFXMLController implements Initializable {
             return;
         }
         try {
-            List<LogEntry> logEntries = new ArrayList<>();
-            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> logEntries.add(new LogEntry()));
-            automaticEntriesView.getItems().addAll(logEntries);
-
-            List<MedicinalEntry> medicalEntries = new ArrayList<>();
-            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> medicalEntries.add(new MedicinalEntry()));
-            medicinalEntriesView.getItems().addAll(medicalEntries);
-
-            List<ManualEntry> manualEntries = new ArrayList<>();
-            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> manualEntries.add(new ManualEntry()));
-            manualEntriesView.getItems().addAll(manualEntries);
-
-            List<Patient> patients = new ArrayList<>();
-            communicationHandler.sendQuery(new String[]{"getPatients", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> patients.add(new Patient(tuple[1], tuple[0])));
-            PatientView.getItems().addAll(patients);
+//            List<LogEntry> logEntries = new ArrayList<>();
+//            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> logEntries.add(new LogEntry()));
+//            automaticEntriesView.getItems().addAll(logEntries);
+//
+//            List<MedicinalEntry> medicalEntries = new ArrayList<>();
+//            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> medicalEntries.add(new MedicinalEntry()));
+//            medicinalEntriesView.getItems().addAll(medicalEntries);
+//
+//            List<ManualEntry> manualEntries = new ArrayList<>();
+//            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> manualEntries.add(new ManualEntry()));
+//            manualEntriesView.getItems().addAll(manualEntries);
+//
+//            List<Patient> patients = new ArrayList<>();
+//            communicationHandler.sendQuery(new String[]{"getPatients", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> patients.add(new Patient(tuple[1], tuple[0])));
+//            PatientView.getItems().addAll(patients);
         } catch (NullPointerException e) {
         }
     }

@@ -141,13 +141,11 @@ public class CalendarFXMLController implements Initializable {
                 Calendar calendar = new Calendar();
                 //Get new values
                 try {
-                    communicationHandler.sendQuery(new String[]{
-                        "getCalendar",
-                        credentialContainer.getUsername(),
-                        credentialContainer.getPassword(),
-                        patientView.getSelectionModel().getSelectedItem().getPatientID(),
-                        Long.toString(toMillis(detailedWeekView.getStartDate(), detailedWeekView.getStartTime())),
-                        Long.toString(toMillis(detailedWeekView.getEndDate(), detailedWeekView.getEndTime()))})
+                    communicationHandler.sendQuery(
+                            "getCalendar",
+                            patientView.getSelectionModel().getSelectedItem().getPatientID(),
+                            Long.toString(toMillis(detailedWeekView.getStartDate(), detailedWeekView.getStartTime())),
+                            Long.toString(toMillis(detailedWeekView.getEndDate(), detailedWeekView.getEndTime())))
                             .forEach(tuple -> {
                                 Entry entry = new Entry<String>(
                                         tuple[3],
@@ -206,7 +204,7 @@ public class CalendarFXMLController implements Initializable {
 
                 //Get new values
                 try {
-                    communicationHandler.sendQuery(new String[]{"getPatients", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> patients.add(new Patient(tuple[1], tuple[0])));
+                    communicationHandler.sendQuery("getPatients").forEach((tuple) -> patients.add(new Patient(tuple[1], tuple[0])));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
