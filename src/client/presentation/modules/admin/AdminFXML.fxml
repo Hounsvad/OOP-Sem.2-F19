@@ -21,7 +21,7 @@
          <top>
             <AnchorPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="1020.0" style="-fx-background-color: #048BA8;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXComboBox fx:id="departmentPicker" layoutY="8.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#departmentPicked" prefHeight="26.0" prefWidth="1010.0" promptText="Department" style="-fx-prompt-text-fill: WHITE;" styleClass="jfx-combo-box" stylesheets="@../../css/generalStyleSheet.css" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="8.0" />
+                  <JFXComboBox fx:id="departmentPicker" layoutY="8.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#departmentPicked" prefHeight="26.0" prefWidth="1010.0" promptText="Department" style="-fx-prompt-text-fill: #F4F4F4; -fx-text-fill: #F4F4F4;" stylesheets="@../../css/adminStyleSheet.css" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="8.0" />
                </children>
             </AnchorPane>
          </top>

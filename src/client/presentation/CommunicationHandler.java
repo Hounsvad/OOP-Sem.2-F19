@@ -67,6 +67,10 @@ public class CommunicationHandler {
             query[2] = CredentialContainer.getInstance().getPassword();
         }
         List<String[]> returnVariable = communicationInterface.sendQuery(query);
+        if (returnVariable.get(0)[0].equalsIgnoreCase("error")) {
+            System.err.println(returnVariable.get(0)[1]);
+            System.exit(0);
+        }
         name = returnVariable.get(0)[0];
         return returnVariable;
     }

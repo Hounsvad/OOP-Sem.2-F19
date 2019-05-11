@@ -57,7 +57,7 @@ public class DomainInterfaceImpl implements DomainInterface {
             put("getMessages", "");
             put("getMenuItems", "");
             put("getUserActivity", "002-007");
-            put("getUsersByDepartment", "000-000");
+            put("userListByDepartment", "000-000");
             put("getPatientsByDepartment", "000-000");
             put("getDepartments", "000-000");
 
