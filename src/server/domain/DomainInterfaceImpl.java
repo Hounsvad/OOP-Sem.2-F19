@@ -22,7 +22,7 @@ import server.persistence.PersistanceInterfaceImpl;
  */
 public class DomainInterfaceImpl implements DomainInterface {
 
-    private final PersistanceInterface persistenceInterface = new PersistanceInterfaceImpl();
+    private final PersistanceInterface persistenceInterface = PersistanceInterfaceImpl.getInstance();
     private String userId = null;
     private String ip = null;
     private List<String> rights = null;
