@@ -15,7 +15,6 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -119,16 +118,15 @@ public class AdminFXMLController implements Initializable {
     private void updateUserList() {
         CommunicationHandler.getInstance().sendQuery("userListByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).forEach(t -> UserView.getItems().add(new User(t[0], t[1], t[2])));
         UserView.getSelectionModel().selectFirst();
-        updateFields();
+//        updateFields();
     }
 
     private void updatePatientList() {
         CommunicationHandler.getInstance().sendQuery("getPatientsByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).forEach(t -> assignmentView.getItems().add(new Patient(t[0], t[1])));
     }
 
-    private void updateFields() {
-        List<Integers> assignedPatients = CommunicationHandler.getInstance().sendQuery("getPatients", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> assignmentView.getItems().indexOf(new Patient(t[0], t[1]))).collect(Collectors.toList());
-        assignmentView.getSelectionModel().
-    }
-
-    }
+//    private void updateFields() {
+//        List<Integers> assignedPatients = CommunicationHandler.getInstance().sendQuery("getPatients", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> assignmentView.getItems().indexOf(new Patient(t[0], t[1]))).collect(Collectors.toList());
+//        assignmentView.getSelectionModel().
+//    }
+}
