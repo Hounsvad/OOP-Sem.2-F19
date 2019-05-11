@@ -142,6 +142,8 @@ public class DomainInterfaceImpl implements DomainInterface {
                         case "getPatientsByDepartment":
                             addActivity();
                             return persistenceInterface.parseQuery("getPatientsByDepartment", query[3]);
+                        case "getPatientsByUser":
+                            return persistenceInterface.parseQuery("getPatients", query[3]);
                         case "getPatients":
                             return persistenceInterface.parseQuery("getPatients", userId);
                         case "addUser":

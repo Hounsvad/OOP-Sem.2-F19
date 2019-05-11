@@ -137,7 +137,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 queryString = "SELECT role FROM role_assignment where user_id = " + query[1];
                 break;
             case "getRoles":
-                queryString = "SELECT role FROM roles";
+                queryString = "SELECT * FROM roles";
                 break;
             case "addJournalEntry":
                 queryString = "INSERT INTO journal VALUES (" + query[1] + ", '" + query[2] + "', " + query[3] + ", '" + query[4] + "', " + query[5] + ", '" + query[6] + "')";
