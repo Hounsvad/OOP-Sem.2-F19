@@ -31,7 +31,7 @@
                   <Font size="27.0" />
                </font>
             </Label>
-            <JFXListView fx:id="PatientView" fixedCellSize="0.0" onMouseClicked="#getCalendarEvents" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="ALWAYS" />
+            <JFXListView fx:id="patientView" fixedCellSize="0.0" onMouseClicked="#getCalendarEvents" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </right>

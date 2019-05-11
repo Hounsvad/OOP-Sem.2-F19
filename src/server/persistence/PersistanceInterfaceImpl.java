@@ -102,7 +102,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 queryString = "SELECT id.full_name, matchingId.id FROM id, (SELECT id FROM users WHERE password = '" + query[2] + "' AND username = '" + query[1] + "') AS matchingId WHERE matchingId.id = id.id";
                 break;
             case "getCalendar":
-                queryString = "SELECT calender.* FROM calender, (SELECT participation.event_id FROM participation WHERE participation.id = " + query[1] + ") AS x WHERE (calender.date > " + query[2] + " AND calender.date < " + query[3] + ") AND calender.event_id = x.event_id";
+                queryString = "SELECT calendar.* FROM calendar, (SELECT participation.event_id FROM participation WHERE participation.id = " + query[1] + ") AS x WHERE (calendar.date >= " + query[2] + " AND calendar.date <= " + query[3] + ") AND calendar.event_id = x.event_id";
                 break;
             case "getEventParticipants":
                 queryString = "SELECT id.id, id.full_name FROM id, (SELECT id FROM participation WHERE event_id = " + query[1] + ") as participants WHERE id.id = participants.id";

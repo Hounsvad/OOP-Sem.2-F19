@@ -240,7 +240,7 @@ public class DomainInterfaceImpl implements DomainInterface {
         for (int i = 3; i < query.length; i++) {
             specifics.append(query[i]).append(";:;");
         }
-        specifics.delete(specifics.lastIndexOf(";:;"), specifics.lastIndexOf(";:;") + 3);
+//        specifics.delete(specifics.lastIndexOf(";:;"), specifics.lastIndexOf(";:;") + 3);
         persistenceInterface.parseQuery("addActivity", query[0], specifics.toString(), this.ip, this.userId);
     }
 
