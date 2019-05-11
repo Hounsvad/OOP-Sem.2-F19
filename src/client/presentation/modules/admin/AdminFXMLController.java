@@ -126,7 +126,7 @@ public class AdminFXMLController implements Initializable {
     }
 
     private void updateFields() {
-//        List<Integers> assignedPatients = CommunicationHandler.getInstance().sendQuery("getPatients", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> assignmentView.getItems().indexOf(new Patient(t[0], t[1]))).collect(Collectors.toList());
+        List<Integer> assignedPatients = CommunicationHandler.getInstance().sendQuery("getPatients", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> assignmentView.getItems().indexOf(new Patient(t[0], t[1]))).collect(Collectors.toList());
 //        assignmentView.getSelectionModel().
     }
 }
