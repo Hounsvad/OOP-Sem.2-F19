@@ -60,8 +60,6 @@ public class AdminFXMLController implements Initializable {
     @FXML
     private JFXListView<User> UserView;
 
-    List<Patient> assignedPatients;
-
     /**
      * Initializes the controller class.
      */
@@ -69,6 +67,7 @@ public class AdminFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             UserView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            assignmentView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             //Get department and populate
             CommunicationHandler.getInstance().sendQuery("getDepartments").forEach(t -> departmentPicker.getItems().add(new Department(t[0], t[1])));
             departmentPicker.getSelectionModel().selectFirst();
@@ -77,9 +76,11 @@ public class AdminFXMLController implements Initializable {
             newUserDepartment.getItems().addAll(departmentPicker.getItems());
             newUserDepartment.getSelectionModel().selectFirst();
             //update info based on first user
-            updateUserList();
+            populateUserList();
             //update stored patients
-            updatePatientList();
+            populatePatientList();
+            updatePatientAssignments();
+            populateRolesList();
 
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -88,12 +89,12 @@ public class AdminFXMLController implements Initializable {
 
     @FXML
     private void departmentPicked(ActionEvent event) {
-        updateUserList();
+        populateUserList();
     }
 
     @FXML
     private void userSelected(MouseEvent event) {
-
+        updatePatientAssignments();
     }
 
     @FXML
@@ -116,18 +117,31 @@ public class AdminFXMLController implements Initializable {
     ) {
     }
 
-    private void updateUserList() {
+    private void populateUserList() {
         CommunicationHandler.getInstance().sendQuery("userListByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).forEach(t -> UserView.getItems().add(new User(t[0], t[1], t[2])));
         UserView.getSelectionModel().selectFirst();
         updateFields();
     }
 
-    private void updatePatientList() {
+    private void populatePatientList() {
         CommunicationHandler.getInstance().sendQuery("getPatientsByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).forEach(t -> assignmentView.getItems().add(new Patient(t[0], t[1])));
     }
 
-    private void updateFields() {
-        List<Integer> assignedPatients = CommunicationHandler.getInstance().sendQuery("getPatients", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> assignmentView.getItems().indexOf(new Patient(t[0], t[1]))).collect(Collectors.toList());
-        //assignmentView.getSelectionModel().
+    private void populateRolesList() {
+        CommunicationHandler.getInstance().sendQuery("getRoles").forEach(t -> roleView.getItems().add(new Role(t[0], t[1])));
     }
+
+    private void updatePatientAssignments() {
+        List<Integer> assignedPatients = CommunicationHandler.getInstance().sendQuery("getPatients", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> assignmentView.getItems().indexOf(new Patient(t[0], t[1]))).collect(Collectors.toList());
+        int[] assignedPatientsArray = new int[assignedPatients.size()];
+        for (int i = 0; i < assignedPatientsArray.length; i++) {
+
+        }
+        assignmentView.getSelectionModel().selectIndices(assignedPatientsArray.length, assignedPatientsArray);
+    }
+
+    private void updateFields() {
+
+    }
+
 }
