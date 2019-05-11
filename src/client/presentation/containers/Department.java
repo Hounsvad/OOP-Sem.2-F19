@@ -41,6 +41,11 @@ public class Department {
         return departmentName;
     }
 
+    @Override
+    public String toString() {
+        return departmentName + "(" + departmentId + ")";
+    }
+
     /**
      *
      * @param obj a department
