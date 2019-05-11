@@ -3,27 +3,30 @@
  */
 package client.presentation.containers;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 /**
  *
  * @author Hounsvad
  */
-public class PatientExtended extends Patient implements Comparable<PatientExtended> {
+public class PatientExtended extends Patient {
 
     private String department;
 
     /**
      *
-     * @param fullName  is the full name of the patient
-     * @param patientID
+     * @param fullName   is the full name of the patient
+     * @param patientID  is the unique id of the patient
+     * @param department is the department which the patient is associated
+     *                   with
      */
     public PatientExtended(String fullName, String patientID, String department) {
         super(fullName, patientID);
         this.department = department;
     }
 
+    /**
+     *
+     * @return returns the department which the patient is associated with
+     */
     public String getDepartment() {
         return department;
     }
@@ -36,16 +39,6 @@ public class PatientExtended extends Patient implements Comparable<PatientExtend
     @Override
     public String toString() {
         return String.format("%s(%s)", getFullName(), getPatientID());
-    }
-
-    @Override
-    public int compareTo(PatientExtended o) {
-
-        Integer[] oTokens = (Integer[]) Arrays.asList(o.getDepartment().split("-")).stream().map(t -> Integer.parseInt(t)).collect(Collectors.toList()).toArray();
-        Integer[] tokens = (Integer[]) Arrays.asList(this.getDepartment().split("-")).stream().map(t -> Integer.parseInt(t)).collect(Collectors.toList()).toArray();
-        if (o.department.split("")) {
-
-        }
     }
 
 }

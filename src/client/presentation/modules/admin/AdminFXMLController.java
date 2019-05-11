@@ -3,6 +3,8 @@
  */
 package client.presentation.modules.admin;
 
+import client.presentation.CommunicationHandler;
+import client.presentation.containers.Department;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
@@ -22,7 +24,7 @@ import javafx.scene.input.MouseEvent;
 public class AdminFXMLController implements Initializable {
 
     @FXML
-    private JFXComboBox<?> departmentPicker;
+    private JFXComboBox<Department> departmentPicker;
     @FXML
     private FontAwesomeIconView saveAssignments;
     @FXML
@@ -57,11 +59,12 @@ public class AdminFXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        CommunicationHandler.getInstance().sendQuery("")
     }
 
     @FXML
     private void departmentPicked(ActionEvent event) {
+
     }
 
     @FXML
