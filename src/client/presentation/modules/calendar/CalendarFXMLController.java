@@ -156,6 +156,7 @@ public class CalendarFXMLController implements Initializable {
                                 entry.setId(tuple[0]);
                                 entry.setLocation(tuple[4]);
                                 calendar.addEntry(entry);
+                                //test
                             }
                             );
                 } catch (Exception e) {
