@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -107,6 +108,7 @@ public final class CredentialContainer {
                     s.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
                     login.initStyle(StageStyle.UNDECORATED);
                     login.initModality(Modality.APPLICATION_MODAL);
+                    login.getIcons().add(new Image(getClass().getResourceAsStream("/client/presentation/resources/sanitaslogo.png")));
                     login.setScene(s);
                     login.show();
                 } catch (IOException ex) {
