@@ -23,6 +23,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.Pane;
@@ -235,6 +236,7 @@ public class LoginPopupFXMLController implements Initializable {
             stage.setScene(scene);
             stage.setMinHeight(845);
             stage.setMinWidth(1290);
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/client/presentation/resources/sanitaslogo.png")));
             stage.show();
             stage.setTitle("Sanitas Overview");
 
