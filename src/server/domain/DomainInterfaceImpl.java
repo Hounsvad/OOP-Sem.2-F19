@@ -62,6 +62,7 @@ public class DomainInterfaceImpl implements DomainInterface {
             put("getDepartments", "000-000");
             put("getPatientsByUser", "000-000");
             put("updatePatientAssignment", "004-005");
+            put("setUserDepartment", "002-003");
 
         }
     };
@@ -231,6 +232,9 @@ public class DomainInterfaceImpl implements DomainInterface {
                             assignments.forEach((t) -> {
                                 persistenceInterface.parseQuery("removeAssignedPatient", query[3], t);
                             });
+                            return constructReturn("Success", "Patients updated");
+                        case "setUserDepartment":
+                            persistenceInterface.parseQuery("setUserDepartment", query[3], query[4]);
                             return constructReturn("Success", "Patients updated");
                     }
                 } else {

@@ -197,6 +197,9 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             case "removeAssignedPatient":
                 queryString = "DELETE FROM patient_assignment WHERE user_id = " + query[1] + " AND patient_id = " + query[2];
                 break;
+            case "setUserDepartment":
+                queryString = "UPDATE users SET department='" + query[2] + "' WHERE id = " + query[1] + "";
+                break;
             default:
                 return new ArrayList<String[]>() {
                     {

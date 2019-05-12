@@ -5,6 +5,7 @@ package client.presentation.modules.admin;
 
 import client.presentation.CommunicationHandler;
 import client.presentation.containers.Department;
+import client.presentation.modules.Popup;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -20,7 +21,7 @@ import javafx.stage.Stage;
  *
  * @author Hounsvad
  */
-public class PatientCreationPopupFXMLController implements Initializable {
+public class PatientCreationPopupFXMLController extends Popup implements Initializable {
 
     @FXML
     private FontAwesomeIconView cross;
@@ -48,11 +49,10 @@ public class PatientCreationPopupFXMLController implements Initializable {
 
     /**
      * Closes the popup
-     *
-     * @param event
      */
     @FXML
-    private void close() {
+    @Override
+    public void close() {
         ((Stage) cross.getScene().getWindow()).close();
     }
 

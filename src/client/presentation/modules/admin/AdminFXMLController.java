@@ -108,6 +108,7 @@ public class AdminFXMLController implements Initializable {
     @FXML
     private void departmentPicked(ActionEvent event) {
         populateUserList();
+        populatePatientList();
     }
 
     @FXML
@@ -144,8 +145,10 @@ public class AdminFXMLController implements Initializable {
     @FXML
     private void saveDetailsClicked(MouseEvent event) {
         if (userDepartment.getSelectionModel().getSelectedItem() != departmentPicker.getSelectionModel().getSelectedItem()) {
-
+            CommunicationHandler.getInstance().sendQuery("setUserDepartment", UserView.getSelectionModel().getSelectedItem().getUserID(), userDepartment.getSelectionModel().getSelectedItem().getDepartmentId());
         }
+        clearFields();
+        updateFields();
     }
 
     @FXML
@@ -174,6 +177,7 @@ public class AdminFXMLController implements Initializable {
     }
 
     private void populateUserList() {
+        clearFields();
         Platform.runLater(() -> {
             UserView.getItems().clear();
             CommunicationHandler.getInstance().sendQuery("userListByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).forEach(t -> UserView.getItems().add(new User(t[0], t[1], t[2])));
@@ -186,6 +190,12 @@ public class AdminFXMLController implements Initializable {
         userName.setText(UserView.getSelectionModel().getSelectedItem().getUserFullName());
         updateRoleAssignments();
         updatePatientAssignments();
+    }
+
+    private void clearFields() {
+        userId.setText("");
+        userUsername.setText("");
+        userName.setText("");
     }
 
     protected void populatePatientList() {
