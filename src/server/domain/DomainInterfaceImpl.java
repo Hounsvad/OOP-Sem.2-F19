@@ -69,7 +69,17 @@ public class DomainInterfaceImpl implements DomainInterface {
 
     public DomainInterfaceImpl(String ip) {
         this.ip = ip;
-        new Scanner(getClass().getResourceAsStream("/server/recources/SMTPConfiguration.config")).useDelimiter("\r\n").forEachRemaining((s) -> smtpConfiguration.put(s.split(" := ")[0], s.split(" := ")[1]));
+        new Scanner(getClass().getResourceAsStream("/server/recources/SMTPConfiguration.config")).useDelimiter("\n").forEachRemaining((s) -> smtpConfiguration.put(s.split(" := ")[0], s.split(" := ")[1]));
+//        try (Scanner configFileScanner = new Scanner(getClass().getResourceAsStream("/server/recources/SMTPConfiguration.config"))) {
+//
+//            while (configFileScanner.hasNextLine()) {
+//                String[] tokens = configFileScanner.nextLine().split(" := ");
+//                this.smtpConfiguration.put(tokens[0], tokens[1]);
+//            }
+//        } catch (ArrayIndexOutOfBoundsException e) {
+//            e.printStackTrace();
+//            System.exit(-1);
+//        }
     }
 
     /**
@@ -141,7 +151,7 @@ public class DomainInterfaceImpl implements DomainInterface {
                             return constructReturn("Success", "Event Removed");
                         case "addPatient":
                             addActivity();
-                            persistenceInterface.parseQuery("addPatient", query[3], persistenceInterface.parseQuery("getUserDepartment", userId).get(0)[0]);
+                            persistenceInterface.parseQuery("addPatient", query[3], query[4]);
                             return constructReturn("Success", "Patienty");
                         case "getPatientsByDepartment":
                             addActivity();
@@ -153,8 +163,9 @@ public class DomainInterfaceImpl implements DomainInterface {
                         case "addUser":
                             addActivity();
                             String password = generatePassword();
-                            List<String[]> result = persistenceInterface.parseQuery("addUser", query[3], query[4], Hashing.sha256().hashString(password, Charset.forName("UTF-8")).toString(), query[5]);
-                            sendPassword(query[4], result.get(0)[0], password);
+                            persistenceInterface.parseQuery("addUser", query[3], query[4], Hashing.sha256().hashString(password, Charset.forName("UTF-8")).toString(), query[5]);
+                            List<String[]> result = persistenceInterface.parseQuery("getMailDomainByDepartment", query[5]);
+                            sendPassword(query[3], result.get(0)[0], password);
                             return result;
                         case "userListByDepartment":
                             addActivity();

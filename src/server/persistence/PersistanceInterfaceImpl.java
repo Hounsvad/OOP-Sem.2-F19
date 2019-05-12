@@ -129,7 +129,10 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 queryString = "SELECT patients.id, patients.department, id.full_name FROM patients, id, (SELECT department FROM users WHERE id = '" + query[1] + "') as dep where patients.id = id.id AND patients.department = dep.department ORDER BY patients.id ASC";
                 break;
             case "addUser":
-                queryString = "INSERT INTO id VALUES((SELECT MAX(id) FROM id)+1, '" + query[2] + "'); INSERT INTO users VALUES ('" + query[1] + "', '" + query[3] + "', " + query[4] + ", (SELECT MAX(id.id)from id)); SELECT MAX(id.id)from id";
+                queryString = "INSERT INTO id VALUES((SELECT MAX(id) FROM id)+1, '" + query[2] + "'); INSERT INTO users VALUES ('" + query[1] + "', '" + query[3] + "', '" + query[4] + "', (SELECT MAX(id.id)from id))";
+                break;
+            case "getMailDomainByDepartment":
+                queryString = "SELECT department_mail_domain FROM departments WHERE department_id = '" + query[1] + "'";
                 break;
             case "getUsers":
                 queryString = "SELECT username, users.id, full_name FROM users, id WHERE id.id = users.id AND users.department = '" + query[1] + "' ORDER BY users.id";

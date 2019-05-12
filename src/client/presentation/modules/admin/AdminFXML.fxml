@@ -161,7 +161,7 @@
                                        </rowConstraints>
                                        <children>
                                           <JFXTextField fx:id="newUserUsername" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText="Username" />
-                                          <JFXTextField fx:id="newName" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText="Full Name" GridPane.rowIndex="2" />
+                                          <JFXTextField fx:id="newUserFullName" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText="Full Name" GridPane.rowIndex="2" />
                                           <JFXComboBox fx:id="newUserDepartment" focusColor="#048ba8" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText="Department" style="-fx-prompt-text-fill: #048ba8; -fx-text-fill: #39A9C0;" unFocusColor="#047f97" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>

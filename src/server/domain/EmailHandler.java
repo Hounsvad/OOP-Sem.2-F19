@@ -24,7 +24,7 @@ public class EmailHandler {
     private final String host;
     private final String port;
 
-    private String getHTML(String password) {
+    private String getHTML(String password, String username) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy 'at' HH:mm:ss");;
         return "<!doctype html>\n"
                 + "<html>\n"
@@ -340,7 +340,8 @@ public class EmailHandler {
                 + "                      <td>\n"
                 + "                        <p style=\"text-align:center;\"><img src=\"https://i.imgur.com/owFgzll.png\" alt=\"Sanitas Overview Logo\" width=\"150\" height=\"60\"></p>\n"
                 + "                        <h1>Sanitas Overview</h1>\n"
-                + "                        <p>Here is your new password for your Sanitas Overview account. You can change it in the program later</p>\n"
+                + "                        <p>Here is your new password and your username for your Sanitas Overview account. You can change it in the program later</p>\n"
+                + "                        <p>Username: " + username + "</p>\n"
                 + "                        <p>Password: " + password + "</p>\n"
                 + "                      </td>\n"
                 + "                    </tr>\n"
@@ -412,7 +413,7 @@ public class EmailHandler {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(reciptient));
             message.setSubject("Password Reset");
 
-            String msg = getHTML(userPassword);
+            String msg = getHTML(userPassword, reciptient.split("@")[0]);
 
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
             mimeBodyPart.setContent(msg, "text/html");
