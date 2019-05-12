@@ -70,16 +70,6 @@ public class DomainInterfaceImpl implements DomainInterface {
     public DomainInterfaceImpl(String ip) {
         this.ip = ip;
         new Scanner(getClass().getResourceAsStream("/server/recources/SMTPConfiguration.config")).useDelimiter("\n").forEachRemaining((s) -> smtpConfiguration.put(s.split(" := ")[0], s.split(" := ")[1]));
-//        try (Scanner configFileScanner = new Scanner(getClass().getResourceAsStream("/server/recources/SMTPConfiguration.config"))) {
-//
-//            while (configFileScanner.hasNextLine()) {
-//                String[] tokens = configFileScanner.nextLine().split(" := ");
-//                this.smtpConfiguration.put(tokens[0], tokens[1]);
-//            }
-//        } catch (ArrayIndexOutOfBoundsException e) {
-//            e.printStackTrace();
-//            System.exit(-1);
-//        }
     }
 
     /**
@@ -182,7 +172,8 @@ public class DomainInterfaceImpl implements DomainInterface {
                             addActivity();
                             String newPassword = generatePassword();
                             persistenceInterface.parseQuery("setUserPassword", query[3], Hashing.sha256().hashString(newPassword, Charset.forName("UTF-8")).toString());
-                            sendPassword(query[4], query[3], newPassword);
+                            String domain = persistenceInterface.parseQuery("getMailDomainByDepartment", query[4]).get(0)[0];
+                            sendPassword(query[5], domain, newPassword);
                             return constructReturn("Success", "Password updated");
                         case "alterOwnPassword":
                             addActivity(query[4]);
@@ -290,6 +281,7 @@ public class DomainInterfaceImpl implements DomainInterface {
     }
 
     private void sendPassword(String username, String domain, String password) {
+        System.out.printf("Username: %s Domain: %s Password %s%n", username, domain, password);
         new EmailHandler(smtpConfiguration.get("host"), smtpConfiguration.get("port"), smtpConfiguration.get("username"), smtpConfiguration.get("password")).sendMail(username + "@" + domain, password);
     }
 

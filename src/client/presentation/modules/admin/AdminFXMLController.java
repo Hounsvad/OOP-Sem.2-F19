@@ -325,7 +325,7 @@ public class AdminFXMLController extends Module {
     private void resetPassword(MouseEvent event) {
         if (!UserView.getSelectionModel().isEmpty()) {
             User user = UserView.getSelectionModel().getSelectedItem();
-            communicationHandler.sendQuery("resetUserPassword", user.getUserID());
+            communicationHandler.sendQuery("resetUserPassword", user.getUserID(), departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId(), user.getUsername());
         }
     }
 }
