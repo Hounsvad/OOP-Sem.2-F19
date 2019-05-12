@@ -8,6 +8,7 @@ import client.presentation.containers.Department;
 import client.presentation.containers.Patient;
 import client.presentation.containers.Role;
 import client.presentation.containers.User;
+import client.presentation.modules.Module;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
@@ -22,7 +23,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.SelectionMode;
@@ -36,7 +36,7 @@ import javafx.stage.StageStyle;
  *
  * @author Oliver
  */
-public class AdminFXMLController implements Initializable {
+public class AdminFXMLController extends Module {
 
     @FXML
     private JFXComboBox<Department> departmentPicker;
@@ -232,6 +232,16 @@ public class AdminFXMLController implements Initializable {
                 roleView.getSelectionModel().selectIndices(indecies[0], indecies);
             }
         });
+    }
+
+    @Override
+    protected void clearAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updateData() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

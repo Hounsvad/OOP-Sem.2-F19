@@ -22,15 +22,15 @@ public abstract class Popup implements Initializable {
     private FontAwesomeIconView cross;
 
     private Initializable moduleController;
-    public final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
-    public final CredentialContainer credentialContainer = CredentialContainer.getInstance();
+    protected final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
+    protected final CredentialContainer credentialContainer = CredentialContainer.getInstance();
 
     @FXML
-    public void close() {
+    protected void close() {
         ((Stage) cross.getScene().getWindow()).close();
     }
 
-    public Initializable getModuleController() {
+    protected Initializable getModuleController() {
         return moduleController;
     }
 

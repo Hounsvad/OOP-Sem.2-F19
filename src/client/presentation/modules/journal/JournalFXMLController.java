@@ -5,13 +5,13 @@ package client.presentation.modules.journal;
 
 import client.presentation.CommunicationHandler;
 import client.presentation.containers.Patient;
+import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -19,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author Hounsvad
  */
-public class JournalFXMLController implements Initializable {
+public class JournalFXMLController extends Module {
 
     /**
      * The list view for the AutomaticEntries
@@ -91,7 +91,7 @@ public class JournalFXMLController implements Initializable {
         this.currentPatient = patient;
     }
 
-    private void updateData() {
+    public void updateData() {
         if (currentPatient == null) {
             return;
         }
@@ -113,6 +113,11 @@ public class JournalFXMLController implements Initializable {
 //            PatientView.getItems().addAll(patients);
         } catch (NullPointerException e) {
         }
+    }
+
+    @Override
+    protected void clearAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -5,8 +5,8 @@
  */
 package client.presentation.modules.calendar;
 
-import client.presentation.CommunicationHandler;
 import client.presentation.containers.Patient;
+import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
@@ -30,8 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
@@ -41,7 +42,7 @@ import javafx.scene.text.Text;
  *
  * @author Oliver
  */
-public class CalendarFXMLController implements Initializable {
+public class CalendarFXMLController extends Module {
 
     @FXML
     private JFXListView<Patient> patientView;
@@ -50,11 +51,9 @@ public class CalendarFXMLController implements Initializable {
     @FXML
     private AnchorPane datePickerPane;
 
-    CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
-    CredentialContainer credentialContainer = CredentialContainer.getInstance();
-
     private static List<Patient> patientsCache;
     private static Map<Integer, Calendar> calendarsCache;
+    private static ChangeListener changeListener;
 
     DetailedWeekView detailedWeekView = new DetailedWeekView();
 
@@ -68,7 +67,6 @@ public class CalendarFXMLController implements Initializable {
         detailedWeekView.earlyLateHoursStrategyProperty().set(DayViewBase.EarlyLateHoursStrategy.SHOW_COMPRESSED);
         detailedWeekView.weekFieldsProperty().set(WeekFields.ISO);
         detailedWeekView.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-
         //Add calendar to the designated calendar pane
         calendarPane.getChildren().add(detailedWeekView);
 
@@ -109,6 +107,22 @@ public class CalendarFXMLController implements Initializable {
 
         //Binding the datepicker calendar to the main calendar
         detailedWeekView.bind(yearMonthView, true);
+
+        //Create changeListener to delete cached data upon credential invalidation
+        changeListener = new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> a, Boolean b, Boolean c) {
+                if (b == true && c == false) {
+                    clearAll();
+                } else if (b == false && c == true) {
+                    updateData();
+                }
+            }
+        };
+
+        //Make sure that there is only one active listener from this class
+        CredentialContainer.getInstance().getCredentialReadyProperty().removeListener(changeListener);
+        CredentialContainer.getInstance().getCredentialReadyProperty().addListener(changeListener);
 
         updateData();
     }
@@ -231,12 +245,14 @@ public class CalendarFXMLController implements Initializable {
                 start();
     }
 
+    @Override
     public void updateData() {
         getPatients();
         getCalendarEvents();
     }
 
-    private void clearAll() {
+    @Override
+    protected void clearAll() {
         patientsCache = null;
         calendarsCache = null;
         Platform.runLater(() -> {

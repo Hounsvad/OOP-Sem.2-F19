@@ -6,6 +6,7 @@
 package client.presentation.modules.dashboard;
 
 import client.presentation.CommunicationHandler;
+import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
@@ -17,7 +18,6 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
@@ -26,7 +26,7 @@ import javafx.scene.text.Text;
  *
  * @author Oliver
  */
-public class DashboardFXMLController implements Initializable {
+public class DashboardFXMLController extends Module {
 
     @FXML
     private Text name;
@@ -34,9 +34,6 @@ public class DashboardFXMLController implements Initializable {
     private JFXListView<ActivityEntry> activityView;
     @FXML
     private JFXListView<MessageEntry> messageView;
-
-    private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
-    private final CredentialContainer credentialContainer = CredentialContainer.getInstance();
 
     private static List<ActivityEntry> activityEntriesCache;
     private static List<MessageEntry> messageEntriesCache;
@@ -140,7 +137,7 @@ public class DashboardFXMLController implements Initializable {
                 start();
     }
 
-    private void clearAll() {
+    protected void clearAll() {
         activityEntriesCache = null;
         messageEntriesCache = null;
         Platform.runLater(() -> {
