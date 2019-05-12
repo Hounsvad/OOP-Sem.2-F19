@@ -30,6 +30,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -73,6 +74,8 @@ public class AdminFXMLController extends Module {
     private JFXListView<User> UserView;
 
     private static ChangeListener changeListener;
+    @FXML
+    private BorderPane root;
 
     /**
      * Initializes the controller class.
@@ -126,9 +129,11 @@ public class AdminFXMLController extends Module {
 
     @FXML
     private void userSelected(MouseEvent event) {
-        updateUserDetailFields();
-        updatePatientAssignments();
-        updateRoleAssignments();
+        if (!UserView.getSelectionModel().isEmpty()) {
+            updateUserDetailFields();
+            updatePatientAssignments();
+            updateRoleAssignments();
+        }
     }
 
     @FXML
@@ -195,18 +200,19 @@ public class AdminFXMLController extends Module {
 
     private void populateDepartmentLists() {
         new Thread(() -> {
+            List<Department> departments = CommunicationHandler.getInstance().sendQuery("getDepartments").stream().map(t -> new Department(t[0], t[1])).collect(Collectors.toList());
             Platform.runLater(() -> {
                 //clear data
+                clearFields();
                 departmentPicker.getItems().clear();
                 userDepartment.getItems().clear();
                 newUserDepartment.getItems().clear();
-                //get data and populate main department picker
-                CommunicationHandler.getInstance().sendQuery("getDepartments").forEach(t -> departmentPicker.getItems().add(new Department(t[0], t[1])));
                 //populate data
+                departmentPicker.getItems().addAll(departments);
                 departmentPicker.getSelectionModel().selectFirst();
-                userDepartment.getItems().addAll(departmentPicker.getItems());
+                userDepartment.getItems().addAll(departments);
                 userDepartment.getSelectionModel().selectFirst();
-                newUserDepartment.getItems().addAll(departmentPicker.getItems());
+                newUserDepartment.getItems().addAll(departments);
                 newUserDepartment.getSelectionModel().selectFirst();
                 populateUserList();
                 populatePatientList();
@@ -218,9 +224,10 @@ public class AdminFXMLController extends Module {
     private void populateUserList() {
         clearFields();
         new Thread(() -> {
+            List<User> users = CommunicationHandler.getInstance().sendQuery("userListByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).stream().map(t -> new User(t[0], t[1], t[2])).collect(Collectors.toList());
             Platform.runLater(() -> {
                 UserView.getItems().clear();
-                CommunicationHandler.getInstance().sendQuery("userListByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).forEach(t -> UserView.getItems().add(new User(t[0], t[1], t[2])));
+                UserView.getItems().addAll(users);
             });
         }).start();
 
@@ -228,9 +235,10 @@ public class AdminFXMLController extends Module {
 
     protected void populatePatientList() {
         new Thread(() -> {
+            List<Patient> patients = CommunicationHandler.getInstance().sendQuery("getPatientsByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).stream().map(t -> new Patient(t[0], t[1])).collect(Collectors.toList());
             Platform.runLater(() -> {
                 assignmentView.getItems().clear();
-                CommunicationHandler.getInstance().sendQuery("getPatientsByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).forEach(t -> assignmentView.getItems().add(new Patient(t[0], t[1])));
+                assignmentView.getItems().addAll(patients);
             });
         }).start();
 
@@ -238,11 +246,11 @@ public class AdminFXMLController extends Module {
 
     private void populateRolesList() {
         new Thread(() -> {
+            List<Role> roles = CommunicationHandler.getInstance().sendQuery("getRoles").stream().map(t -> new Role(t[0], t[1])).collect(Collectors.toList());
+            Collections.sort(roles);
             Platform.runLater(() -> {
                 roleView.getItems().clear();
-                List<Role> l1 = CommunicationHandler.getInstance().sendQuery("getRoles").stream().map(t -> new Role(t[0], t[1])).collect(Collectors.toList());
-                roleView.getItems().addAll(l1);
-                Collections.sort(roleView.getItems());
+                roleView.getItems().addAll(roles);
             });
         }).start();
 
@@ -250,9 +258,9 @@ public class AdminFXMLController extends Module {
 
     protected void updatePatientAssignments() {
         new Thread(() -> {
+            int[] indecies = CommunicationHandler.getInstance().sendQuery("getPatientsByUser", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> assignmentView.getItems().indexOf(new Patient(t[1], t[0]))).collect(Collectors.toList()).stream().mapToInt(i -> i).toArray();
             Platform.runLater(() -> {
                 assignmentView.getSelectionModel().clearSelection();
-                int[] indecies = CommunicationHandler.getInstance().sendQuery("getPatientsByUser", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> assignmentView.getItems().indexOf(new Patient(t[1], t[0]))).collect(Collectors.toList()).stream().mapToInt(i -> i).toArray();
                 if (indecies.length > 0) {
                     assignmentView.getSelectionModel().selectIndices(indecies[0], indecies);
                 }
@@ -263,9 +271,9 @@ public class AdminFXMLController extends Module {
 
     private void updateRoleAssignments() {
         new Thread(() -> {
+            int[] indecies = CommunicationHandler.getInstance().sendQuery("getUserRoles", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> roleView.getItems().indexOf(new Role(t[0], "No description"))).collect(Collectors.toList()).stream().mapToInt(i -> i).toArray();
             Platform.runLater(() -> {
                 roleView.getSelectionModel().clearSelection();
-                int[] indecies = CommunicationHandler.getInstance().sendQuery("getUserRoles", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> roleView.getItems().indexOf(new Role(t[0], "No description"))).collect(Collectors.toList()).stream().mapToInt(i -> i).toArray();
                 if (indecies.length > 0) {
                     roleView.getSelectionModel().selectIndices(indecies[0], indecies);
                 }
@@ -290,6 +298,11 @@ public class AdminFXMLController extends Module {
         //clears data about a new user
         newUserFullName.setText("");
         newUserUsername.setText("");
+
+        //clear selections
+        UserView.getSelectionModel().clearSelection();
+        roleView.getSelectionModel().clearSelection();
+        assignmentView.getSelectionModel().clearSelection();
     }
 
     @Override
@@ -308,4 +321,11 @@ public class AdminFXMLController extends Module {
         populateDepartmentLists();
     }
 
+    @FXML
+    private void resetPassword(MouseEvent event) {
+        if (!UserView.getSelectionModel().isEmpty()) {
+            User user = UserView.getSelectionModel().getSelectedItem();
+            communicationHandler.sendQuery("resetUserPassword", user.getUserID());
+        }
+    }
 }
