@@ -3,11 +3,13 @@
  */
 package client.presentation.containers;
 
+import java.util.Objects;
+
 /**
  *
  * @author Hounsvad
  */
-public class Patient {
+public class Patient implements Comparable {
 
     private final String fullName;
     private final String patientID;
@@ -46,6 +48,34 @@ public class Patient {
      */
     public String getPatientID() {
         return patientID;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.fullName);
+        hash = 17 * hash + Objects.hashCode(this.patientID);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Patient other = (Patient) obj;
+        return this.patientID.equals(other.patientID);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return Integer.parseInt(this.patientID) - Integer.parseInt(((Patient) o).getPatientID());
     }
 
 }

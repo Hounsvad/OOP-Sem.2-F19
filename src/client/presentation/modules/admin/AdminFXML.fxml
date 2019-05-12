@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -37,10 +38,20 @@
                                     <Font size="27.0" />
                                  </font>
                               </Label>
-                              <FontAwesomeIconView fx:id="saveAssignments" glyphName="SAVE" onMouseClicked="#saveAssignmentsClicked" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
+                              <FontAwesomeIconView fx:id="saveAssignments" glyphName="SAVE" onMouseClicked="#saveAssignmentsClicked" size="35" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></FontAwesomeIconView>
+                              <FontAwesomeIconView glyphName="USER_PLUS" layoutX="162.0" layoutY="33.0" onMouseClicked="#addNewPatientClicked" size="35" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="5.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></FontAwesomeIconView>
                            </children>
                         </AnchorPane>
-                        <JFXListView fx:id="assignmentView" fixedCellSize="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="250.0" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="SOMETIMES" />
+                        <JFXListView fx:id="assignmentView" fixedCellSize="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="250.0" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="SOMETIMES">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></JFXListView>
                      </children>
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" top="10.0" />
@@ -55,10 +66,16 @@
                                     <Font size="27.0" />
                                  </font>
                               </Label>
-                              <FontAwesomeIconView fx:id="saveRoles" glyphName="SAVE" onMouseClicked="#saveRolesClicked" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
+                              <FontAwesomeIconView fx:id="saveRoles" glyphName="SAVE" onMouseClicked="#saveRolesClicked" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></FontAwesomeIconView>
                            </children>
                         </AnchorPane>
-                        <JFXListView fx:id="roleView" fixedCellSize="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="250.0" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="SOMETIMES" />
+                        <JFXListView fx:id="roleView" fixedCellSize="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="250.0" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="SOMETIMES">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></JFXListView>
                      </children>
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" top="10.0" />
@@ -78,7 +95,10 @@
                                           <Font size="27.0" />
                                        </font>
                                     </Label>
-                                    <FontAwesomeIconView fx:id="saveDetails" glyphName="SAVE" onMouseClicked="#saveDetailsClicked" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
+                                    <FontAwesomeIconView fx:id="saveDetails" glyphName="SAVE" onMouseClicked="#saveDetailsClicked" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></FontAwesomeIconView>
                                  </children>
                               </AnchorPane>
                               <AnchorPane>
@@ -94,8 +114,14 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <JFXTextField fx:id="userId" editable="false" focusTraversable="false" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText=" Id" GridPane.columnIndex="1" />
-                                          <JFXTextField fx:id="userUsername" editable="false" focusTraversable="false" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText="Username" />
+                                          <JFXTextField fx:id="userId" editable="false" focusTraversable="false" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="25.0" promptText=" Id" GridPane.columnIndex="1">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor></JFXTextField>
+                                          <JFXTextField fx:id="userUsername" editable="false" focusTraversable="false" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="25.0" promptText="Username">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor></JFXTextField>
                                           <JFXTextField fx:id="userName" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText="Full Name" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                                           <JFXComboBox fx:id="userDepartment" focusColor="#048ba8" labelFloat="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" promptText="Department" style="-fx-prompt-text-fill: #048ba8; -fx-text-fill: #39A9C0;" unFocusColor="#047f97" GridPane.columnSpan="2" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" />
                                        </children>
@@ -116,7 +142,10 @@
                                           <Font size="27.0" />
                                        </font>
                                     </Label>
-                                    <FontAwesomeIconView fx:id="addNew" glyphName="USER_PLUS" onMouseClicked="#addNewClicked" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
+                                    <FontAwesomeIconView fx:id="addNew" glyphName="USER_PLUS" onMouseClicked="#addNewClicked" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></FontAwesomeIconView>
                                  </children>
                               </AnchorPane>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1B2634;" VBox.vgrow="SOMETIMES">
@@ -159,7 +188,10 @@
                   </Label>
                </children>
             </AnchorPane>
-            <JFXListView fx:id="UserView" fixedCellSize="0.0" onMouseClicked="#userSelected" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="ALWAYS" />
+            <JFXListView fx:id="UserView" fixedCellSize="0.0" onMouseClicked="#userSelected" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="ALWAYS">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXListView>
          </children>
       </VBox>
    </right>

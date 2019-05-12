@@ -121,8 +121,34 @@ public class LoginPopupFXMLController implements Initializable {
      */
     @FXML
     private void skip(ContextMenuEvent event) {
-        loadMain();
-        closeStage();
+        loadpane.setVisible(true);
+        new Thread(() -> {
+            List<String[]> sqlReturn = CommunicationHandler.getInstance().sendQuery(new String[]{"login", "olnor18", StringUtils.hash("kode")});
+            if (sqlReturn != null && !sqlReturn.isEmpty() && !sqlReturn.get(0)[0].equalsIgnoreCase("error")) {
+                CredentialContainer.getInstance().setUsername("olnor18");
+                CredentialContainer.getInstance().setPassword(StringUtils.hash("kode"));
+                Platform.runLater(() -> {
+                    if (containerInstance.isFirst()) {
+                        loadMain();
+                    }
+                    closeStage();
+                });
+
+            } else {
+                Platform.runLater(()
+                        -> {
+                    message.setText("Wrong username or password!");
+                    password.setText("");
+                    username.getStyleClass().add("wrong-credentials");
+                    password.getStyleClass().add("wrong-credentials");
+                });
+
+            }
+            Platform.runLater(()
+                    -> {
+                loadpane.setVisible(false);
+            });
+        }).start();
     }
 
     /**

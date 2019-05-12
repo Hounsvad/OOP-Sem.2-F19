@@ -87,7 +87,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
     public List<String[]> parseQuery(String... query) {
 
         ResultSet sqlReturnValues;
-        List<String[]> output;
+        List<String[]> output = new ArrayList<String[]>();
         Statement stmt = null;
         String queryString;
         try {
@@ -190,6 +190,12 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 break;
             case "getDepartments":
                 queryString = "SELECT department_id, name FROM departments";
+                break;
+            case "assignPatient":
+                queryString = "INSERT INTO patient_assignment VALUES (" + query[1] + "," + query[2] + ")";
+                break;
+            case "removeAssignedPatient":
+                queryString = "DELETE FROM patient_assignment WHERE user_id = " + query[1] + " AND patient_id = " + query[2];
                 break;
             default:
                 return new ArrayList<String[]>() {

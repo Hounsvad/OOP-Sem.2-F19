@@ -60,6 +60,8 @@ public class DomainInterfaceImpl implements DomainInterface {
             put("userListByDepartment", "000-000");
             put("getPatientsByDepartment", "000-000");
             put("getDepartments", "000-000");
+            put("getPatientsByUser", "000-000");
+            put("updatePatientAssignment", "004-005");
 
         }
     };
@@ -180,6 +182,7 @@ public class DomainInterfaceImpl implements DomainInterface {
                             for (int i = 4; i < query.length; i++) {
                                 if (!roles.contains(query[i])) {
                                     persistenceInterface.parseQuery("addUserRole", query[3], query[i]);
+                                } else {
                                     roles.remove(roles.indexOf(query[i]));
                                 }
                             }
@@ -215,6 +218,20 @@ public class DomainInterfaceImpl implements DomainInterface {
                             return persistenceInterface.parseQuery("getMenuItems", userId);
                         case "getDepartments":
                             return persistenceInterface.parseQuery("getDepartments");
+                        case "updatePatientAssignment":
+                            addActivity();
+                            List<String> assignments = persistenceInterface.parseQuery("getPatients", query[3]).stream().map(t -> t[0]).collect(Collectors.toList());
+                            for (int i = 4; i < query.length; i++) {
+                                if (!assignments.contains(query[i])) {
+                                    persistenceInterface.parseQuery("assignPatient", query[3], query[i]);
+                                } else {
+                                    assignments.remove(assignments.indexOf(query[i]));
+                                }
+                            }
+                            assignments.forEach((t) -> {
+                                persistenceInterface.parseQuery("removeAssignedPatient", query[3], t);
+                            });
+                            return constructReturn("Success", "Patients updated");
                     }
                 } else {
                     return constructReturn("Error", "Missing required roles");
@@ -250,7 +267,7 @@ public class DomainInterfaceImpl implements DomainInterface {
     }
 
     private boolean hasRights(String action) {
-        return actions.get(action).isEmpty() || rights.contains(actions.get(action)) || rights.contains("000-000");
+        return action != null && (actions.get(action).isEmpty() || rights.contains(actions.get(action)) || rights.contains("000-000"));
     }
 
     private boolean isAssignedPatient(String id) {

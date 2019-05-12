@@ -47,7 +47,7 @@ public class User {
      *
      * @return the unique of the user
      */
-    public String getUserName() {
+    public String getUsername() {
         return userName;
     }
 
@@ -55,7 +55,7 @@ public class User {
      *
      * @return the full name of the user
      */
-    public String getFullName() {
+    public String getUserFullName() {
         return fullName;
     }
 
