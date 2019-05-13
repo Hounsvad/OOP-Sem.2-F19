@@ -41,7 +41,7 @@ public class DomainInterfaceImpl implements DomainInterface {
             put("getPatients", "004-001");
             put("addUser", "002-002");
             put("userList", "002-001");
-            put("alterUserfullName", "002-003");
+            put("alterUserFullName", "002-003");
             put("alterUserUsername", "002-003");
             put("resetUserPassword", "002-005");
             put("alterOwnPassword", "003-001");
@@ -168,7 +168,7 @@ public class DomainInterfaceImpl implements DomainInterface {
                             addActivity();
                             List<String[]> s = persistenceInterface.parseQuery("getUserDepartment", userId);
                             return persistenceInterface.parseQuery("getUsers", s.get(0)[0]);
-                        case "alterUserfullName":
+                        case "alterUserFullName":
                             addActivity();
                             persistenceInterface.parseQuery("alterUserFullName", query[3], query[4]);
                             return constructReturn("Success", "Full name of user altered");
@@ -277,6 +277,10 @@ public class DomainInterfaceImpl implements DomainInterface {
     }
 
     private boolean hasRights(String action) {
+        if (actions.get(action) == null) {
+            System.err.printf("Role '%s' non existant", action);
+
+        }
         return action != null && (actions.get(action).isEmpty() || rights.contains(actions.get(action)) || rights.contains("000-000"));
     }
 
@@ -285,7 +289,6 @@ public class DomainInterfaceImpl implements DomainInterface {
     }
 
     private void sendPassword(String username, String domain, String password) {
-        System.out.printf("Username: %s Domain: %s Password %s%n", username, domain, password);
         new EmailHandler(smtpConfiguration.get("host"), smtpConfiguration.get("port"), smtpConfiguration.get("username"), smtpConfiguration.get("password")).sendMail(username + "@" + domain, password);
     }
 

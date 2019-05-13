@@ -128,6 +128,8 @@ public class AdminFXMLController extends Module {
     private void departmentPicked(ActionEvent event) {
         populateUserList();
         populatePatientList();
+        userDepartment.getSelectionModel().select(departmentPicker.getSelectionModel().getSelectedItem());
+        newUserDepartment.getSelectionModel().select(departmentPicker.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -168,8 +170,10 @@ public class AdminFXMLController extends Module {
         if (userDepartment.getSelectionModel().getSelectedItem() != departmentPicker.getSelectionModel().getSelectedItem()) {
             CommunicationHandler.getInstance().sendQuery("setUserDepartment", UserView.getSelectionModel().getSelectedItem().getUserID(), userDepartment.getSelectionModel().getSelectedItem().getDepartmentId());
         }
-        clearFields();
-        updateUserDetailFields();
+        if (!userName.getText().equals(UserView.getSelectionModel().getSelectedItem().getUserFullName())) {
+            CommunicationHandler.getInstance().sendQuery("alterUserFullName", UserView.getSelectionModel().getSelectedItem().getUserID(), userName.getText());
+        }
+        populateUserList();
     }
 
     @FXML
@@ -195,10 +199,8 @@ public class AdminFXMLController extends Module {
                     stage.show();
                 } catch (IOException e) {
                 }
-
             });
         }).start();
-
     }
 
     private void populateDepartmentLists() {

@@ -20,7 +20,7 @@
           <Region />
         </root>
       </SubScene>
-      <VBox fx:id="menu" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" style="-fx-background-color: #048BA8;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="menu" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" style="-fx-background-color: #048BA8;" translateX="-140.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <GridPane fx:id="menuGrid" prefHeight="730.0" VBox.vgrow="SOMETIMES">
               <columnConstraints>

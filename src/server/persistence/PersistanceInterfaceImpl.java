@@ -233,7 +233,9 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
 
             }
         } catch (SQLException ex) {
-            //ex.printStackTrace();
+            if (!ex.getMessage().contains("No results")) {
+                ex.printStackTrace();
+            }
             output = new ArrayList<String[]>() {
                 {
                     add(new String[]{"Error", "Unexpected sql error"});
