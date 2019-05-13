@@ -108,6 +108,7 @@ public final class CredentialContainer {
                     s.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
                     login.initStyle(StageStyle.UNDECORATED);
                     login.initModality(Modality.APPLICATION_MODAL);
+                    login.setTitle("Sanitas Overview - Login");
                     login.getIcons().add(new Image(getClass().getResourceAsStream("/client/presentation/resources/sanitaslogo.png")));
                     login.setScene(s);
                     login.show();

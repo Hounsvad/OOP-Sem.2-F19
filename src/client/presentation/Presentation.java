@@ -54,6 +54,7 @@ public class Presentation extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
         stage.setScene(scene);
+        stage.setTitle("Sanitas Overview - Login");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/client/presentation/resources/sanitaslogo.png")));
         stage.show();
 
