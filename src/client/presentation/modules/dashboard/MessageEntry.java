@@ -114,7 +114,7 @@ public class MessageEntry {
     /**
      *
      */
-    public void showCreationPopup() {
+    public final void showCreationPopup() {
         Platform.runLater(()
                 -> {
             try {
