@@ -27,6 +27,13 @@ public class ActivityEntry {
     private final String specificsOfEntry;
     private final String ip;
 
+    /**
+     *
+     * @param typeOfEntry
+     * @param dateOfEntry
+     * @param specificsOfEntry
+     * @param ip
+     */
     public ActivityEntry(String typeOfEntry, Date dateOfEntry, String specificsOfEntry, String ip) {
         this.typeOfEntry = typeOfEntry;
         this.dateOfEntryString = String.format("%1$" + 2 + "s", dateOfEntry.getHours()).replace(' ', '0') + ":"
@@ -44,6 +51,9 @@ public class ActivityEntry {
         return getBoldString(typeOfEntry) + "\n" + ip + "\n" + dateOfEntryString;
     }
 
+    /**
+     *
+     */
     public void showPopup() {
         Platform.runLater(()
                 -> {

@@ -174,6 +174,10 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+    /**
+     *
+     * @param state
+     */
     public void setSpinner(boolean state) {
         subScene.setCursor(state ? Cursor.WAIT : Cursor.DEFAULT);
     }

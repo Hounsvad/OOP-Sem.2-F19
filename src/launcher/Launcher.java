@@ -16,6 +16,10 @@ import server.communication.ServerController;
  */
 public class Launcher extends Application {
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         new Thread(() -> Presentation.main(args)).start();
         new Thread(new ServerController()).start();

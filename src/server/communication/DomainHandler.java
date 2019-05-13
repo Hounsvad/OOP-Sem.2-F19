@@ -27,6 +27,8 @@ public class DomainHandler {
 
     /**
      * Constructs the Domainhandler and initializes the Interface
+     *
+     * @param ip
      */
     public DomainHandler(String ip) {
         domainInterface = new DomainInterfaceImpl(ip);

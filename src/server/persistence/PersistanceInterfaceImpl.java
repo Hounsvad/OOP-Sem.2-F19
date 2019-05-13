@@ -76,6 +76,10 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public static PersistanceInterfaceImpl getInstance() {
         if (instance == null) {
             instance = new PersistanceInterfaceImpl();
@@ -83,6 +87,11 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
         return instance;
     }
 
+    /**
+     *
+     * @param query
+     * @return
+     */
     @Override
     public List<String[]> parseQuery(String... query) {
 

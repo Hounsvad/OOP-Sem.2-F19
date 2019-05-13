@@ -376,6 +376,13 @@ public class EmailHandler {
                 + "</html>";
     }
 
+    /**
+     *
+     * @param host
+     * @param port
+     * @param username
+     * @param password
+     */
     public EmailHandler(String host, String port, String username, String password) {
 
         this.host = host;
@@ -385,6 +392,11 @@ public class EmailHandler {
 
     }
 
+    /**
+     *
+     * @param reciptient
+     * @param userPassword
+     */
     public void sendMail(String reciptient, String userPassword) {
 
         Properties prop = new Properties();

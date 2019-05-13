@@ -15,6 +15,11 @@ public class Role implements Comparable {
 
     private String roleDescription;
 
+    /**
+     *
+     * @param roleId
+     * @param roleDescription
+     */
     public Role(String roleId, String roleDescription) {
         this.roleId = roleId;
         this.roleDescription = roleDescription;

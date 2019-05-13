@@ -19,6 +19,9 @@ import javafx.stage.StageStyle;
  */
 public class MedicinalEntry {
 
+    /**
+     *
+     */
     public static void showCreationPopup() {
         Platform.runLater(()
                 -> {

@@ -42,6 +42,8 @@ public class DashboardFXMLController extends Module {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -87,6 +89,9 @@ public class DashboardFXMLController extends Module {
         new MessageEntry(this);
     }
 
+    /**
+     *
+     */
     public void updateData() {
         //Check if there are cached values, and use those until the new values arrive
         if (activityEntriesCache != null && messageEntriesCache != null) {
@@ -137,6 +142,9 @@ public class DashboardFXMLController extends Module {
                 start();
     }
 
+    /**
+     *
+     */
     protected void clearAll() {
         activityEntriesCache = null;
         messageEntriesCache = null;

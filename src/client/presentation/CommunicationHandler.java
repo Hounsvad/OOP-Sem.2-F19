@@ -54,6 +54,10 @@ public class CommunicationHandler {
         return communicationHandler;
     }
 
+    /**
+     *
+     * @param mainFXMLController
+     */
     public void setMainFXMLController(MainFXMLController mainFXMLController) {
         this.mainFXMLController = mainFXMLController;
     }

@@ -91,6 +91,9 @@ public class JournalFXMLController extends Module {
         this.currentPatient = patient;
     }
 
+    /**
+     *
+     */
     public void updateData() {
         if (currentPatient == null) {
             return;
@@ -115,6 +118,9 @@ public class JournalFXMLController extends Module {
         }
     }
 
+    /**
+     *
+     */
     @Override
     protected void clearAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -13,10 +13,23 @@ import javafx.fxml.Initializable;
  */
 public abstract class Module implements Initializable {
 
+    /**
+     *
+     */
     protected CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
+
+    /**
+     *
+     */
     protected CredentialContainer credentialContainer = CredentialContainer.getInstance();
 
+    /**
+     *
+     */
     abstract protected void clearAll();
 
+    /**
+     *
+     */
     abstract public void updateData();
 }

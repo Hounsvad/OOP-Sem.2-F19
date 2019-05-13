@@ -79,6 +79,9 @@ public class AdminFXMLController extends Module {
 
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -233,6 +236,9 @@ public class AdminFXMLController extends Module {
 
     }
 
+    /**
+     *
+     */
     protected void populatePatientList() {
         new Thread(() -> {
             List<Patient> patients = CommunicationHandler.getInstance().sendQuery("getPatientsByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).stream().map(t -> new Patient(t[0], t[1])).collect(Collectors.toList());
@@ -256,6 +262,9 @@ public class AdminFXMLController extends Module {
 
     }
 
+    /**
+     *
+     */
     protected void updatePatientAssignments() {
         new Thread(() -> {
             int[] indecies = CommunicationHandler.getInstance().sendQuery("getPatientsByUser", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> assignmentView.getItems().indexOf(new Patient(t[1], t[0]))).collect(Collectors.toList()).stream().mapToInt(i -> i).toArray();
@@ -305,6 +314,9 @@ public class AdminFXMLController extends Module {
         assignmentView.getSelectionModel().clearSelection();
     }
 
+    /**
+     *
+     */
     @Override
     protected void clearAll() {
         //clears department pickers
@@ -316,6 +328,9 @@ public class AdminFXMLController extends Module {
         clearFields();
     }
 
+    /**
+     *
+     */
     @Override
     public void updateData() {
         populateDepartmentLists();

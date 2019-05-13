@@ -37,6 +37,8 @@ public class MessageEntryCreationPopupFXMLController extends Popup {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

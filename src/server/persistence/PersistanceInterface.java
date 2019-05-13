@@ -13,6 +13,11 @@ import java.util.List;
  */
 public interface PersistanceInterface {
 
+    /**
+     *
+     * @param query
+     * @return
+     */
     public List<String[]> parseQuery(String... query);
 
 }

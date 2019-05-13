@@ -19,6 +19,9 @@ import javafx.stage.StageStyle;
  */
 public class ManualEntry {
 
+    /**
+     *
+     */
     public static void showCreationPopup() {
         Platform.runLater(()
                 -> {

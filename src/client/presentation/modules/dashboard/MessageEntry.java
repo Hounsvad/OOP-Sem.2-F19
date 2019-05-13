@@ -66,6 +66,10 @@ public class MessageEntry {
         this.moduleController = null;
     }
 
+    /**
+     *
+     * @param moduleController
+     */
     public MessageEntry(Initializable moduleController) {
         this.subject = "";
         this.sender = "";
@@ -107,6 +111,9 @@ public class MessageEntry {
         });
     }
 
+    /**
+     *
+     */
     public void showCreationPopup() {
         Platform.runLater(()
                 -> {

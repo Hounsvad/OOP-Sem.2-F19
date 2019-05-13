@@ -67,6 +67,10 @@ public class DomainInterfaceImpl implements DomainInterface {
         }
     };
 
+    /**
+     *
+     * @param ip
+     */
     public DomainInterfaceImpl(String ip) {
         this.ip = ip;
         new Scanner(getClass().getResourceAsStream("/server/recources/SMTPConfiguration.config")).useDelimiter("\n").forEachRemaining((s) -> smtpConfiguration.put(s.split(" := ")[0], s.split(" := ")[1]));

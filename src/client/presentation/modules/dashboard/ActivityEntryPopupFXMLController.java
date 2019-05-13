@@ -63,7 +63,6 @@ public class ActivityEntryPopupFXMLController extends Popup {
      *
      * @param titleString       the title for the entry
      * @param descriptionString the description of the entry
-     * @param queryString       the query of the entry???
      * @param dateString        the date of the entry
      * @param ipString          the ip of the entry
      */
