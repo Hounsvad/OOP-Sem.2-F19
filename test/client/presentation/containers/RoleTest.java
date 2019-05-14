@@ -30,6 +30,7 @@ public class RoleTest {
     @Test
     public void testGetRoleId() {
         Role testInstance = new Role("001-001", "roleDescription");
+        Assert.assertEquals("001-001", testInstance.getRoleId());
     }
 
     /**
