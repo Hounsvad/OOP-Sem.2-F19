@@ -37,6 +37,7 @@ public class MessageEntryCreationPopupFXMLController extends Popup {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -53,7 +54,7 @@ public class MessageEntryCreationPopupFXMLController extends Popup {
     @FXML
     private void send() {
         if (recipients.getSelectionModel().getSelectedItem() != null && !subject.getText().isEmpty() && !message.getText().isEmpty()) {
-            communicationHandler.sendQuery("sendMessage", credentialContainer.getUsername(), credentialContainer.getPassword(), recipients.getSelectionModel().getSelectedItem().getUserID(), subject.getText(), message.getText());
+            communicationHandler.sendQuery("sendMessage", recipients.getSelectionModel().getSelectedItem().getUserID(), subject.getText(), message.getText());
             new Thread(() -> {
                 Platform.runLater(() -> ((DashboardFXMLController) getModuleController()).updateData());
             }).start();
