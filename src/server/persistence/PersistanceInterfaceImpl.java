@@ -280,7 +280,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 break;
             case "getUserRoles":
                  try {
-                    stmt = conn.prepareStatement("SELECT role FROM role_assignment where user_id = " + query[1]);
+                    stmt = conn.prepareStatement("SELECT role FROM role_assignment where user_id = ?");
                     stmt.setLong(1, Long.parseLong(query[1]));      
                 } catch (SQLException ex) {
                     ex.printStackTrace();
@@ -444,7 +444,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 break;
             case "setUserDepartment":
                 try {
-                    stmt = conn.prepareStatement("UPDATE users SET department='" + query[2] + "' WHERE id = " + query[1] + "");
+                    stmt = conn.prepareStatement("UPDATE users SET department=? WHERE id = ?");
                     stmt.setString(1, (query[2]));
                     stmt.setLong(2, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
