@@ -5,6 +5,7 @@ package client.presentation.modules.journal;
 
 import client.presentation.CommunicationHandler;
 import client.presentation.containers.Patient;
+import client.presentation.containers.PatientExtended;
 import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
 import com.jfoenix.controls.JFXComboBox;
@@ -40,7 +41,7 @@ public class JournalFXMLController extends Module {
      * The list view for the Patients
      */
     @FXML
-    private JFXListView<Patient> PatientView;
+    protected JFXListView<Patient> PatientView;
 
     private Patient currentPatient;
     private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
@@ -74,7 +75,7 @@ public class JournalFXMLController extends Module {
      */
     @FXML
     private void addMedicinalEntry() {
-        MedicinalEntry.showCreationPopup();
+        MedicinalEntry.showCreationPopup(null);
     }
 
     /**
@@ -87,8 +88,8 @@ public class JournalFXMLController extends Module {
         ManualEntry.showCreationPopup();
     }
 
-    private void getPatient(Patient patient) {
-        this.currentPatient = patient;
+    protected Patient getPatient() {
+        return PatientView.getSelectionModel().getSelectedItem();
     }
 
     /**
