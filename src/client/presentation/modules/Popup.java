@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 public abstract class Popup implements Initializable {
 
     @FXML
-    private FontAwesomeIconView cross;
+    protected FontAwesomeIconView cross;
 
     private Initializable moduleController;
 

@@ -7,16 +7,19 @@ package client.presentation.modules.calendar;
 
 import client.presentation.containers.Patient;
 import client.presentation.modules.Module;
+import client.presentation.modules.dashboard.MessageEntry;
 import client.presentation.utils.credentials.CredentialContainer;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
+import com.calendarfx.view.DateControl;
 import com.calendarfx.view.DayViewBase;
 import com.calendarfx.view.DetailedWeekView;
 import com.calendarfx.view.YearMonthView;
 import com.calendarfx.view.YearMonthView.DateCell;
 import com.jfoenix.controls.JFXListView;
+import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -33,9 +36,18 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -67,6 +79,12 @@ public class CalendarFXMLController extends Module {
         detailedWeekView.earlyLateHoursStrategyProperty().set(DayViewBase.EarlyLateHoursStrategy.SHOW_COMPRESSED);
         detailedWeekView.weekFieldsProperty().set(WeekFields.ISO);
         detailedWeekView.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+        detailedWeekView.setEntryEditPolicy(param -> param.getEditOperation().equals(DateControl.EditOperation.DELETE));
+        detailedWeekView.setEntryDetailsPopOverContentCallback(param -> calendarDetailsPopup());
+        detailedWeekView.setEntryContextMenuCallback(param -> calendarEntryContextMenu());
+        detailedWeekView.setContextMenuCallback(param -> calendarContextMenu());
+        detailedWeekView.setEntryFactory(param -> createCalendarEntry());
+
         //Add calendar to the designated calendar pane
         calendarPane.getChildren().add(detailedWeekView);
 
@@ -263,6 +281,79 @@ public class CalendarFXMLController extends Module {
 
     private long toMillis(LocalDate date, LocalTime time) {
         return date.atTime(time).toEpochSecond(ZoneId.systemDefault().getRules().getOffset(Instant.now())) * 1000;
+    }
+
+    private Node calendarDetailsPopup() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarEventDetailsPopoverFXML.fxml"));
+            return fxmlLoader.load();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    private ContextMenu calendarEntryContextMenu() {
+        MenuItem editEvent = new MenuItem("Edit");
+        editEvent.setOnAction(param -> openEventEditor());
+        return new ContextMenu(editEvent);
+    }
+
+    private ContextMenu calendarContextMenu() {
+        MenuItem editDayRythm = new MenuItem("Edit Dayrythm");
+        editDayRythm.setOnAction(param -> openDayRythmEditor());
+        MenuItem createEvent = new MenuItem("Create event");
+        createEvent.setOnAction(param -> openEventCreator());
+        return new ContextMenu(editDayRythm, createEvent);
+    }
+
+    private Entry<String> createCalendarEntry() {
+        return null;
+    }
+
+    private void openEventEditor() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarEventEditPopupFXML.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            root.getStylesheets().add(MessageEntry.class.getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void openDayRythmEditor() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarDayRythmEditorPopupFXML.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            root.getStylesheets().add(MessageEntry.class.getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void openEventCreator() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarEventCreationPopupFXML.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            root.getStylesheets().add(MessageEntry.class.getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }
