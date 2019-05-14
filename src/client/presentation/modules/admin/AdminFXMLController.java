@@ -195,8 +195,11 @@ public class AdminFXMLController extends Module {
                     stage.initStyle(StageStyle.UNDECORATED);
                     root.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
                     stage.setScene(new Scene(root));
+                    //set position
+                    //stage.setX((root.getScene().getWindow().getX() + root.getScene().getWindow().getWidth() / 2) - stage.getWidth() / 2);
                     ((PatientCreationPopupFXMLController) fxmlLoader.getController()).setAdminController(this);
                     stage.show();
+                    System.out.println(root.getScene().getX());
                 } catch (IOException e) {
                 }
             });
