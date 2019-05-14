@@ -7,9 +7,9 @@ package server.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -97,18 +97,18 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
 
         ResultSet sqlReturnValues;
         List<String[]> output = new ArrayList<String[]>();
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         String queryString;
-        try {
-            //readying sql driver and connection
-            stmt = conn.createStatement();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
         switch (query[0]) {
             case "checkCredentials":
-                queryString = "SELECT id.full_name, matchingId.id FROM id, (SELECT id FROM users WHERE password = '" + query[2] + "' AND username = '" + query[1] + "') AS matchingId WHERE matchingId.id = id.id";
+                try {
+                    stmt = conn.prepareStatement("SELECT id.full_name, matchingId.id FROM id, (SELECT id FROM users WHERE password = ? AND username = ?) AS matchingId WHERE matchingId.id = id.id");
+                    stmt.setString(1, query[2]);
+                    stmt.setString(2, query[1]);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                //queryString = "SELECT id.full_name, matchingId.id FROM id, (SELECT id FROM users WHERE password = '" + query[2] + "' AND username = '" + query[1] + "') AS matchingId WHERE matchingId.id = id.id";
                 break;
             case "getCalendar":
                 queryString = "SELECT calendar.* FROM calendar, (SELECT participation.event_id FROM participation WHERE participation.id = " + query[1] + ") AS x WHERE (calendar.date >= " + query[2] + " AND calendar.date <= " + query[3] + ") AND calendar.event_id = x.event_id";
@@ -221,7 +221,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
         }
 
         try {
-            sqlReturnValues = stmt.executeQuery(queryString);
+            sqlReturnValues = stmt.executeQuery();//(queryString);
             int columnCount = sqlReturnValues.getMetaData().getColumnCount();
             output = new ArrayList<>();
             while (sqlReturnValues.next()) {
