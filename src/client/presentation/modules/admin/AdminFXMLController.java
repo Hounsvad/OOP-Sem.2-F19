@@ -128,6 +128,8 @@ public class AdminFXMLController extends Module {
     private void departmentPicked(ActionEvent event) {
         populateUserList();
         populatePatientList();
+        userDepartment.getSelectionModel().select(departmentPicker.getSelectionModel().getSelectedItem());
+        newUserDepartment.getSelectionModel().select(departmentPicker.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -168,8 +170,10 @@ public class AdminFXMLController extends Module {
         if (userDepartment.getSelectionModel().getSelectedItem() != departmentPicker.getSelectionModel().getSelectedItem()) {
             CommunicationHandler.getInstance().sendQuery("setUserDepartment", UserView.getSelectionModel().getSelectedItem().getUserID(), userDepartment.getSelectionModel().getSelectedItem().getDepartmentId());
         }
-        clearFields();
-        updateUserDetailFields();
+        if (!userName.getText().equals(UserView.getSelectionModel().getSelectedItem().getUserFullName())) {
+            CommunicationHandler.getInstance().sendQuery("alterUserFullName", UserView.getSelectionModel().getSelectedItem().getUserID(), userName.getText());
+        }
+        populateUserList();
     }
 
     @FXML
@@ -191,14 +195,15 @@ public class AdminFXMLController extends Module {
                     stage.initStyle(StageStyle.UNDECORATED);
                     root.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
                     stage.setScene(new Scene(root));
+                    //set position
+                    //stage.setX((root.getScene().getWindow().getX() + root.getScene().getWindow().getWidth() / 2) - stage.getWidth() / 2);
                     ((PatientCreationPopupFXMLController) fxmlLoader.getController()).setAdminController(this);
                     stage.show();
+                    System.out.println(root.getScene().getX());
                 } catch (IOException e) {
                 }
-
             });
         }).start();
-
     }
 
     private void populateDepartmentLists() {

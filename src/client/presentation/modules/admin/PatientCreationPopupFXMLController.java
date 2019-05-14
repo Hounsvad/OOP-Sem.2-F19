@@ -44,7 +44,6 @@ public class PatientCreationPopupFXMLController extends Popup implements Initial
      */
     protected void setAdminController(AdminFXMLController c) {
         adminController = c;
-        System.out.println("controller added");
     }
 
     /**
