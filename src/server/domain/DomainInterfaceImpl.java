@@ -180,8 +180,8 @@ public class DomainInterfaceImpl implements DomainInterface {
                             sendPassword(query[5], domain, newPassword);
                             return constructReturn("Success", "Password updated");
                         case "alterOwnPassword":
-                            addActivity(query[4]);
-                            persistenceInterface.parseQuery("setUserPassword", query[4], query[3]);
+                            addActivity();
+                            persistenceInterface.parseQuery("setUserPassword", userId, query[3]);
                             return constructReturn("Success", "Password succesfully updated");
                         case "setUserRoles":
                             addActivity();
