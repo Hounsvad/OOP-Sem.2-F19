@@ -294,9 +294,8 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 break;
             case "addJournalEntry":
                 try {
-                    stmt = conn.prepareStatement("INSERT INTO journal VALUES (?, ?, ?, ?, ?,?)");
+                    stmt = conn.prepareStatement("INSERT INTO journal VALUES (?, ?, ?, ?, ?)");
                     stmt.setLong(1, Long.parseLong(query[1]));
-                    stmt.setString(2, query[2]);
                     stmt.setLong(3, Long.parseLong(query[3]));
                     stmt.setString(4, query[4]);
                     stmt.setLong(5, Long.parseLong(query[5]));
@@ -304,7 +303,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                // queryString = "INSERT INTO journal VALUES (" + query[1] + ", '" + query[2] + "', " + query[3] + ", '" + query[4] + "', " + query[5] + ", '" + query[6] + "')";
+                // queryString = "INSERT INTO journal VALUES (" + query[1] + ", " + query[3] + ", '" + query[4] + "', " + query[5] + ", '" + query[6] + "')";
                 break;
             case "getJournal":
                 try {
