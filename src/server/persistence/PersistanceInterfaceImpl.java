@@ -111,16 +111,47 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 //queryString = "SELECT id.full_name, matchingId.id FROM id, (SELECT id FROM users WHERE password = '" + query[2] + "' AND username = '" + query[1] + "') AS matchingId WHERE matchingId.id = id.id";
                 break;
             case "getCalendar":
-                queryString = "SELECT calendar.* FROM calendar, (SELECT participation.event_id FROM participation WHERE participation.id = " + query[1] + ") AS x WHERE (calendar.date >= " + query[2] + " AND calendar.date <= " + query[3] + ") AND calendar.event_id = x.event_id";
+                //queryString = "SELECT calendar.* FROM calendar, (SELECT participation.event_id FROM participation WHERE participation.id = " + query[1] + ") AS x WHERE (calendar.date >= " + query[2] + " AND calendar.date <= " + query[3] + ") AND calendar.event_id = x.event_id";
+                try {
+                    stmt = conn.prepareStatement("SELECT calendar.* FROM calendar, (SELECT participation.event_id FROM participation WHERE participation.id = ?) AS x WHERE (calendar.date >= ? AND calendar.date <= ?) AND calendar.event_id = x.event_id");
+                    stmt.setLong(1, Long.parseLong(query[1]));
+                    stmt.setLong(2, Long.parseLong(query[2]));
+                    stmt.setLong(3, Long.parseLong(query[3]));
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
                 break;
             case "getEventParticipants":
-                queryString = "SELECT id.id, id.full_name FROM id, (SELECT id FROM participation WHERE event_id = " + query[1] + ") as participants WHERE id.id = participants.id";
+                // queryString = "SELECT id.id, id.full_name FROM id, (SELECT id FROM participation WHERE event_id = " + query[1] + ") as participants WHERE id.id = participants.id";
+                try {
+                    stmt = conn.prepareStatement("SELECT id.id, id.full_name FROM id, (SELECT id FROM participation WHERE event_id = ?) as participants WHERE id.id = participants.id");
+                    stmt.setLong(1, Long.parseLong(query[1]));
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
                 break;
             case "addEventParticipant":
-                queryString = "INSERT INTO participation VALUES (" + query[1] + ", " + query[2] + ")";
+                // queryString = "INSERT INTO participation VALUES (" + query[1] + ", " + query[2] + ")";
+                try {
+                    stmt = conn.prepareStatement("INSERT INTO participation VALUES (?, ?)");
+                    stmt.setString(1, query[1]);
+                    stmt.setString(2, query[2]);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
                 break;
             case "addCalendarEvent":
-                queryString = "INSERT INTO calender VALUES ((SELECT MAX(W.event_id) FROM calender as W)+1, " + query[1] + ", '" + query[3] + "', '" + query[4] + "'," + query[2] + ")";
+                // queryString = "INSERT INTO calender VALUES ((SELECT MAX(W.event_id) FROM calender as W)+1, " + query[1] + ", '" + query[3] + "', '" + query[4] + "'," + query[2] + ")";
+                try {
+                    stmt = conn.prepareStatement("INSERT INTO calender VALUES ((SELECT MAX(W.event_id) FROM calender as W)+1, ?, ?, ?,?)");
+                    stmt.setLong(1, Long.parseLong(query[1]));
+                    stmt.setLong(2, Long.parseLong(query[3]));
+                    stmt.setLong(3, Long.parseLong(query[4]));
+                    Long.parse
+                    stmt.setLong(4, query[2]);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
                 break;
             case "updateCalendarEvent":
                 queryString = "UPDATE calender SET date = " + query[2] + ", event_name = '" + query[4] + "', event_detail = '" + query[5] + "', date_end = " + query[3] + " WHERE event_id = " + query[1];
