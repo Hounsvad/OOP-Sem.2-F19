@@ -71,7 +71,7 @@
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button fx:id="buttonDashboardLabel1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="140.0" stylesheets="@css/menuStyleSheet.css">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openSettings" prefHeight="60.0" prefWidth="140.0" stylesheets="@css/menuStyleSheet.css">
                      <graphic>
                         <Label contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Settings" textAlignment="RIGHT" textFill="#2e4057">
                            <font>
@@ -83,7 +83,7 @@
                         </Label>
                      </graphic>
                   </Button>
-                  <Button fx:id="buttonDashboard1" cache="true" cacheHint="SPEED" centerShape="false" focusTraversable="false" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" stylesheets="@css/menuStyleSheet.css" GridPane.columnIndex="1">
+                  <Button cache="true" cacheHint="SPEED" centerShape="false" focusTraversable="false" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openSettings" prefHeight="60.0" prefWidth="60.0" stylesheets="@css/menuStyleSheet.css" GridPane.columnIndex="1">
                      <graphic>
                         <FontAwesomeIconView fill="#2e4057" glyphName="GEAR" size="50" />
                      </graphic>

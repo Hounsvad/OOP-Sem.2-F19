@@ -13,13 +13,17 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,6 +31,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 /**
@@ -73,6 +80,8 @@ public class MainFXMLController implements Initializable {
      */
     @FXML
     private AnchorPane root;
+    @FXML
+    private GridPane menuGrid1;
 
     /**
      * Initializes the controller class
@@ -113,7 +122,6 @@ public class MainFXMLController implements Initializable {
         root.requestFocus();
         root.setOnKeyReleased(t -> {
             if (t.getCode().equals(KeyCode.F5)) {
-                System.out.println("Hit F5");
                 module.updateData();
             }
         });
@@ -180,5 +188,26 @@ public class MainFXMLController implements Initializable {
      */
     public void setSpinner(boolean state) {
         subScene.setCursor(state ? Cursor.WAIT : Cursor.DEFAULT);
+    }
+
+    @FXML
+    private void openSettings(ActionEvent event) {
+        System.out.println("openSettings");
+        new Thread(() -> {
+            Platform.runLater(()
+                    -> {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SettingsPopupFXML.fxml"));
+                    Parent root = (Parent) fxmlLoader.load();
+                    Stage stage = new Stage();
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.initStyle(StageStyle.UNDECORATED);
+                    root.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException e) {
+                }
+            });
+        }).start();
     }
 }
