@@ -216,7 +216,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 break;
             case "getMailDomainByDepartment":
                 try {
-                    stmt = conn.prepareStatement("SELECT department_mail_domain FROM departments WHERE department_id = '" + query[1] + "'");
+                    stmt = conn.prepareStatement("SELECT department_mail_domain FROM departments WHERE department_id = ?)");
                     stmt.setString(1, (query[1]));
        
                 } catch (SQLException ex) {
@@ -226,7 +226,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 break;
             case "getUsers":
                  try {
-                    stmt = conn.prepareStatement("SELECT username, users.id, full_name FROM users, id WHERE id.id = users.id AND users.department = '" + query[1] + "' ORDER BY users.id");
+                    stmt = conn.prepareStatement("SELECT username, users.id, full_name FROM users, id WHERE id.id = users.id AND users.department = ? ORDER BY users.id");
                     stmt.setString(1, (query[1]));
        
                 } catch (SQLException ex) {
