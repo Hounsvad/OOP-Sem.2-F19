@@ -203,7 +203,7 @@ public class DomainInterfaceImpl implements DomainInterface {
                             return persistenceInterface.parseQuery("getRoles");
                         case "addJournalEntry":
                             addActivity();
-                            persistenceInterface.parseQuery("addJournalEntry", query[3], query[4], Long.toString(System.currentTimeMillis()), query[6], userId, query[5]);
+                            persistenceInterface.parseQuery("addJournalEntry", query[3], query[4], query[5], Long.toString(System.currentTimeMillis()), userId);
                             return constructReturn("Success", "Entry added");
                         case "getJournal":
                             addActivity();

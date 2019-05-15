@@ -96,7 +96,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
     public List<String[]> parseQuery(String... query) {
 
         ResultSet sqlReturnValues;
-        List<String[]> output = new ArrayList<String[]>();
+        List<String[]> output = new ArrayList<>();
         PreparedStatement stmt = null;
         String queryString;
         switch (query[0]) {
@@ -296,10 +296,10 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 try {
                     stmt = conn.prepareStatement("INSERT INTO journal VALUES (?, ?, ?, ?, ?)");
                     stmt.setLong(1, Long.parseLong(query[1]));
-                    stmt.setLong(3, Long.parseLong(query[3]));
-                    stmt.setString(4, query[4]);
-                    stmt.setLong(5, Long.parseLong(query[5]));
-                    stmt.setString(6, query[6]);
+                    stmt.setLong(2, Long.parseLong(query[4]));
+                    stmt.setString(3, query[3]);
+                    stmt.setLong(4, Long.parseLong(query[5]));
+                    stmt.setString(5, query[2]);
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
