@@ -50,7 +50,7 @@
                                           </AnchorPane>
                                        </children>
                                     </AnchorPane>
-                                    <JFXListView fx:id="medicinalEntriesView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="256.5" prefHeight="340.0" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="SOMETIMES" />
+                                    <JFXListView fx:id="medicinalEntriesView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="256.5" onMouseClicked="#medicinalSelected" prefHeight="340.0" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="SOMETIMES" />
                                  </children>
                            <GridPane.margin>
                               <Insets left="20.0" right="20.0" top="20.0" />
@@ -82,7 +82,7 @@
                                     </AnchorPane>
                                  </children>
                               </AnchorPane>
-                              <JFXListView fx:id="manualEntriesView" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="SOMETIMES" />
+                              <JFXListView fx:id="manualEntriesView" onMouseClicked="#manualSelected" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="SOMETIMES" />
                            </children>
                         </VBox>
                      </children>
@@ -100,7 +100,7 @@
                   <Font size="27.0" />
                </font>
             </Label>
-            <JFXListView fx:id="PatientView" fixedCellSize="0.0" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="ALWAYS" />
+            <JFXListView fx:id="patientView" fixedCellSize="0.0" onMouseClicked="#patientSelected" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </right>

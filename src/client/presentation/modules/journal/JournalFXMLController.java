@@ -5,14 +5,15 @@ package client.presentation.modules.journal;
 
 import client.presentation.CommunicationHandler;
 import client.presentation.containers.Patient;
-import client.presentation.containers.PatientExtended;
 import client.presentation.modules.Module;
-import client.presentation.utils.credentials.CredentialContainer;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -22,11 +23,6 @@ import javafx.scene.layout.AnchorPane;
  */
 public class JournalFXMLController extends Module {
 
-    /**
-     * The list view for the AutomaticEntries
-     */
-    @FXML
-    private JFXListView<LogEntry> automaticEntriesView;
     /**
      * The list view for the MedicinalEntries
      */
@@ -41,21 +37,13 @@ public class JournalFXMLController extends Module {
      * The list view for the Patients
      */
     @FXML
-    protected JFXListView<Patient> PatientView;
+    protected JFXListView<Patient> patientView;
 
-    private Patient currentPatient;
     private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
-    private final CredentialContainer credentialContainer = CredentialContainer.getInstance();
     @FXML
-    private JFXComboBox<?> departmentPicker;
+    private AnchorPane addMedicinalEntryButton;
     @FXML
-    private JFXListView<?> UserView1;
-    @FXML
-    private JFXListView<?> UserView11;
-    @FXML
-    private AnchorPane addUserButton;
-    @FXML
-    private JFXListView<?> UserView;
+    private AnchorPane addManualEntryButton;
 
     /**
      * Initializes the controller class
@@ -85,38 +73,32 @@ public class JournalFXMLController extends Module {
      */
     @FXML
     private void addManualEntry() {
-        ManualEntry.showCreationPopup();
+        ManualEntry.showCreationPopup(this);
     }
 
     protected Patient getPatient() {
-        return PatientView.getSelectionModel().getSelectedItem();
+        return patientView.getSelectionModel().getSelectedItem();
     }
 
     /**
      *
      */
     public void updateData() {
-        if (currentPatient == null) {
-            return;
-        }
-        try {
+        clearAll();
 //            List<LogEntry> logEntries = new ArrayList<>();
 //            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> logEntries.add(new LogEntry()));
 //            automaticEntriesView.getItems().addAll(logEntries);
 //
 //            List<MedicinalEntry> medicalEntries = new ArrayList<>();
-//            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> medicalEntries.add(new MedicinalEntry()));
+//            communicationHandler.sendQuery("getActivity").forEach((tuple) -> medicalEntries.add(new MedicinalEntry()));
 //            medicinalEntriesView.getItems().addAll(medicalEntries);
 //
-//            List<ManualEntry> manualEntries = new ArrayList<>();
-//            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> manualEntries.add(new ManualEntry()));
-//            manualEntriesView.getItems().addAll(manualEntries);
-//
-//            List<Patient> patients = new ArrayList<>();
-//            communicationHandler.sendQuery(new String[]{"getPatients", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> patients.add(new Patient(tuple[1], tuple[0])));
-//            PatientView.getItems().addAll(patients);
-        } catch (NullPointerException e) {
-        }
+
+        List<Patient> patients = new ArrayList<>();
+        communicationHandler.sendQuery("getPatients").forEach((tuple) -> patients.add(new Patient(tuple[1], tuple[0])));
+        patientView.getItems().addAll(patients);
+        patientView.getSelectionModel().selectFirst();
+        updateEntryDate();
     }
 
     /**
@@ -124,7 +106,32 @@ public class JournalFXMLController extends Module {
      */
     @Override
     protected void clearAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        manualEntriesView.getItems().clear();
+        medicinalEntriesView.getItems().clear();
+        patientView.getItems().clear();
+    }
+
+    @FXML
+    private void medicinalSelected(MouseEvent event) {
+    }
+
+    @FXML
+    private void manualSelected(MouseEvent event) {
+
+    }
+
+    @FXML
+    private void patientSelected(MouseEvent event) {
+
+    }
+
+    private void updateEntryDate() {
+        List<ManualEntry> manualEntries = new ArrayList<>();
+        communicationHandler.sendQuery("getJournal", getPatient().getPatientID()).forEach((tuple) -> {
+            Arrays.toString(tuple);
+//            manualEntries.add(new ManualEntry(tuple[1], tuple[0], tuple[2]));
+        });
+        manualEntriesView.getItems().addAll(manualEntries);
     }
 
 }
