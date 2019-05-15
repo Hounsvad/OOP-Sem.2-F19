@@ -53,6 +53,13 @@ public class JournalFXMLController extends Module {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         updateData();
+        manualEntriesView.setOnMouseClicked((MouseEvent event) -> {
+            try {
+                manualEntriesView.getSelectionModel().getSelectedItem().showPopup();
+            } catch (NullPointerException e) {
+                //Do nothing
+            }
+        });
     }
 
     /**

@@ -34,6 +34,25 @@ public class ManualEntry {
         this.contents = contents;
     }
 
+    public void showPopup() {
+        Platform.runLater(()
+                -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManualEntryShowMessagePopupFXML.fxml"));
+                Parent root = (Parent) fxmlLoader.load();
+                ManualEntryShowMessagePopupFXMLController controller = fxmlLoader.<ManualEntryShowMessagePopupFXMLController>getController();
+                controller.setData(contents, date);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initStyle(StageStyle.UNDECORATED);
+                root.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+            }
+        });
+    }
+
     /**
      *
      * @param moduleController
