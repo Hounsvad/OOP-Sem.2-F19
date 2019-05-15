@@ -3,6 +3,7 @@
  */
 package client.presentation.modules.journal;
 
+import client.presentation.containers.Patient;
 import client.presentation.modules.Popup;
 import com.jfoenix.animation.alert.JFXAlertAnimation;
 import com.jfoenix.controls.JFXAlert;
@@ -12,6 +13,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
@@ -33,6 +35,7 @@ public class MedicalEntryCreationPopupFXMLController extends Popup {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -44,7 +47,13 @@ public class MedicalEntryCreationPopupFXMLController extends Popup {
     @FXML
     private void send() {
         if (medicin.getSelectionModel().getSelectedItem() != null && !dosage.getText().isEmpty() && !notes.getText().isEmpty()) {
-            communicationHandler.sendQuery(new String[]{});
+            communicationHandler.sendQuery("addJournalEntry", getPatient().getPatientID(), "medicinal", String.join(";:;", new String[]{medicin.getSelectionModel().getSelectedItem(), dosage.getText(), notes.getText()}));
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    getModuleController().updateData();
+                }
+            });
             close();
         } else {
             JFXAlert alert = new JFXAlert<>(((Stage) notes.getScene().getWindow()));
@@ -56,6 +65,10 @@ public class MedicalEntryCreationPopupFXMLController extends Popup {
             alert.initModality(Modality.NONE);
             alert.showAndWait();
         }
+    }
+
+    private Patient getPatient() {
+        return ((JournalFXMLController) getModuleController()).getPatient();
     }
 
 }

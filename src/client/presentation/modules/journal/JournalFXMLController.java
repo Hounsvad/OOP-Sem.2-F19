@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -53,13 +54,7 @@ public class JournalFXMLController extends Module {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         updateData();
-        manualEntriesView.setOnMouseClicked((MouseEvent event) -> {
-            try {
-                manualEntriesView.getSelectionModel().getSelectedItem().showPopup();
-            } catch (NullPointerException e) {
-                //Do nothing
-            }
-        });
+        patientView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     /**
@@ -69,7 +64,7 @@ public class JournalFXMLController extends Module {
      */
     @FXML
     private void addMedicinalEntry() {
-        MedicinalEntry.showCreationPopup(null);
+        MedicinalEntry.showCreationPopup(this);
     }
 
     /**
@@ -91,15 +86,6 @@ public class JournalFXMLController extends Module {
      */
     public void updateData() {
         clearAll();
-//            List<LogEntry> logEntries = new ArrayList<>();
-//            communicationHandler.sendQuery(new String[]{"getActivity", credentialContainer.getUsername(), credentialContainer.getPassword()}).forEach((tuple) -> logEntries.add(new LogEntry()));
-//            automaticEntriesView.getItems().addAll(logEntries);
-//
-//            List<MedicinalEntry> medicalEntries = new ArrayList<>();
-//            communicationHandler.sendQuery("getActivity").forEach((tuple) -> medicalEntries.add(new MedicinalEntry()));
-//            medicinalEntriesView.getItems().addAll(medicalEntries);
-//
-
         List<Patient> patients = new ArrayList<>();
         communicationHandler.sendQuery("getPatients").forEach((tuple) -> patients.add(new Patient(tuple[1], tuple[0])));
         patientView.getItems().addAll(patients);
@@ -119,22 +105,37 @@ public class JournalFXMLController extends Module {
 
     @FXML
     private void medicinalSelected(MouseEvent event) {
+        try {
+            medicinalEntriesView.getSelectionModel().getSelectedItem().showPopup();
+        } catch (NullPointerException e) {
+            //Do nothing
+        }
     }
 
     @FXML
     private void manualSelected(MouseEvent event) {
-
+        try {
+            manualEntriesView.getSelectionModel().getSelectedItem().showPopup();
+        } catch (NullPointerException e) {
+            //Do nothing
+        }
     }
 
     @FXML
     private void patientSelected(MouseEvent event) {
-
+        updateEntryDate();
     }
 
     private void updateEntryDate() {
+        manualEntriesView.getItems().clear();
+        medicinalEntriesView.getItems().clear();
         List<ManualEntry> manualEntries = new ArrayList<>();
         communicationHandler.sendQuery("getJournal", getPatient().getPatientID()).forEach((tuple) -> manualEntries.add(new ManualEntry(tuple[1], tuple[0], tuple[2])));
         manualEntriesView.getItems().addAll(manualEntries);
+
+        List<MedicinalEntry> medicalEntries = new ArrayList<>();
+        communicationHandler.sendQuery("getMedicinalJournal", getPatient().getPatientID()).forEach((tuple) -> medicalEntries.add(new MedicinalEntry(tuple[0], tuple[1], tuple[2])));
+        medicinalEntriesView.getItems().addAll(medicalEntries);
     }
 
 }

@@ -83,9 +83,9 @@ public class DomainInterfaceImpl implements DomainInterface {
      * @return the expected result based on the parseble quarries
      * <p>
      * In the event that the system does not return data from the database a
-     * message is returned in the form of
-     * {@literal List<String[]>} with the first index in the first array being
-     * a single word descriptor and the second index being a message associated
+     * message is returned in the form of {@literal List<String[]>} with the
+     * first index in the first array being a single word descriptor and the
+     * second index being a message associated
      * <p>
      * <p>
      * <pre>
