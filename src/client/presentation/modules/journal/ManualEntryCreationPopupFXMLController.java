@@ -3,6 +3,7 @@
  */
 package client.presentation.modules.journal;
 
+import client.presentation.containers.Patient;
 import client.presentation.modules.Popup;
 import com.jfoenix.animation.alert.JFXAlertAnimation;
 import com.jfoenix.controls.JFXAlert;
@@ -33,11 +34,15 @@ public class ManualEntryCreationPopupFXMLController extends Popup {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
-
+    
+    private Patient getPatient(){
+        return ((JournalFXMLController)getModuleController()).getPatient();
+    }
+            
     @FXML
     private void send() {
         if (!notes.getText().isEmpty()) {
-            communicationHandler.sendQuery(new String[]{});
+            communicationHandler.sendQuery("addJournalEntry",getPatient().getPatientID(),"journal",notes.getText());
             close();
         } else {
             JFXAlert alert = new JFXAlert<>(((Stage) notes.getScene().getWindow()));
