@@ -5,12 +5,12 @@
  */
 package client.presentation.modules.dashboard;
 
+import client.presentation.modules.Module;
 import static client.presentation.utils.StringUtils.getBoldString;
 import java.io.IOException;
 import java.util.Date;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -43,7 +43,7 @@ public class MessageEntry {
      */
     private final String sentDateString;
 
-    private final Initializable moduleController;
+    private final Module moduleController;
 
     /**
      * Constructs a new MessageEntry
@@ -70,7 +70,7 @@ public class MessageEntry {
      *
      * @param moduleController
      */
-    public MessageEntry(Initializable moduleController) {
+    public MessageEntry(Module moduleController) {
         this.subject = "";
         this.sender = "";
         this.message = "";

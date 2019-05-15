@@ -3,6 +3,7 @@
  */
 package client.presentation.modules.journal;
 
+import client.presentation.modules.Module;
 import client.presentation.modules.dashboard.MessageEntry;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -10,7 +11,6 @@ import java.text.ParseException;
 import java.util.Date;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -38,7 +38,7 @@ public class ManualEntry {
      *
      * @param moduleController
      */
-    public static void showCreationPopup(Initializable moduleController) {
+    public static void showCreationPopup(Module moduleController) {
         Platform.runLater(()
                 -> {
             try {
@@ -61,7 +61,8 @@ public class ManualEntry {
     public String toString() {
         try {
             DateFormatter dateFormatter = new DateFormatter(DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM));
-            return String.format("%s-40 %s", dateFormatter.valueToString(new Date(Long.parseLong(date))), contents);
+            String headLine = contents.contains("\n") ? contents.split("\n")[0] : contents;
+            return String.format("%-40s : %.60s", dateFormatter.valueToString(new Date(Long.parseLong(date))), headLine);
         } catch (ParseException ex) {
             ex.printStackTrace();
             return "";

@@ -9,7 +9,6 @@ import client.presentation.modules.Module;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -127,10 +126,7 @@ public class JournalFXMLController extends Module {
 
     private void updateEntryDate() {
         List<ManualEntry> manualEntries = new ArrayList<>();
-        communicationHandler.sendQuery("getJournal", getPatient().getPatientID()).forEach((tuple) -> {
-            Arrays.toString(tuple);
-//            manualEntries.add(new ManualEntry(tuple[1], tuple[0], tuple[2]));
-        });
+        communicationHandler.sendQuery("getJournal", getPatient().getPatientID()).forEach((tuple) -> manualEntries.add(new ManualEntry(tuple[1], tuple[0], tuple[2])));
         manualEntriesView.getItems().addAll(manualEntries);
     }
 

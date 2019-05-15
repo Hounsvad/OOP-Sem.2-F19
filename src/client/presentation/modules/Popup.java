@@ -21,7 +21,7 @@ public abstract class Popup implements Initializable {
     @FXML
     protected FontAwesomeIconView cross;
 
-    private Initializable moduleController;
+    private Module moduleController;
 
     /**
      *
@@ -45,7 +45,7 @@ public abstract class Popup implements Initializable {
      *
      * @return
      */
-    protected Initializable getModuleController() {
+    protected Module getModuleController() {
         return moduleController;
     }
 
@@ -53,7 +53,7 @@ public abstract class Popup implements Initializable {
      *
      * @param moduleController
      */
-    public void setModuleController(Initializable moduleController) {
+    public void setModuleController(Module moduleController) {
         this.moduleController = moduleController;
     }
 

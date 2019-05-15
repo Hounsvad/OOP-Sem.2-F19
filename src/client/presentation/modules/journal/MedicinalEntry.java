@@ -3,12 +3,12 @@
  */
 package client.presentation.modules.journal;
 
+import client.presentation.modules.Module;
 import client.presentation.modules.Popup;
 import client.presentation.modules.dashboard.MessageEntry;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -23,14 +23,15 @@ public class MedicinalEntry {
 
     /**
      *
+     * @param moduleController
      */
-    public static void showCreationPopup(Initializable moduleController) {
+    public static void showCreationPopup(Module moduleController) {
         Platform.runLater(()
                 -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(MedicinalEntry.class.getResource("MedicalEntryCreationPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
-                ((Popup)fxmlLoader.getController()).setModuleController(moduleController);
+                ((Popup) fxmlLoader.getController()).setModuleController(moduleController);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.initStyle(StageStyle.UNDECORATED);
