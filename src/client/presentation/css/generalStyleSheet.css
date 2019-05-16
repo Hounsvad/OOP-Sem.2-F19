@@ -109,7 +109,7 @@ and open the template in the editor.
 
 /* Dashboad */
 .list-view {
-    -fx-background-color: derive(-fx-primary, -40%);;
+    -fx-background-color: derive(-fx-primary, -40%);
     -fx-padding : 0px;
     -fx-background-insets: 0;
 }
