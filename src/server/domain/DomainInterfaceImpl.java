@@ -63,7 +63,8 @@ public class DomainInterfaceImpl implements DomainInterface {
             put("getPatientsByUser", "000-000");
             put("updatePatientAssignment", "004-005");
             put("setUserDepartment", "002-003");
-
+            put("setRhythmHour", "005-002");
+            put("getDayRhythm", "005-002");
         }
     };
 
@@ -242,6 +243,17 @@ public class DomainInterfaceImpl implements DomainInterface {
                         case "setUserDepartment":
                             persistenceInterface.parseQuery("setUserDepartment", query[3], query[4]);
                             return constructReturn("Success", "Patients updated");
+                        case "setRhythmHour":
+                            addActivity();
+                            List<String> rhythmHours = persistenceInterface.parseQuery("getPatients", query[3]).stream().map(t -> t[0]).collect(Collectors.toList());
+                            if (rhythmHours.contains(query[4])) {
+                                persistenceInterface.parseQuery("updateRhythmHour", query[3], query[4], query[5], query[6]);
+                            } else {
+                                persistenceInterface.parseQuery("setRhythmHour", query[3], query[4], query[5], query[6]);
+                            }
+                            return constructReturn("Success", "Patient rhytm updated");
+                        case "getDayRhythm":
+                            return persistenceInterface.parseQuery("getDayRythm", query[3]);
                     }
                 } else {
                     return constructReturn("Error", "Missing required roles");
@@ -268,7 +280,6 @@ public class DomainInterfaceImpl implements DomainInterface {
         for (int i = 3; i < query.length; i++) {
             specifics.append(query[i]).append(";:;");
         }
-//        specifics.delete(specifics.lastIndexOf(";:;"), specifics.lastIndexOf(";:;") + 3);
         persistenceInterface.parseQuery("addActivity", query[0], specifics.toString(), this.ip, this.userId);
     }
 

@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -25,28 +24,6 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
 
     private static PersistanceInterfaceImpl instance = null;
 
-    /**
-     * Table and column names
-     */
-    private final Map<String, String[]> tables = new HashMap<String, String[]>() {
-        {
-            put("activity", new String[]{"user_id", "date", "type", "specifics", "ip"});
-            put("calender", new String[]{"event_id", "date", "event_name", "event_detail", "date_end"});
-            put("departments", new String[]{"name", "department_id", "department_mail_domain"});
-            put("id", new String[]{"uid", "fullName"});
-            put("journal", new String[]{"patient_id", "department_id", "date", "text", "created_by_id", "entry_type"});
-            put("messages", new String[]{"sender_id", "recipient_id", "title", "message", "date"});
-            put("modules", new String[]{"name", "icon", "fxml", "role"});
-            put("participation", new String[]{"event_id", "id"});
-            put("patient_assignment", new String[]{"user_id", "patient_id"});
-            put("patients", new String[]{"id", "department"});
-            put("rhythm", new String[]{"patien_id", "hour", "icon", "title", "text"});
-            put("role_assignment", new String[]{"user_id", "role", "department"});
-            put("roles", new String[]{"role", "description"});
-            put("users", new String[]{"username", "password", "department", "id"});
-
-        }
-    };
     private Map<String, String> configFileMap;
 
     /**
@@ -448,6 +425,41 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 }
                 //queryString = "UPDATE users SET department='" + query[2] + "' WHERE id = " + query[1] + "";
                 break;
+            case "setRhythmHour": {
+                try {
+                    stmt = conn.prepareStatement("INSERT INTO rhythm(patient_id, hour, icon, title) VALUES (?, ?, ?, ?)");
+                    stmt.setLong(1, Long.parseLong(query[1]));
+                    stmt.setString(2, query[2]);
+                    stmt.setString(3, query[3]);
+                    stmt.setString(4, query[4]);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                break;
+            }
+            case "getDayRhythm": {
+                try {
+                    stmt = conn.prepareStatement("SELECT hour, icon, title FROM rhythm WHERE patient_id = ?");
+                    stmt.setLong(1, Long.parseLong(query[1]));
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                break;
+            }
+            case "updateRhythmHour": {
+                try {
+                    stmt = conn.prepareStatement("UPDATE rhythm SET hour = ?, icon = ?, title = ? WHERE patient_id = ?");
+                    stmt.setLong(4, Long.parseLong(query[1]));
+                    stmt.setString(1, query[2]);
+                    stmt.setString(2, query[3]);
+                    stmt.setString(3, query[4]);
+                    //UPDATE rhythm SET hour = \"hour\", icon = \"icon\", title = \"title\" WHERE patient_id = 1000000001
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                break;
+            }
+
             default:
                 return new ArrayList<String[]>() {
                     {
