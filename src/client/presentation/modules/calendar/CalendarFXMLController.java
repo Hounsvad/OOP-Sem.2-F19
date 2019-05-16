@@ -308,22 +308,6 @@ public class CalendarFXMLController extends Module {
     }
 
     private Entry<String> createCalendarEntry() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarCreationPopupFXML.fxml"));
-            Parent root = fxmlLoader.load();
-            CalendarEventCreationPopupFXMLController controller = fxmlLoader.getController();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            root.getStylesheets().add(MessageEntry.class.getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
-            stage.setScene(new Scene(root));
-            stage.show();
-            controller.
-
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
         return null;
     }
 
@@ -358,18 +342,23 @@ public class CalendarFXMLController extends Module {
     }
 
     private void openEventCreator() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarEventCreationPopupFXML.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            root.getStylesheets().add(MessageEntry.class.getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        if (patientView.getSelectionModel().getSelectedItem() == null) {
+            return;
         }
+        new Thread(() -> {
+            Entry<String> entry = new CalendarEventCreationPopupFXMLController().createEvent();
+            detailedWeekView.getCalendars().get(0).addEntry(entry);
+            String[] query = new String[4];
+            query[0] = "createCalendarEvent";
+            query[1] = patientView.getSelectionModel().getSelectedItem().getPatientID();
+            System.arraycopy(entryToString(entry), 0, query, 2, 3);
+            communicationHandler.sendQuery(query);
+            getCalendarEvents();
+        }).start();
+    }
+
+    private String[] entryToString(Entry<String> entry) {
+        return new String[]{entry.toString()}; //TO BE CHANGED
     }
 
 }
