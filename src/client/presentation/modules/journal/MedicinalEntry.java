@@ -24,12 +24,19 @@ import javax.swing.text.DateFormatter;
  */
 public class MedicinalEntry {
 
-    private String patientID;
-    private String date;
-    private String notes;
-    private String medicin;
-    private String dosage;
+    private final String patientID;
+    private final String date;
+    private final String notes;
+    private final String medicin;
+    private final String dosage;
 
+    /**
+     * Constructs a medicinal entry for use in medicinal journal
+     *
+     * @param patientID
+     * @param date
+     * @param text
+     */
     public MedicinalEntry(String patientID, String date, String text) {
         this.patientID = patientID;
         this.date = date;
@@ -39,6 +46,9 @@ public class MedicinalEntry {
 
     }
 
+    /**
+     * Shows a popup containing the medicinalEntrys data
+     */
     public void showPopup() {
         Platform.runLater(()
                 -> {
@@ -59,8 +69,9 @@ public class MedicinalEntry {
     }
 
     /**
+     * Opens a popup to create a medicinalEntry
      *
-     * @param moduleController
+     * @param moduleController the controller that started the medicinal entry
      */
     public static void showCreationPopup(Module moduleController) {
         Platform.runLater(()
@@ -80,6 +91,12 @@ public class MedicinalEntry {
         });
     }
 
+    /**
+     * Formats the medicinalEntry to be show in a listview
+     *
+     * @return the formatted string
+     */
+    @Override
     public String toString() {
         try {
             DateFormatter dateFormatter = new DateFormatter(DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM));

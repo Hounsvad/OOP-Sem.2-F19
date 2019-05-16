@@ -8,6 +8,10 @@ and open the template in the editor.
     Author     : Oliver
 */
 
+@font-face{
+    src: url("../resources/monaco.ttf");
+}
+
 * {
     -fx-primary : #2E4057;
     -fx-secondary : #048BA8;
@@ -107,9 +111,12 @@ and open the template in the editor.
     -fx-font-size: 12pt;
 }
 
+
+
 /* Dashboad */
 .list-view {
-    -fx-background-color: derive(-fx-primary, -40%);;
+    -fx-font-family: Monaco;
+    -fx-background-color: derive(-fx-primary, -40%);
     -fx-padding : 0px;
     -fx-background-insets: 0;
 }
