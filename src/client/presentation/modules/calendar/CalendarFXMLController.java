@@ -308,7 +308,7 @@ public class CalendarFXMLController extends Module {
     }
 
     private Entry<String> createCalendarEntry() {
-        System.out.println("test");
+        openEventCreator();
         return null;
     }
 
@@ -368,7 +368,6 @@ public class CalendarFXMLController extends Module {
             }
             Entry<String> entry = fxmlLoader.<CalendarEventCreationPopupFXMLController>getController().createEvent();
             if (entry == null) {
-                System.out.println("test2");
                 return;
             }
             detailedWeekView.getCalendars().get(0).addEntry(entry);
