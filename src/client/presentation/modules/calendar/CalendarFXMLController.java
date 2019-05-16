@@ -347,6 +347,9 @@ public class CalendarFXMLController extends Module {
         }
         new Thread(() -> {
             Entry<String> entry = new CalendarEventCreationPopupFXMLController().createEvent();
+            if (entry == null) {
+                return;
+            }
             detailedWeekView.getCalendars().get(0).addEntry(entry);
             String[] query = new String[4];
             query[0] = "createCalendarEvent";
