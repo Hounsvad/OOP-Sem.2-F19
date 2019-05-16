@@ -68,7 +68,7 @@ public class MedicinalEntry {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(MedicinalEntry.class.getResource("MedicalEntryCreationPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
-                ((MedicalEntryCreationPopupFXMLController) fxmlLoader.getController()).setModuleController(moduleController);
+                fxmlLoader.<MedicalEntryCreationPopupFXMLController>getController().setModuleController(moduleController);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.initStyle(StageStyle.UNDECORATED);
