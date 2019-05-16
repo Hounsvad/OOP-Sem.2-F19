@@ -9,6 +9,7 @@ import com.google.common.hash.Hashing;
 import com.google.common.primitives.Chars;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Locale;
 
 /**
  *
@@ -41,6 +42,17 @@ public class StringUtils {
      * @return The input string in Math Bold Latin characters instead of normal
      */
     public static String getBoldString(String s) {
+        //Check if the system is capable os the bold characters used in this method
+        String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
+        if ((OS.indexOf("mac") >= 0) || (OS.indexOf("darwin") >= 0)) {
+            return s;
+        } else if (OS.indexOf("win") >= 0) {
+            //Continue
+        } else if (OS.indexOf("nux") >= 0) {
+            //detectedOS = OSType.Linux;
+        } else {
+            return s;
+        }
         List<Character> input = Chars.asList(s.toCharArray());
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < input.size(); i++) {

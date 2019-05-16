@@ -308,6 +308,7 @@ public class CalendarFXMLController extends Module {
     }
 
     private Entry<String> createCalendarEntry() {
+        System.out.println("test");
         return null;
     }
 
@@ -346,8 +347,28 @@ public class CalendarFXMLController extends Module {
             return;
         }
         new Thread(() -> {
-            Entry<String> entry = new CalendarEventCreationPopupFXMLController().createEvent();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarEventCreationPopupFXML.fxml"));
+            Platform.runLater(() -> {
+                try {
+                    Parent root = fxmlLoader.load();
+                    Stage stage = new Stage();
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.initStyle(StageStyle.UNDECORATED);
+                    root.getStylesheets().add(MessageEntry.class.getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+            Entry<String> entry = fxmlLoader.<CalendarEventCreationPopupFXMLController>getController().createEvent();
             if (entry == null) {
+                System.out.println("test2");
                 return;
             }
             detailedWeekView.getCalendars().get(0).addEntry(entry);
