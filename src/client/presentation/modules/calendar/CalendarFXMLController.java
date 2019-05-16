@@ -64,7 +64,7 @@ public class CalendarFXMLController extends Module {
     private AnchorPane datePickerPane;
 
     private static List<Patient> patientsCache;
-    private static Map<Integer, Calendar> calendarsCache;
+    private static Map<CalendarCacheKey, Calendar> calendarsCache;
     private static ChangeListener changeListener;
 
     DetailedWeekView detailedWeekView = new DetailedWeekView();
@@ -153,9 +153,9 @@ public class CalendarFXMLController extends Module {
         }
 
         //Insert the cached date, if available
-        if (calendarsCache != null && calendarsCache.containsKey(patientView.getSelectionModel().getSelectedIndex())) {
+        if (calendarsCache != null && calendarsCache.containsKey(new CalendarCacheKey(Long.parseLong(patientView.getSelectionModel().getSelectedItem().getPatientID()), detailedWeekView.getStartDate().toEpochDay()))) {
             CalendarSource calendarSource = new CalendarSource();
-            calendarSource.getCalendars().add(calendarsCache.get(patientView.getSelectionModel().getSelectedIndex()));
+            calendarSource.getCalendars().add(calendarsCache.get(new CalendarCacheKey(Long.parseLong(patientView.getSelectionModel().getSelectedItem().getPatientID()), detailedWeekView.getStartDate().toEpochDay())));
             detailedWeekView.getCalendarSources().clear();
             detailedWeekView.getCalendarSources().add(calendarSource);
         }
@@ -179,7 +179,7 @@ public class CalendarFXMLController extends Module {
                             Long.toString(toMillis(detailedWeekView.getStartDate(), detailedWeekView.getStartTime())),
                             Long.toString(toMillis(detailedWeekView.getEndDate(), detailedWeekView.getEndTime())))
                             .forEach(tuple -> {
-                                Entry entry = new Entry<String>(
+                                Entry entry = new Entry<>(
                                         tuple[3],
                                         new Interval(LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(tuple[1])), ZoneId.systemDefault()),
                                                 LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(tuple[4])), ZoneId.systemDefault())
@@ -204,7 +204,7 @@ public class CalendarFXMLController extends Module {
                         if (calendarsCache == null) {
                             calendarsCache = new HashMap<>();
                         }
-                        calendarsCache.put(patientView.getSelectionModel().getSelectedIndex(), calendar);
+                        calendarsCache.put(new CalendarCacheKey(Long.parseLong(patientView.getSelectionModel().getSelectedItem().getPatientID()), detailedWeekView.getStartDate().toEpochDay()), calendar);
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
@@ -253,6 +253,7 @@ public class CalendarFXMLController extends Module {
                         if (patientView.getSelectionModel().getSelectedItem() == null) {
                             patientView.getSelectionModel().select(0);
                         }
+                        getCalendarEvents();
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
@@ -266,7 +267,6 @@ public class CalendarFXMLController extends Module {
     @Override
     public void updateData() {
         getPatients();
-        getCalendarEvents();
     }
 
     @Override
@@ -342,18 +342,26 @@ public class CalendarFXMLController extends Module {
     }
 
     private void openEventCreator() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarEventCreationPopupFXML.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            root.getStylesheets().add(MessageEntry.class.getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        if (patientView.getSelectionModel().getSelectedItem() == null) {
+            return;
         }
+        new Thread(() -> {
+            Entry<String> entry = new CalendarEventCreationPopupFXMLController().createEvent();
+            if (entry == null) {
+                return;
+            }
+            detailedWeekView.getCalendars().get(0).addEntry(entry);
+            String[] query = new String[4];
+            query[0] = "createCalendarEvent";
+            query[1] = patientView.getSelectionModel().getSelectedItem().getPatientID();
+            System.arraycopy(entryToString(entry), 0, query, 2, 3);
+            communicationHandler.sendQuery(query);
+            getCalendarEvents();
+        }).start();
+    }
+
+    private String[] entryToString(Entry<String> entry) {
+        return new String[]{entry.toString()}; //TO BE CHANGED
     }
 
 }
