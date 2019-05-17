@@ -33,10 +33,6 @@ public class CommunicationInterfaceImpl implements CommunicationInterface {
         } catch (IOException ex) {
             ex.printStackTrace(System.err);
         }
-        return new ArrayList<String[]>() {
-            {
-                add(new String[]{"Error", "Client-side network error"});
-            }
-        };
+        return new ArrayList<>(Arrays.asList(new String[][]{new String[]{"Error", "Client-side network error"}}));
     }
 }

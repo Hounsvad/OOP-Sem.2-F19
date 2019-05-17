@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +34,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
 
         //Load settings from config file
         this.configFileMap = new HashMap<>();
-        new Scanner(getClass().getResourceAsStream("/server/recources/Database.config")).useDelimiter("\n").forEachRemaining((s) -> configFileMap.put(s.split(" := ")[0], s.split(" := ")[1]));
-
+        new Scanner(getClass().getResourceAsStream("/server/recources/Database.config")).useDelimiter("\r\n").forEachRemaining((s) -> configFileMap.put(s.split(" := ")[0], s.split(" := ")[1]));
         //Initiate connection
         try {
             DriverManager.registerDriver(new org.postgresql.Driver());
@@ -63,8 +63,11 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
      * <P>
      * The first position of the query is the action to be performed and the
      * following positions are parameters
+     * <P>
      *
+     * In the event that the action is something other than
      * <pre>
+     *    Actions:                      Param 1:    Param 2:            Param 3:    Param 4:    Param 5:
      *  * "checkCredentials"            Username    HashedPassword
      *  * "getCalendar"                 id          Date_min            Date_max
      *  * "getEventParticipants"        eventId
@@ -109,7 +112,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
      */
     @Override
     public List<String[]> parseQuery(String... query) {
-        List<String[]> output = new ArrayList<>();
+        List<String[]> output = constructReturn("Error", "Unexpected error in persistance handler");
         PreparedStatement stmt = null;
         switch (query[0]) {
             case "checkCredentials":
@@ -446,11 +449,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 }
                 break;
             default:
-                return new ArrayList<String[]>() {
-                    {
-                        add(new String[]{"Error", String.format("The action \"%s\" is not defined", query[0])});
-                    }
-                };
+                return constructReturn("Error", String.format("The action \"%s\" is not defined", query[0]));
         }
 
         //Exceqution of the query
@@ -470,12 +469,12 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             if (!ex.getMessage().contains("No results")) {
                 ex.printStackTrace(System.err);
             }
-            output = new ArrayList<String[]>() {
-                {
-                    add(new String[]{"Error", "Unexpected sql error"});
-                }
-            };
+            output = constructReturn("Error", "Unexpected sql error");
         }
         return output;
+    }
+
+    private List<String[]> constructReturn(String... input) {
+        return new ArrayList<>(Arrays.asList(new String[][]{new String[]{input[0], input[1]}}));
     }
 }
