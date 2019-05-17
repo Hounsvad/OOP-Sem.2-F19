@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -42,43 +42,25 @@ import javafx.util.Duration;
  */
 public class MainFXMLController implements Initializable {
 
-    /**
-     * The SubScene of the stage
-     */
     @FXML
     private SubScene subScene;
-
     private Module module;
 
-    /**
-     * The VBox for the Menu
-     */
     @FXML
     private VBox menu;
 
-    /**
-     * The GridPane for the menu
-     */
     @FXML
     private GridPane menuGrid;
 
-    /**
-     * The Button leading to the Dashboard
-     */
     @FXML
     private Button buttonDashboard;
 
-    /**
-     * The TextButton leading to the Dashboard
-     */
     @FXML
     private Button buttonDashboardLabel;
 
-    /**
-     * The TextButton leading to the Calandar
-     */
     @FXML
     private AnchorPane root;
+
     @FXML
     private GridPane menuGrid1;
 
@@ -93,7 +75,7 @@ public class MainFXMLController implements Initializable {
 
         CommunicationHandler.getInstance().setMainFXMLController(this);
 
-        //Side-menu
+        //Configuring the side drawer-menu
         menu.prefHeightProperty().bind(((AnchorPane) menu.getParent()).heightProperty());
         subScene.heightProperty().bind(menu.heightProperty());
         ((AnchorPane) subScene.getParent()).widthProperty().addListener(new ChangeListener() {
@@ -102,9 +84,7 @@ public class MainFXMLController implements Initializable {
                 subScene.setWidth((double) newValue - 60);
             }
         });
-
         TranslateTransition menuTranslation = new TranslateTransition(Duration.millis(500), menu);
-
         menuTranslation.setFromX(-140);
         menuTranslation.setToX(0);
         menu.setOnMouseEntered(evt -> {
@@ -115,7 +95,6 @@ public class MainFXMLController implements Initializable {
             menuTranslation.setRate(-1);
             menuTranslation.play();
         });
-
         addMenuItems(CommunicationHandler.getInstance().sendQuery(new String[]{"getMenuItems", CredentialContainer.getInstance().getUsername(), CredentialContainer.getInstance().getPassword()}));
         loadSubScene("modules/dashboard/DashboardFXML.fxml");
         root.requestFocus();
@@ -133,7 +112,6 @@ public class MainFXMLController implements Initializable {
      */
     public void loadSubScene(String path) {
         try {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             subScene.setRoot(loader.load());
             module = loader.getController();
@@ -182,8 +160,10 @@ public class MainFXMLController implements Initializable {
     }
 
     /**
+     * Sets the mouse pointer to be a spinner or sets it to the default cursor
      *
-     * @param state
+     * @param state the state for whether or not the spinner should be enabled
+     *              for the mouse pointer
      */
     public void setSpinner(boolean state) {
         subScene.setCursor(state ? Cursor.WAIT : Cursor.DEFAULT);
