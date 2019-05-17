@@ -113,7 +113,7 @@ public final class CredentialContainer {
                     login.setScene(s);
                     login.show();
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
             }
         });

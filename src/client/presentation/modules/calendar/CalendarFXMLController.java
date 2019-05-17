@@ -310,7 +310,7 @@ public class CalendarFXMLController extends Module {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarEventDetailsPopoverFXML.fxml"));
             return fxmlLoader.load();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         }
         return null;
     }
@@ -348,7 +348,7 @@ public class CalendarFXMLController extends Module {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         }
     }
 
@@ -376,7 +376,7 @@ public class CalendarFXMLController extends Module {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         }
     }
 
@@ -396,13 +396,13 @@ public class CalendarFXMLController extends Module {
                     stage.setScene(new Scene(root));
                     stage.show();
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
             });
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
-                ex.printStackTrace();
+                ex.printStackTrace(System.err);
             }
             Entry<String> entry = fxmlLoader.<CalendarEventCreationPopupFXMLController>getController().createEvent();
             if (entry == null) {

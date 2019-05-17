@@ -41,7 +41,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection("jdbc:postgresql://" + configFileMap.get("url") + ":" + configFileMap.get("port") + "/" + configFileMap.get("databaseName") + "?sslmode=require", configFileMap.get("username"), configFileMap.get("password"));
         } catch (ClassNotFoundException | SQLException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         }
     }
 
@@ -118,7 +118,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setString(1, query[2]);
                     stmt.setString(2, query[1]);
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getCalendar":
@@ -128,7 +128,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setLong(2, Long.parseLong(query[2]));
                     stmt.setLong(3, Long.parseLong(query[3]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getEventParticipants":
@@ -136,7 +136,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("SELECT id.id, id.full_name FROM id, (SELECT id FROM participation WHERE event_id = ?) as participants WHERE id.id = participants.id");
                     stmt.setLong(1, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "addCalendarEvent":
@@ -147,7 +147,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setLong(3, Long.parseLong(query[4]));
                     stmt.setLong(4, Long.parseLong(query[2]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "addEventParticipant":
@@ -156,7 +156,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setLong(1, Long.parseLong(query[1]));
                     stmt.setLong(2, Long.parseLong(query[2]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "removeEventParticipant":
@@ -165,7 +165,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setLong(1, Long.parseLong(query[1]));
                     stmt.setLong(2, Long.parseLong(query[2]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "updateCalendarEvent":
@@ -176,7 +176,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setString(3, (query[5]));
                     stmt.setLong(4, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "removeCalendarEvent":
@@ -185,7 +185,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setLong(1, Long.parseLong(query[1]));
                     stmt.setLong(2, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "setRhythmHour": {
@@ -196,7 +196,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setString(3, query[3]);
                     stmt.setString(4, query[4]);
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             }
@@ -205,7 +205,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("SELECT hour, icon, title FROM rhythm WHERE patient_id = ?");
                     stmt.setLong(1, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             }
@@ -217,7 +217,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setLong(1, Long.parseLong(query[3]));
                     stmt.setString(2, query[4]);
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             }
@@ -227,7 +227,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setLong(1, Long.parseLong(query[1]));
                     stmt.setLong(2, Long.parseLong(query[2]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getPatientsByDepartment":
@@ -235,7 +235,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("SELECT id.full_name, patients.id, patients.department FROM patients, id WHERE patients.id = id.id AND patients.department = ? ORDER BY patients.id");
                     stmt.setString(1, (query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getPatients":
@@ -243,7 +243,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("SELECT id.id, id.full_name FROM id, (SELECT patient_id as id FROM patient_assignment WHERE user_id = ?) as compare WHERE compare.id = id.id");
                     stmt.setLong(1, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "addAssignedPatient":
@@ -252,7 +252,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setLong(1, Long.parseLong(query[1]));
                     stmt.setLong(2, Long.parseLong(query[2]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "removeAssignedPatient":
@@ -261,7 +261,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setLong(1, Long.parseLong(query[1]));
                     stmt.setLong(2, Long.parseLong(query[2]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "addUser":
@@ -272,7 +272,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setString(3, (query[3]));
                     stmt.setString(4, (query[4]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getUsersByDepartment":
@@ -280,7 +280,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("SELECT username, users.id, full_name FROM users, id WHERE id.id = users.id AND users.department = ? ORDER BY users.id");
                     stmt.setString(1, (query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
 
@@ -291,7 +291,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setLong(2, Long.parseLong(query[1]));
 
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "setUserPassword":
@@ -301,7 +301,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setLong(2, Long.parseLong(query[1]));
 
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "setUserDepartment":
@@ -310,7 +310,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setString(1, (query[2]));
                     stmt.setLong(2, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getUserDepartment":
@@ -318,7 +318,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("SELECT users.department FROM users WHERE users.id=?");
                     stmt.setLong(1, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "addUserRole":
@@ -328,7 +328,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setString(2, (query[2]));
 
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "removeUserRole":
@@ -338,7 +338,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setString(2, (query[2]));
 
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getUserRoles":
@@ -346,21 +346,21 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("SELECT role FROM role_assignment where user_id = ?");
                     stmt.setLong(1, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getRoles":
                 try {
                     stmt = conn.prepareStatement("SELECT * FROM roles");
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getDepartments":
                 try {
                     stmt = conn.prepareStatement("SELECT department_id, name FROM departments");
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "addJournalEntry":
@@ -372,7 +372,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setLong(4, Long.parseLong(query[5]));
                     stmt.setString(5, query[2]);
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getJournal":
@@ -380,7 +380,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("SELECT * FROM journal WHERE patient_id = ? AND entry_type = 'journal' LIMIT 30");
                     stmt.setLong(1, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getMedicalJournal":
@@ -388,7 +388,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("SELECT * FROM journal WHERE patient_id = ? AND entry_type = 'medicinal' LIMIT 30");
                     stmt.setLong(1, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "addActivity":
@@ -399,7 +399,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setString(3, query[2]);
                     stmt.setString(4, query[3]);
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getActivity":
@@ -407,7 +407,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("SELECT date, type, specifics, ip FROM activity WHERE date > (date_part('epoch'::text, now()) * (1000)::double precision)-25922000000 AND user_id = ? ORDER BY date desc");
                     stmt.setLong(1, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "sendMessage":
@@ -418,7 +418,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setString(3, query[3]);
                     stmt.setString(4, query[4]);
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getMessages":
@@ -426,7 +426,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("SELECT id.full_name, users.username, messages.title, messages.message, messages.date FROM users, id, messages WHERE id.id = sender_id AND users.id = sender_id AND recipient_id = ? ORDER BY date DESC LIMIT 30");
                     stmt.setLong(1, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getMenuItems":
@@ -434,7 +434,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("SELECT DISTINCT modules.name, modules.icon, modules.fxml, modules.index FROM modules, role_assignment WHERE role_assignment.user_id = ? AND (role_assignment.role = modules.role OR role_assignment.role = '000-000') ORDER BY index");
                     stmt.setLong(1, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             case "getMailDomainByDepartment":
@@ -442,7 +442,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("SELECT department_mail_domain FROM departments WHERE department_id = ?)");
                     stmt.setString(1, (query[1]));
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
                 break;
             default:

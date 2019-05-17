@@ -139,7 +139,7 @@ public class MainFXMLController implements Initializable {
             subScene.setRoot(loader.load());
             module = loader.getController();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         }
     }
 

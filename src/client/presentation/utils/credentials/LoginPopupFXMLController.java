@@ -250,7 +250,7 @@ public class LoginPopupFXMLController implements Initializable {
             stage.setTitle("Sanitas Overview");
 
         } catch (IOException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         }
 
     }

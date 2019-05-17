@@ -31,7 +31,7 @@ public class CommunicationInterfaceImpl implements CommunicationInterface {
             ps.sendObject(query);
             return (List<String[]>) ps.recieveObject();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         }
         return new ArrayList<String[]>() {
             {

@@ -33,7 +33,7 @@ public class ServerController implements Runnable {
                 clientHandler.start();
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         }
     }
 }

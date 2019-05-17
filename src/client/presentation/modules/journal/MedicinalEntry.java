@@ -103,7 +103,7 @@ public class MedicinalEntry {
             String headLine = String.format("Medicin type: %-30sDosage: %s", medicin, dosage);
             return String.format("%-40s : %s", dateFormatter.valueToString(new Date(Long.parseLong(date))), headLine);
         } catch (ParseException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
             return "";
         }
     }

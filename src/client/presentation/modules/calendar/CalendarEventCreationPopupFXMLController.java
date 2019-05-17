@@ -43,7 +43,7 @@ public class CalendarEventCreationPopupFXMLController extends Popup {
             condition.await();
             return entry;
         } catch (InterruptedException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         } finally {
             lock.unlock();
         }

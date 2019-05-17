@@ -83,7 +83,7 @@ public class ManualEntry {
             String headLine = contents.contains("\n") ? contents.split("\n")[0] : contents;
             return String.format("%-40s : %.60s", dateFormatter.valueToString(new Date(Long.parseLong(date))), headLine);
         } catch (ParseException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
             return "";
         }
     }

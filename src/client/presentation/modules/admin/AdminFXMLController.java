@@ -101,7 +101,7 @@ public class AdminFXMLController extends Module {
 
                     });
                 } catch (InterruptedException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(System.err);
                 }
             }).start();
 

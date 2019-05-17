@@ -62,7 +62,7 @@ public class MedicalEntryShowMessagePopupFXMLController extends Popup {
         try {
             dateLabel.setText(dateFormatter.valueToString(new Date(Long.parseLong(dateString))));
         } catch (ParseException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         }
     }
 
