@@ -17,7 +17,7 @@ import javafx.stage.StageStyle;
 
 /**
  *
- * @author Hounsvad
+ * @author Sanitas Solutions
  */
 public final class CredentialContainer {
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author prikn
+ * @author Sanitas Solutions
  */
 public interface DomainInterface {
     

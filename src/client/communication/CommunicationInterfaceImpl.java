@@ -12,7 +12,7 @@ import java.util.*;
 
 /**
  *
- * @author hende den sidste
+ * @author Sanitas Solutions
  */
 public class CommunicationInterfaceImpl implements CommunicationInterface {
 

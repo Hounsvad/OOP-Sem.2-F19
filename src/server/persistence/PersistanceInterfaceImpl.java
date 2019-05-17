@@ -19,7 +19,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class PersistanceInterfaceImpl implements PersistanceInterface {
 

@@ -12,7 +12,7 @@ import server.communication.ServerController;
 
 /**
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class Launcher extends Application {
 

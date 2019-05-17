@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 /**
  * FXML Controller class
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class CalendarEventDetailsPopoverFXMLController extends Popup {
 

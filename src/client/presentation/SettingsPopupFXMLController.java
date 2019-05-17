@@ -20,7 +20,7 @@ import javafx.util.Duration;
 /**
  * FXML Controller class
  *
- * @author Hounsvad
+ * @author Sanitas Solutions
  */
 public class SettingsPopupFXMLController implements Initializable {
 

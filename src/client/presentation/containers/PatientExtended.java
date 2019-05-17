@@ -5,7 +5,7 @@ package client.presentation.containers;
 
 /**
  *
- * @author Hounsvad
+ * @author Sanitas Solutions
  */
 public class PatientExtended extends Patient {
 

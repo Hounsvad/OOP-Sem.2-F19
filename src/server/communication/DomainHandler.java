@@ -11,7 +11,7 @@ import server.domain.DomainInterfaceImpl;
 
 /**
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class DomainHandler {
 

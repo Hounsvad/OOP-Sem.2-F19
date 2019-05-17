@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Hounsvad
+ * @author Sanitas Solutions
  */
 public class RoleTest {
 

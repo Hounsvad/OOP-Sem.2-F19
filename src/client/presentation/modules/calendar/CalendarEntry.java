@@ -7,7 +7,7 @@ import client.presentation.utils.StringUtils;
 
 /**
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class CalendarEntry {
 

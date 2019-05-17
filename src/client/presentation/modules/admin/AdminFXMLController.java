@@ -38,7 +38,7 @@ import javafx.stage.StageStyle;
 /**
  * FXML Controller class
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class AdminFXMLController extends Module {
 

@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author Hounsvad
+ * @author Sanitas Solutions
  */
 public class PatientCreationPopupFXMLController extends Popup implements Initializable {
 

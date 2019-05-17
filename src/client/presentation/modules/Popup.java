@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public abstract class Popup implements Initializable {
 

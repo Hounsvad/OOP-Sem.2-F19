@@ -23,7 +23,7 @@ import javax.swing.text.DateFormatter;
 
 /**
  *
- * @author jacob
+ * @author Sanitas Solutions
  */
 public class MedicalEntryShowMessagePopupFXMLController extends Popup {
 

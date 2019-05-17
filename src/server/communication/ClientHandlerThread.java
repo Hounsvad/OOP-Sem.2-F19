@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author Sanitas solution
+ * @author Sanitas Solutions
  */
 public class ClientHandlerThread extends Thread {
 

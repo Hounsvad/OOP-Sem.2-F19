@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public interface PersistanceInterface {
 

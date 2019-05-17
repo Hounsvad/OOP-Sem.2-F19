@@ -5,7 +5,7 @@ package client.presentation.containers;
 
 /**
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class User {
 

@@ -15,7 +15,7 @@ import javafx.fxml.FXML;
 /**
  * FXML Controller class
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class CalendarEventEditPopupFXMLController extends Popup {
 

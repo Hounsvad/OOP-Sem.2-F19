@@ -19,7 +19,7 @@ import server.persistence.PersistanceInterfaceImpl;
 
 /**
  *
- * @author Frederik
+ * @author Sanitas Solutions
  */
 public class DomainInterfaceImpl implements DomainInterface {
 

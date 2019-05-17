@@ -24,7 +24,7 @@ import javafx.scene.text.Text;
 /**
  * FXML Controller class
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class DashboardFXMLController extends Module {
 

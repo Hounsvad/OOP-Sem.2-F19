@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 /**
  * A Decorator class used to make the top buttons non-traversable and lets the exit button exit the system
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class CustomDecorator extends JFXDecorator {
     

@@ -7,7 +7,7 @@ import java.util.Objects;
 
 /**
  *
- * @author Hounsvad
+ * @author Sanitas Solutions
  */
 public class Department {
 

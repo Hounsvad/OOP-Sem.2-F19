@@ -20,7 +20,7 @@ import javax.swing.text.DateFormatter;
 
 /**
  *
- * @author Hounsvad
+ * @author Sanitas Solutions
  */
 public class MedicinalEntry {
 

@@ -9,7 +9,7 @@ import javafx.fxml.Initializable;
 
 /**
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public abstract class Module implements Initializable {
 

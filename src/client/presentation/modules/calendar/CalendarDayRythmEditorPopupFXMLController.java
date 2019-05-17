@@ -26,7 +26,7 @@ import javafx.scene.paint.Color;
 /**
  * FXML Controller class
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class CalendarDayRythmEditorPopupFXMLController extends Popup {
 

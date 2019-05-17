@@ -24,7 +24,7 @@ import javax.swing.text.DateFormatter;
 /**
  * FXML Controller class
  *
- * @author nadinfariss
+ * @author Sanitas Solutions
  */
 public class ManualEntryShowMessagePopupFXMLController extends Popup {
 

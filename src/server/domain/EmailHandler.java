@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMultipart;
 
 /**
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class EmailHandler {
 

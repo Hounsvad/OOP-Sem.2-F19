@@ -18,7 +18,7 @@ import javafx.stage.WindowEvent;
 
 /**
  *
- * @author Hounsvad
+ * @author Sanitas Solutions
  */
 public class Presentation extends Application {
 

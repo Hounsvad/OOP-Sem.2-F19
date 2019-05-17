@@ -19,7 +19,7 @@ import javafx.stage.StageStyle;
 
 /**
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class MessageEntry {
 

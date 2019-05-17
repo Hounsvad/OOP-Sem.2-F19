@@ -19,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * FXML Controller class
  *
- * @author Hounsvad
+ * @author Sanitas Solutions
  */
 public class JournalFXMLController extends Module {
 

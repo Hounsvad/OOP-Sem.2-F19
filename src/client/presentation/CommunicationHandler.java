@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * A Singleton class
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class CommunicationHandler {
 

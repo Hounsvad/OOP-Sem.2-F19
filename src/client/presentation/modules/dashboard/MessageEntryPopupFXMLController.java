@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class MessageEntryPopupFXMLController extends Popup {
 

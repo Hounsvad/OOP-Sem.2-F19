@@ -34,7 +34,7 @@ import javafx.stage.WindowEvent;
 /**
  * FXML Controller class
  *
- * @author Hounsvad
+ * @author Sanitas Solutions
  */
 public class LoginPopupFXMLController implements Initializable {
 

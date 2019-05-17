@@ -7,7 +7,7 @@ import java.util.Objects;
 
 /**
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class CalendarCacheKey {
 

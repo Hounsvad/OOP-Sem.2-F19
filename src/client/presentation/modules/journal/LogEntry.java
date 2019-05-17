@@ -5,7 +5,7 @@ package client.presentation.modules.journal;
 
 /**
  *
- * @author Hounsvad
+ * @author Sanitas Solutions
  */
 public class LogEntry {
 

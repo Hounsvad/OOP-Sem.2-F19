@@ -13,7 +13,7 @@ import java.util.Locale;
 
 /**
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class StringUtils {
 

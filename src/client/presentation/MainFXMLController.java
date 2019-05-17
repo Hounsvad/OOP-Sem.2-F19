@@ -39,7 +39,7 @@ import javafx.util.Duration;
 /**
  * FXML Controller class
  *
- * @author Oliver
+ * @author Sanitas Solutions
  */
 public class MainFXMLController implements Initializable {
 

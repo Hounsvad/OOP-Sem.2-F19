@@ -11,7 +11,7 @@ import java.net.Socket;
 
 /**
  *
- * @author duffy
+ * @author Sanitas Solutions
  */
 public class ServerController implements Runnable {
 
