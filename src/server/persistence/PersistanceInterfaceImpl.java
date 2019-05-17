@@ -428,7 +428,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             case "setRhythmHour": {
                 try {
                     stmt = conn.prepareStatement("INSERT INTO rhythm(patient_id, hour, icon, title) VALUES (?, ?, ?, ?)");
-                    stmt.setString(1, query[1]);
+                    stmt.setLong(1, Long.parseLong(query[1]));
                     stmt.setInt(2, Integer.parseInt(query[2]));
                     stmt.setString(3, query[3]);
                     stmt.setString(4, query[4]);
@@ -440,7 +440,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             case "getDayRhythm": {
                 try {
                     stmt = conn.prepareStatement("SELECT hour, icon, title FROM rhythm WHERE patient_id = ?");
-                    stmt.setString(1, query[1]);
+                    stmt.setLong(1, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -451,7 +451,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt = conn.prepareStatement("UPDATE rhythm SET icon = ?, title = ? WHERE patient_id = ? AND hour = ?");
                     stmt.setString(3, query[1]);
                     stmt.setInt(4, Integer.parseInt(query[2]));
-                    stmt.setString(1, query[3]);
+                    stmt.setLong(1, Long.parseLong(query[3]));
                     stmt.setString(2, query[4]);
                     //UPDATE rhythm SET hour = \"hour\", icon = \"icon\", title = \"title\" WHERE patient_id = 1000000001
                 } catch (SQLException ex) {
