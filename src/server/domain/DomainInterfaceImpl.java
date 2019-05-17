@@ -164,11 +164,11 @@ public class DomainInterfaceImpl implements DomainInterface {
                             return result;
                         case "userListByDepartment":
                             addActivity();
-                            return persistenceInterface.parseQuery("getUsers", query[3]);
+                            return persistenceInterface.parseQuery("getUsersByDepartment", query[3]);
                         case "userList":
                             addActivity();
-                            List<String[]> s = persistenceInterface.parseQuery("getUserDepartment", userId);
-                            return persistenceInterface.parseQuery("getUsers", s.get(0)[0]);
+                            List<String[]> department = persistenceInterface.parseQuery("getUserDepartment", userId);
+                            return persistenceInterface.parseQuery("getUsersByDepartment", department.get(0)[0]);
                         case "alterUserFullName":
                             addActivity();
                             persistenceInterface.parseQuery("alterUserFullName", query[3], query[4]);
@@ -231,7 +231,7 @@ public class DomainInterfaceImpl implements DomainInterface {
                             List<String> assignments = persistenceInterface.parseQuery("getPatients", query[3]).stream().map(t -> t[0]).collect(Collectors.toList());
                             for (int i = 4; i < query.length; i++) {
                                 if (!assignments.contains(query[i])) {
-                                    persistenceInterface.parseQuery("assignPatient", query[3], query[i]);
+                                    persistenceInterface.parseQuery("addAssignedPatient", query[3], query[i]);
                                 } else {
                                     assignments.remove(assignments.indexOf(query[i]));
                                 }
