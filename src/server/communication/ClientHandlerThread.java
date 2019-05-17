@@ -12,23 +12,24 @@ import java.util.List;
 
 /**
  *
- * @author hende den sidste
+ * @author Sanitas solution
  */
 public class ClientHandlerThread extends Thread {
 
     private final Socket clientSocket;
 
     /**
-     * Constructs the ClientHandlerSocket with the given Socket
+     * Constructs a handler for the action requested by the user
      *
-     * @param clientSocket
+     * @param clientSocket the socket returned by the server upon accepting a
+     *                     client
      */
     public ClientHandlerThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
     }
 
     /**
-     * Overrides the Run method for the thread
+     * Client request handling
      */
     @Override
     public void run() {
