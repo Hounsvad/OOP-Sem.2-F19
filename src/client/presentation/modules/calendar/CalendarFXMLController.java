@@ -14,6 +14,8 @@ import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 import com.calendarfx.view.DateControl;
+import com.calendarfx.view.DateControl.EntryContextMenuParameter;
+import com.calendarfx.view.DateControl.EntryDetailsPopOverContentParameter;
 import com.calendarfx.view.DayViewBase;
 import com.calendarfx.view.DetailedWeekView;
 import com.calendarfx.view.YearMonthView;
@@ -41,10 +43,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -65,6 +69,7 @@ public class CalendarFXMLController extends Module {
 
     private static List<Patient> patientsCache;
     private static Map<CalendarCacheKey, Calendar> calendarsCache;
+    private static Map<String, Calendar> dayRythmCache;
     private static ChangeListener changeListener;
 
     DetailedWeekView detailedWeekView = new DetailedWeekView();
@@ -80,8 +85,8 @@ public class CalendarFXMLController extends Module {
         detailedWeekView.weekFieldsProperty().set(WeekFields.ISO);
         detailedWeekView.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
         detailedWeekView.setEntryEditPolicy(param -> param.getEditOperation().equals(DateControl.EditOperation.DELETE));
-        detailedWeekView.setEntryDetailsPopOverContentCallback(param -> calendarDetailsPopup());
-        detailedWeekView.setEntryContextMenuCallback(param -> calendarEntryContextMenu());
+        detailedWeekView.setEntryDetailsPopOverContentCallback(param -> calendarDetailsPopup(param));
+        detailedWeekView.setEntryContextMenuCallback(param -> calendarEntryContextMenu(param));
         detailedWeekView.setContextMenuCallback(param -> calendarContextMenu());
         detailedWeekView.setEntryFactory(param -> createCalendarEntry());
 
@@ -156,8 +161,12 @@ public class CalendarFXMLController extends Module {
         if (calendarsCache != null && calendarsCache.containsKey(new CalendarCacheKey(Long.parseLong(patientView.getSelectionModel().getSelectedItem().getPatientID()), detailedWeekView.getStartDate().toEpochDay()))) {
             CalendarSource calendarSource = new CalendarSource();
             calendarSource.getCalendars().add(calendarsCache.get(new CalendarCacheKey(Long.parseLong(patientView.getSelectionModel().getSelectedItem().getPatientID()), detailedWeekView.getStartDate().toEpochDay())));
-            detailedWeekView.getCalendarSources().clear();
-            detailedWeekView.getCalendarSources().add(calendarSource);
+            try {
+                detailedWeekView.getCalendarSources().remove(0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            detailedWeekView.getCalendarSources().add(0, calendarSource);
         }
 
         //Find the previous Updater thread, if any and kill it
@@ -171,6 +180,7 @@ public class CalendarFXMLController extends Module {
         new Thread(() -> {
             try {
                 Calendar calendar = new Calendar();
+                calendar.setStyle(Calendar.Style.STYLE2);
                 //Get new values
                 try {
                     communicationHandler.sendQuery(
@@ -198,13 +208,18 @@ public class CalendarFXMLController extends Module {
                     try {
                         CalendarSource calendarSource = new CalendarSource();
                         calendarSource.getCalendars().add(calendar);
-                        detailedWeekView.getCalendarSources().clear();
-                        detailedWeekView.getCalendarSources().add(calendarSource);
+                        try {
+                            detailedWeekView.getCalendarSources().remove(0);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        detailedWeekView.getCalendarSources().add(0, calendarSource);
 
                         if (calendarsCache == null) {
                             calendarsCache = new HashMap<>();
                         }
                         calendarsCache.put(new CalendarCacheKey(Long.parseLong(patientView.getSelectionModel().getSelectedItem().getPatientID()), detailedWeekView.getStartDate().toEpochDay()), calendar);
+                        getDayRythm();
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
@@ -283,7 +298,14 @@ public class CalendarFXMLController extends Module {
         return date.atTime(time).toEpochSecond(ZoneId.systemDefault().getRules().getOffset(Instant.now())) * 1000;
     }
 
-    private Node calendarDetailsPopup() {
+    private Node calendarDetailsPopup(EntryDetailsPopOverContentParameter parameter) {
+        if (parameter.getEntry().getCalendar().getName().equalsIgnoreCase("rhythm")) {
+            Label label = new Label(parameter.getEntry().getTitle());
+            label.setPrefSize(100, 60);
+            label.setTextAlignment(TextAlignment.CENTER);
+            label.setStyle("-fx-background-color: #2E4057; -fx-text-fill: #048BA8;");
+            return label;
+        }
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarEventDetailsPopoverFXML.fxml"));
             return fxmlLoader.load();
@@ -293,7 +315,10 @@ public class CalendarFXMLController extends Module {
         return null;
     }
 
-    private ContextMenu calendarEntryContextMenu() {
+    private ContextMenu calendarEntryContextMenu(EntryContextMenuParameter parameter) {
+        if (parameter.getCalendar().getName().equalsIgnoreCase("rhythm")) {
+            return null;
+        }
         MenuItem editEvent = new MenuItem("Edit");
         editEvent.setOnAction(param -> openEventEditor());
         return new ContextMenu(editEvent);
@@ -329,7 +354,20 @@ public class CalendarFXMLController extends Module {
 
     private void openDayRythmEditor() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarDayRythmEditorPopupFXML.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("CalendarDayRythmEditorPopupFXML.fxml"));
+            fxmlLoader.setControllerFactory(clazz -> {
+                Object controller;
+                try {
+                    controller = clazz.getConstructor().newInstance();
+                } catch (ReflectiveOperationException ex) {
+                    throw new RuntimeException(ex);
+                }
+                if (controller instanceof CalendarDayRythmEditorPopupFXMLController) {
+                    ((CalendarDayRythmEditorPopupFXMLController) controller).setModuleController(this);
+                }
+                return controller;
+            });
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -380,8 +418,89 @@ public class CalendarFXMLController extends Module {
         }).start();
     }
 
+    private void getDayRythm() {
+        //Avoid null pointer errors
+        if (patientView == null || patientView.getSelectionModel().getSelectedItem() == null || patientView.getSelectionModel().getSelectedItem().equals("")) {
+            return;
+        }
+
+        //Insert the cached date, if available
+        if (dayRythmCache != null && dayRythmCache.get(patientView.getSelectionModel().getSelectedItem().getPatientID()) != null) {
+            try {
+                detailedWeekView.getCalendarSources().remove(1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            CalendarSource calendarSource = new CalendarSource();
+            calendarSource.getCalendars().add(dayRythmCache.get(patientView.getSelectionModel().getSelectedItem().getPatientID()));
+            detailedWeekView.getCalendarSources().add(1, calendarSource);
+        }
+
+        //Find the previous Updater thread, if any and kill it
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().equals("CalendarRythmUpdater")) {
+                t.interrupt();
+            }
+        }
+
+        //New thread to get and update the values and store the new values in a cache
+        new Thread(() -> {
+            try {
+                Calendar calendar = new Calendar("rhythm");
+                calendar.setStyle(Calendar.Style.STYLE2);
+                calendar.setReadOnly(true);
+                //Get new values
+                try {
+                    communicationHandler.sendQuery(
+                            "getDayRhythm",
+                            patientView.getSelectionModel().getSelectedItem().getPatientID())
+                            .forEach(tuple -> {
+                                for (int i = 0; i < 7; i++) {
+                                    Entry entry = new Entry<>(
+                                            tuple[2],
+                                            new Interval(detailedWeekView.getStartDate().plusDays(i), LocalTime.of(Integer.valueOf(tuple[0]), 0), detailedWeekView.getStartDate().plusDays(i), LocalTime.of(Integer.valueOf(tuple[0]) + 1, 0)));
+                                    calendar.addEntry(entry);
+                                }
+                            }
+                            );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                //Update the values to the FX elements and update the cache
+                Platform.runLater(() -> {
+                    try {
+                        CalendarSource calendarSource = new CalendarSource();
+                        calendarSource.getCalendars().add(calendar);
+                        try {
+                            detailedWeekView.getCalendarSources().remove(1);
+                        } catch (Exception e) {
+                        }
+                        detailedWeekView.getCalendarSources().add(1, calendarSource);
+                        if (dayRythmCache == null) {
+                            dayRythmCache = new HashMap<>();
+                        }
+                        dayRythmCache.put(patientView.getSelectionModel().getSelectedItem().getPatientID(), calendar);
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+            } catch (Exception ex) {
+            }
+        }, "CalendarRythmUpdater").
+                start();
+    }
+
     private String[] entryToString(Entry<String> entry) {
         return new String[]{entry.toString()}; //TO BE CHANGED
+    }
+
+    protected String getPatientID() {
+        if (patientView == null || patientView.getSelectionModel().getSelectedItem() == null || patientView.getSelectionModel().getSelectedItem().equals("")) {
+            return "";
+        }
+        return patientView.getSelectionModel().getSelectedItem().getPatientID();
     }
 
 }

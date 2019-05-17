@@ -428,8 +428,8 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             case "setRhythmHour": {
                 try {
                     stmt = conn.prepareStatement("INSERT INTO rhythm(patient_id, hour, icon, title) VALUES (?, ?, ?, ?)");
-                    stmt.setLong(1, Long.parseLong(query[1]));
-                    stmt.setString(2, query[2]);
+                    stmt.setString(1, query[1]);
+                    stmt.setInt(2, Integer.parseInt(query[2]));
                     stmt.setString(3, query[3]);
                     stmt.setString(4, query[4]);
                 } catch (SQLException ex) {
@@ -440,7 +440,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             case "getDayRhythm": {
                 try {
                     stmt = conn.prepareStatement("SELECT hour, icon, title FROM rhythm WHERE patient_id = ?");
-                    stmt.setLong(1, Long.parseLong(query[1]));
+                    stmt.setString(1, query[1]);
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -448,11 +448,11 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             }
             case "updateRhythmHour": {
                 try {
-                    stmt = conn.prepareStatement("UPDATE rhythm SET hour = ?, icon = ?, title = ? WHERE patient_id = ?");
-                    stmt.setLong(4, Long.parseLong(query[1]));
-                    stmt.setString(1, query[2]);
-                    stmt.setString(2, query[3]);
-                    stmt.setString(3, query[4]);
+                    stmt = conn.prepareStatement("UPDATE rhythm SET icon = ?, title = ? WHERE patient_id = ? AND hour = ?");
+                    stmt.setString(3, query[1]);
+                    stmt.setInt(4, Integer.parseInt(query[2]));
+                    stmt.setString(1, query[3]);
+                    stmt.setString(2, query[4]);
                     //UPDATE rhythm SET hour = \"hour\", icon = \"icon\", title = \"title\" WHERE patient_id = 1000000001
                 } catch (SQLException ex) {
                     ex.printStackTrace();

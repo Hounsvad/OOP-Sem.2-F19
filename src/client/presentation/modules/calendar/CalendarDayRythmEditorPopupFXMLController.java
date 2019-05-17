@@ -42,7 +42,7 @@ public class CalendarDayRythmEditorPopupFXMLController extends Popup {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*values = Arrays.asList(new String[]{"0", "", ""},
+        values = Arrays.asList(new String[]{"0", "", ""},
                 new String[]{"1", "", ""},
                 new String[]{"2", "", ""},
                 new String[]{"3", "", ""},
@@ -65,10 +65,10 @@ public class CalendarDayRythmEditorPopupFXMLController extends Popup {
                 new String[]{"20", "", ""},
                 new String[]{"21", "", ""},
                 new String[]{"22", "", ""},
-                new String[]{"23", "", ""});*/
+                new String[]{"23", "", ""});
 
-        patientID = ""; //moduleController.getPatientID();
-        values = communicationHandler.sendQuery("getDayRythm", patientID);
+        patientID = ((CalendarFXMLController) getModuleController()).getPatientID();
+        communicationHandler.sendQuery("getDayRhythm", patientID).forEach(tuple -> values.set(Integer.parseInt(tuple[0]), tuple));
         addMenuItems(values);
     }
 
@@ -76,10 +76,10 @@ public class CalendarDayRythmEditorPopupFXMLController extends Popup {
     private void save() {
         List<String[]> newValues = new ArrayList<>();
         IntStream.range(0, 23).forEach(i -> newValues.add(new String[]{Integer.toString(i), ((FontAwesomeIconView) getNodeByRowColumnIndex(i, 1, gridpane)).getGlyphName(), ((JFXTextField) getNodeByRowColumnIndex(i, 2, gridpane)).getText()}));
-        values.forEach(stringArray -> {
+        newValues.forEach(stringArray -> {
             if (!Arrays.equals(stringArray, values.get(newValues.indexOf(stringArray)))) {
-                String[] query = new String[4];
-                query[0] = "setRythmHour";
+                String[] query = new String[5];
+                query[0] = "setRhythmHour";
                 query[1] = patientID;
                 System.arraycopy(stringArray, 0, query, 2, 3);
                 communicationHandler.sendQuery(query);
@@ -112,7 +112,7 @@ public class CalendarDayRythmEditorPopupFXMLController extends Popup {
             icon.setOnMouseClicked(param -> openIconChange((FontAwesomeIconView) param.getSource()));
 
             //Create Label
-            JFXTextField label = new JFXTextField(tuple[0]);
+            JFXTextField label = new JFXTextField(tuple[2]);
             label.setPrefWidth(140);
             label.setPrefHeight(60);
             label.setMaxWidth(Double.MAX_VALUE);

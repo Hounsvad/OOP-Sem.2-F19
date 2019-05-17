@@ -245,7 +245,7 @@ public class DomainInterfaceImpl implements DomainInterface {
                             return constructReturn("Success", "Patients updated");
                         case "setRhythmHour":
                             addActivity();
-                            List<String> rhythmHours = persistenceInterface.parseQuery("getPatients", query[3]).stream().map(t -> t[0]).collect(Collectors.toList());
+                            List<String> rhythmHours = persistenceInterface.parseQuery("getDayRhythm", query[3]).stream().map(t -> t[0]).collect(Collectors.toList());
                             if (rhythmHours.contains(query[4])) {
                                 persistenceInterface.parseQuery("updateRhythmHour", query[3], query[4], query[5], query[6]);
                             } else {
@@ -253,7 +253,7 @@ public class DomainInterfaceImpl implements DomainInterface {
                             }
                             return constructReturn("Success", "Patient rhytm updated");
                         case "getDayRhythm":
-                            return persistenceInterface.parseQuery("getDayRythm", query[3]);
+                            return persistenceInterface.parseQuery("getDayRhythm", query[3]);
                     }
                 } else {
                     return constructReturn("Error", "Missing required roles");
