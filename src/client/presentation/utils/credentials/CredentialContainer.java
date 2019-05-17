@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -22,49 +22,18 @@ import javafx.stage.StageStyle;
  */
 public final class CredentialContainer {
 
-    /**
-     * The storage for the instance
-     */
     private static CredentialContainer instance = null;
 
-    /**
-     * The stored password
-     */
+    //The stored password of the user
     private String password = null;
 
-    /**
-     * The stored username
-     */
+    //The stored hashed password of the user
     private String username = null;
-
-    /**
-     * The stored time for last access
-     */
     private long lastAccess = 0l;
-
-    /**
-     * A variable to indicate whether the password is being retrieved or not
-     */
     private boolean isGettingCredentials = false;
-
-    /**
-     * A variable to indicate whether its the first time loging in
-     */
     private boolean firstRound = true;
-
-    /**
-     * Observable value indicating the whether or not the credentials are ready
-     */
-    private BooleanProperty credentialReady = new SimpleBooleanProperty(false);
-
-    /**
-     * The path of the login screens FXML
-     */
+    private final BooleanProperty credentialReady = new SimpleBooleanProperty(false);
     private static final String LOGIN_SCREEN_PATH = "LoginPopupFXML.fxml";
-
-    /**
-     * The delay after which stored credentials are invalid and deleted
-     */
     private static final long DELAY = 3600000;
 
     /**
@@ -77,8 +46,10 @@ public final class CredentialContainer {
         return credentialReady;
     }
 
+    /**
+     * A constructor forced private
+     */
     private CredentialContainer() {
-
     }
 
     /**
