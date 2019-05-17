@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -14,13 +14,10 @@ import java.net.Socket;
  */
 public class ServerController implements Runnable {
 
-    /**
-     * the Socket the server uses
-     */
-    ServerSocket server;
+    private ServerSocket server;
 
     /**
-     * Initializes the connection to the client
+     * initialises the connection to the client
      */
     @Override
     public void run() {
