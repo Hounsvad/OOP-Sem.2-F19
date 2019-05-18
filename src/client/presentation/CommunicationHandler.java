@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * A Singleton class
  *
  * @author Sanitas Solutions
  */
@@ -22,7 +21,7 @@ public class CommunicationHandler {
     /**
      * The CommunicationHandler
      */
-    private static CommunicationHandler communicationHandler;
+    private static CommunicationHandler instance;
 
     /**
      * The full name of the user currently signed in
@@ -44,13 +43,13 @@ public class CommunicationHandler {
     /**
      * Creates an instance of the CommunicationHandler if none exists
      *
-     * @return The instanceof the CommunicationHandler
+     * @return the instance of the CommunicationHandler
      */
     public static CommunicationHandler getInstance() {
-        if (communicationHandler == null) {
-            communicationHandler = new CommunicationHandler();
+        if (instance == null) {
+            instance = new CommunicationHandler();
         }
-        return communicationHandler;
+        return instance;
     }
 
     /**
