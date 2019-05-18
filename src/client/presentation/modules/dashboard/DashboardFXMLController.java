@@ -1,10 +1,9 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
 package client.presentation.modules.dashboard;
 
-import client.presentation.CommunicationHandler;
 import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
 import com.jfoenix.controls.JFXListView;
@@ -41,13 +40,14 @@ public class DashboardFXMLController extends Module {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Set the text on name to the name of the user
-        name.setText(CommunicationHandler.getInstance().getName());
+        name.setText(communicationHandler.getName());
 
         updateData();
 

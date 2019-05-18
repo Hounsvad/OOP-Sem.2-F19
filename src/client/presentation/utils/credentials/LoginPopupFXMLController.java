@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -38,15 +38,6 @@ import javafx.stage.WindowEvent;
  * @author Sanitas Solutions
  */
 public class LoginPopupFXMLController implements Initializable {
-
-    /**
-     * The offset on the x axis
-     */
-    private double xOffset = 0;
-    /**
-     * The offset on the y axis
-     */
-    private double yOffset = 0;
 
     /**
      * The CommunicationHandler
@@ -127,7 +118,7 @@ public class LoginPopupFXMLController implements Initializable {
     private void skip(ContextMenuEvent event) {
         loadpane.setVisible(true);
         new Thread(() -> {
-            List<String[]> sqlReturn = CommunicationHandler.getInstance().sendQuery(new String[]{"login", "olnor18", StringUtils.hash("kode")});
+            List<String[]> sqlReturn = communicationHandler.sendQuery(new String[]{"login", "olnor18", StringUtils.hash("kode")});
             if (sqlReturn != null && !sqlReturn.isEmpty() && !sqlReturn.get(0)[0].equalsIgnoreCase("error")) {
                 CredentialContainer.getInstance().setUsername("olnor18");
                 CredentialContainer.getInstance().setPassword(StringUtils.hash("kode"));
@@ -171,7 +162,7 @@ public class LoginPopupFXMLController implements Initializable {
             return;
         }
         new Thread(() -> {
-            List<String[]> sqlReturn = CommunicationHandler.getInstance().sendQuery(new String[]{"login", username.getText(), StringUtils.hash(password.getText())});
+            List<String[]> sqlReturn = communicationHandler.sendQuery(new String[]{"login", username.getText(), StringUtils.hash(password.getText())});
             if (sqlReturn != null && !sqlReturn.isEmpty() && !sqlReturn.get(0)[0].equalsIgnoreCase("error")) {
                 CredentialContainer.getInstance().setUsername(username.getText());
                 CredentialContainer.getInstance().setPassword(StringUtils.hash(password.getText()));

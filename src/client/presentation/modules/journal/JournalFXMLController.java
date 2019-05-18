@@ -1,10 +1,9 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
 package client.presentation.modules.journal;
 
-import client.presentation.CommunicationHandler;
 import client.presentation.containers.Patient;
 import client.presentation.modules.Module;
 import com.jfoenix.controls.JFXListView;
@@ -40,9 +39,9 @@ public class JournalFXMLController extends Module {
     @FXML
     protected JFXListView<Patient> patientView;
 
-    private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
     @FXML
     private AnchorPane addMedicinalEntryButton;
+
     @FXML
     private AnchorPane addManualEntryButton;
 
@@ -95,7 +94,7 @@ public class JournalFXMLController extends Module {
     }
 
     /**
-     *
+     * Clears the data stored int the views
      */
     @Override
     protected void clearAll() {

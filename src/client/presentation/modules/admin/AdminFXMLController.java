@@ -1,10 +1,9 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
 package client.presentation.modules.admin;
 
-import client.presentation.CommunicationHandler;
 import client.presentation.containers.Department;
 import client.presentation.containers.Patient;
 import client.presentation.containers.Role;
@@ -151,7 +150,7 @@ public class AdminFXMLController extends Module {
         for (int i = 2; i < query.length; i++) {
             query[i] = assignedPatitents.get(i - 2).getPatientID();
         }
-        CommunicationHandler.getInstance().sendQuery(query);
+        communicationHandler.sendQuery(query);
     }
 
     @FXML
@@ -163,16 +162,16 @@ public class AdminFXMLController extends Module {
         for (int i = 2; i < query.length; i++) {
             query[i] = assignedRoles.get(i - 2).getRoleId();
         }
-        CommunicationHandler.getInstance().sendQuery(query);
+        communicationHandler.sendQuery(query);
     }
 
     @FXML
     private void saveDetailsClicked(MouseEvent event) {
         if (userDepartment.getSelectionModel().getSelectedItem() != departmentPicker.getSelectionModel().getSelectedItem()) {
-            CommunicationHandler.getInstance().sendQuery("setUserDepartment", UserView.getSelectionModel().getSelectedItem().getUserID(), userDepartment.getSelectionModel().getSelectedItem().getDepartmentId());
+            communicationHandler.sendQuery("setUserDepartment", UserView.getSelectionModel().getSelectedItem().getUserID(), userDepartment.getSelectionModel().getSelectedItem().getDepartmentId());
         }
         if (!userName.getText().equals(UserView.getSelectionModel().getSelectedItem().getUserFullName())) {
-            CommunicationHandler.getInstance().sendQuery("alterUserFullName", UserView.getSelectionModel().getSelectedItem().getUserID(), userName.getText());
+            communicationHandler.sendQuery("alterUserFullName", UserView.getSelectionModel().getSelectedItem().getUserID(), userName.getText());
         }
         populateUserList();
     }
@@ -206,7 +205,7 @@ public class AdminFXMLController extends Module {
 
     private void populateDepartmentLists() {
         new Thread(() -> {
-            List<Department> departments = CommunicationHandler.getInstance().sendQuery("getDepartments").stream().map(t -> new Department(t[0], t[1])).collect(Collectors.toList());
+            List<Department> departments = communicationHandler.sendQuery("getDepartments").stream().map(t -> new Department(t[0], t[1])).collect(Collectors.toList());
             Platform.runLater(() -> {
                 //clear data
                 clearFields();
@@ -230,7 +229,7 @@ public class AdminFXMLController extends Module {
     private void populateUserList() {
         clearFields();
         new Thread(() -> {
-            List<User> users = CommunicationHandler.getInstance().sendQuery("userListByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).stream().map(t -> new User(t[0], t[1], t[2])).collect(Collectors.toList());
+            List<User> users = communicationHandler.sendQuery("userListByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).stream().map(t -> new User(t[0], t[1], t[2])).collect(Collectors.toList());
             Platform.runLater(() -> {
                 UserView.getItems().clear();
                 UserView.getItems().addAll(users);
@@ -244,7 +243,7 @@ public class AdminFXMLController extends Module {
      */
     protected void populatePatientList() {
         new Thread(() -> {
-            List<Patient> patients = CommunicationHandler.getInstance().sendQuery("getPatientsByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).stream().map(t -> new Patient(t[0], t[1])).collect(Collectors.toList());
+            List<Patient> patients = communicationHandler.sendQuery("getPatientsByDepartment", departmentPicker.getSelectionModel().getSelectedItem().getDepartmentId()).stream().map(t -> new Patient(t[0], t[1])).collect(Collectors.toList());
             Platform.runLater(() -> {
                 assignmentView.getItems().clear();
                 assignmentView.getItems().addAll(patients);
@@ -255,7 +254,7 @@ public class AdminFXMLController extends Module {
 
     private void populateRolesList() {
         new Thread(() -> {
-            List<Role> roles = CommunicationHandler.getInstance().sendQuery("getRoles").stream().map(t -> new Role(t[0], t[1])).collect(Collectors.toList());
+            List<Role> roles = communicationHandler.sendQuery("getRoles").stream().map(t -> new Role(t[0], t[1])).collect(Collectors.toList());
             Collections.sort(roles);
             Platform.runLater(() -> {
                 roleView.getItems().clear();
@@ -270,7 +269,7 @@ public class AdminFXMLController extends Module {
      */
     protected void updatePatientAssignments() {
         new Thread(() -> {
-            int[] indecies = CommunicationHandler.getInstance().sendQuery("getPatientsByUser", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> assignmentView.getItems().indexOf(new Patient(t[1], t[0]))).collect(Collectors.toList()).stream().mapToInt(i -> i).toArray();
+            int[] indecies = communicationHandler.sendQuery("getPatientsByUser", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> assignmentView.getItems().indexOf(new Patient(t[1], t[0]))).collect(Collectors.toList()).stream().mapToInt(i -> i).toArray();
             Platform.runLater(() -> {
                 assignmentView.getSelectionModel().clearSelection();
                 if (indecies.length > 0) {
@@ -283,7 +282,7 @@ public class AdminFXMLController extends Module {
 
     private void updateRoleAssignments() {
         new Thread(() -> {
-            int[] indecies = CommunicationHandler.getInstance().sendQuery("getUserRoles", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> roleView.getItems().indexOf(new Role(t[0], "No description"))).collect(Collectors.toList()).stream().mapToInt(i -> i).toArray();
+            int[] indecies = communicationHandler.sendQuery("getUserRoles", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> roleView.getItems().indexOf(new Role(t[0], "No description"))).collect(Collectors.toList()).stream().mapToInt(i -> i).toArray();
             Platform.runLater(() -> {
                 roleView.getSelectionModel().clearSelection();
                 if (indecies.length > 0) {

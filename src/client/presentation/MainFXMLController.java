@@ -44,6 +44,9 @@ public class MainFXMLController implements Initializable {
 
     @FXML
     private SubScene subScene;
+
+    private final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
+
     private Module module;
 
     @FXML
@@ -73,7 +76,7 @@ public class MainFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        CommunicationHandler.getInstance().setMainFXMLController(this);
+        communicationHandler.setMainFXMLController(this);
 
         //Configuring the side drawer-menu
         menu.prefHeightProperty().bind(((AnchorPane) menu.getParent()).heightProperty());
@@ -95,7 +98,7 @@ public class MainFXMLController implements Initializable {
             menuTranslation.setRate(-1);
             menuTranslation.play();
         });
-        addMenuItems(CommunicationHandler.getInstance().sendQuery(new String[]{"getMenuItems", CredentialContainer.getInstance().getUsername(), CredentialContainer.getInstance().getPassword()}));
+        addMenuItems(communicationHandler.sendQuery(new String[]{"getMenuItems", CredentialContainer.getInstance().getUsername(), CredentialContainer.getInstance().getPassword()}));
         loadSubScene("modules/dashboard/DashboardFXML.fxml");
         root.requestFocus();
         root.setOnKeyReleased(t -> {

@@ -1,10 +1,9 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
 package client.presentation.modules.admin;
 
-import client.presentation.CommunicationHandler;
 import client.presentation.containers.Department;
 import client.presentation.modules.Popup;
 import com.jfoenix.controls.JFXComboBox;
@@ -35,7 +34,7 @@ public class PatientCreationPopupFXMLController extends Popup implements Initial
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        CommunicationHandler.getInstance().sendQuery("getDepartments").forEach(t -> department.getItems().add(new Department(t[0], t[1])));
+        communicationHandler.sendQuery("getDepartments").forEach(t -> department.getItems().add(new Department(t[0], t[1])));
     }
 
     /**
@@ -63,7 +62,7 @@ public class PatientCreationPopupFXMLController extends Popup implements Initial
      */
     @FXML
     private void create(ActionEvent event) {
-        CommunicationHandler.getInstance().sendQuery("addPatient", name.getText(), department.getSelectionModel().getSelectedItem().getDepartmentId());
+        communicationHandler.sendQuery("addPatient", name.getText(), department.getSelectionModel().getSelectedItem().getDepartmentId());
         adminController.populatePatientList();
         adminController.updatePatientAssignments();
         close();
