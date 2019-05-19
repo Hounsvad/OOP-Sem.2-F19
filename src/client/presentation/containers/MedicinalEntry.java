@@ -5,8 +5,8 @@
 package client.presentation.containers;
 
 import client.presentation.modules.Module;
-import client.presentation.modules.journal.MedicalEntryCreationPopupFXMLController;
-import client.presentation.modules.journal.MedicalEntryShowMessagePopupFXMLController;
+import client.presentation.modules.journal.MedicinalEntryCreationPopupFXMLController;
+import client.presentation.modules.journal.MedicinalEntryShowMessagePopupFXMLController;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -57,7 +57,7 @@ public class MedicinalEntry {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MedicalEntryShowMessagePopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
-                MedicalEntryShowMessagePopupFXMLController controller = fxmlLoader.<MedicalEntryShowMessagePopupFXMLController>getController();
+                MedicinalEntryShowMessagePopupFXMLController controller = fxmlLoader.<MedicinalEntryShowMessagePopupFXMLController>getController();
                 controller.setData(notes, date, medicin, dosage);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
@@ -81,7 +81,7 @@ public class MedicinalEntry {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(MedicinalEntry.class.getResource("MedicalEntryCreationPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
-                fxmlLoader.<MedicalEntryCreationPopupFXMLController>getController().setModuleController(moduleController);
+                fxmlLoader.<MedicinalEntryCreationPopupFXMLController>getController().setModuleController(moduleController);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.initStyle(StageStyle.UNDECORATED);
