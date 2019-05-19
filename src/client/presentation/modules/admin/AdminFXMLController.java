@@ -79,7 +79,6 @@ public class AdminFXMLController extends Module {
             assignmentView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             roleView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-            //Get department and populate
             updateData();
             populateRolesList();
 
@@ -106,8 +105,8 @@ public class AdminFXMLController extends Module {
     private void departmentPicked(ActionEvent event) {
         populateUserList();
         populatePatientList();
-        userDepartment.getSelectionModel().select(departmentPicker.getSelectionModel().getSelectedItem());
-        newUserDepartment.getSelectionModel().select(departmentPicker.getSelectionModel().getSelectedItem());
+        userDepartment.getSelectionModel().select(departmentPicker.getSelectionModel().getSelectedIndex());
+        newUserDepartment.getSelectionModel().select(departmentPicker.getSelectionModel().getSelectedIndex());
     }
 
     @FXML
@@ -194,8 +193,8 @@ public class AdminFXMLController extends Module {
                 departmentPicker.getItems().addAll(departments);
                 departmentPicker.getSelectionModel().selectFirst();
                 userDepartment.getItems().addAll(departments);
-                userDepartment.getSelectionModel().selectFirst();
                 newUserDepartment.getItems().addAll(departments);
+                userDepartment.getSelectionModel().selectFirst();
                 newUserDepartment.getSelectionModel().selectFirst();
                 populateUserList();
                 populatePatientList();

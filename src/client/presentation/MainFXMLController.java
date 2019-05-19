@@ -174,7 +174,6 @@ public class MainFXMLController implements Initializable {
 
     @FXML
     private void openSettings(ActionEvent event) {
-        System.out.println("openSettings");
         new Thread(() -> {
             Platform.runLater(()
                     -> {

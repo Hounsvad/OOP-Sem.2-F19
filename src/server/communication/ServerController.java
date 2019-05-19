@@ -14,7 +14,7 @@ import java.net.Socket;
  */
 public class ServerController implements Runnable {
 
-    private ServerSocket server;
+    private ServerSocket serverSocket;
 
     /**
      * initialises the connection to the client
@@ -22,9 +22,9 @@ public class ServerController implements Runnable {
     @Override
     public void run() {
         try {
-            server = new ServerSocket(1025);
+            serverSocket = new ServerSocket(1025);
             while (true) {
-                Socket clientSocket = server.accept();
+                Socket clientSocket = serverSocket.accept();
                 Thread clientHandler = new ClientHandlerThread(clientSocket);
                 clientHandler.start();
             }
