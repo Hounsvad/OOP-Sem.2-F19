@@ -28,11 +28,13 @@ public class JournalFXMLController extends Module {
      */
     @FXML
     private JFXListView<MedicinalEntry> medicinalEntriesView;
+
     /**
      * The list view for the ManualEntries
      */
     @FXML
     private JFXListView<ManualEntry> manualEntriesView;
+
     /**
      * The list view for the Patients
      */

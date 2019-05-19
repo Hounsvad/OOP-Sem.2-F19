@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -23,17 +23,17 @@ public abstract class Popup implements Initializable {
     private Module moduleController;
 
     /**
-     *
+     * Shared instance of the communicationHandler
      */
     protected final CommunicationHandler communicationHandler = CommunicationHandler.getInstance();
 
     /**
-     *
+     * Shared instance of the credential container
      */
     protected final CredentialContainer credentialContainer = CredentialContainer.getInstance();
 
     /**
-     *
+     * Closes the popup
      */
     @FXML
     protected void close() {
@@ -41,16 +41,17 @@ public abstract class Popup implements Initializable {
     }
 
     /**
-     *
-     * @return
+     * @return the instance of the controller that opened the popup
      */
     protected Module getModuleController() {
         return moduleController;
     }
 
     /**
+     * Stores the instance of the launching module controller in the
+     * moduleController variable
      *
-     * @param moduleController
+     * @param moduleController the module instance to be stored
      */
     public void setModuleController(Module moduleController) {
         this.moduleController = moduleController;
