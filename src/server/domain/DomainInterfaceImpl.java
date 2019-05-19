@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -11,10 +11,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 import server.persistence.PersistanceInterface;
 import server.persistence.PersistanceInterfaceImpl;
+import server.recources.ConfigReader;
 
 /**
  *
@@ -26,7 +26,7 @@ public class DomainInterfaceImpl implements DomainInterface {
     private String userId = null;
     private String ip = null;
     private List<String> rights = null;
-    private final Map<String, String> smtpConfiguration = new HashMap<>();
+    private Map<String, String> smtpConfiguration = null;
     private static final String PASS_CHARS = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz,.-1234567890+?!@#&/";
     private String[] query;
     private static final Map<String, String> ACTIONS = new HashMap<String, String>() {
@@ -69,13 +69,17 @@ public class DomainInterfaceImpl implements DomainInterface {
     };
 
     /**
-     * Constructs a new Action handler that handles predifined actions
+     * Constructs a new Action handler that handles predefined actions
      *
-     * @param ip the ip that should be logged on specific actions
+     * @param ip the IP that should be logged on specific actions
      */
     public DomainInterfaceImpl(String ip) {
         this.ip = ip;
-        new Scanner(getClass().getResourceAsStream("/server/recources/SMTP.config")).useDelimiter("\r\n").forEachRemaining((s) -> smtpConfiguration.put(s.split(" := ")[0], s.split(" := ")[1]));
+        try {
+            smtpConfiguration = new ConfigReader("SMTP").getProperties();
+        } catch (IllegalArgumentException | NullPointerException ex) {
+            ex.printStackTrace(System.err);
+        }
     }
 
     /**
@@ -121,8 +125,7 @@ public class DomainInterfaceImpl implements DomainInterface {
      * "getMenuItems"
      *
      * </pre>
-     * In the event that the system does not return data from the
-     * database a
+     * In the event that the system does not return data from the database a
      * message is returned in the form of {@literal List<String[]>} with the
      * first index in the first array being a single word descriptor and the
      * second index being a message associated

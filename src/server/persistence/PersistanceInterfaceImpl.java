@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -11,10 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
+import server.recources.ConfigReader;
 
 /**
  *
@@ -32,14 +31,13 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
     private PersistanceInterfaceImpl() {
 
         //Load settings from config file
-        this.configFileMap = new HashMap<>();
-        new Scanner(getClass().getResourceAsStream("/server/recources/Database.config")).useDelimiter("\r\n").forEachRemaining((s) -> configFileMap.put(s.split(" := ")[0], s.split(" := ")[1]));
         //Initiate connection
         try {
+            this.configFileMap = new ConfigReader("Database").getProperties();
             DriverManager.registerDriver(new org.postgresql.Driver());
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection("jdbc:postgresql://" + configFileMap.get("url") + ":" + configFileMap.get("port") + "/" + configFileMap.get("databaseName") + "?sslmode=require", configFileMap.get("username"), configFileMap.get("password"));
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException | SQLException | IllegalArgumentException ex) {
             ex.printStackTrace(System.err);
         }
     }
