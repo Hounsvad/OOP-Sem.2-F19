@@ -13,7 +13,6 @@ import client.presentation.utils.credentials.CredentialContainer;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
@@ -30,7 +29,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -45,15 +43,9 @@ public class AdminFXMLController extends Module {
     @FXML
     private JFXComboBox<Department> departmentPicker;
     @FXML
-    private FontAwesomeIconView saveAssignments;
-    @FXML
     private JFXListView<Patient> assignmentView;
     @FXML
-    private FontAwesomeIconView saveRoles;
-    @FXML
     private JFXListView<Role> roleView;
-    @FXML
-    private FontAwesomeIconView saveDetails;
     @FXML
     private JFXTextField userId;
     @FXML
@@ -62,8 +54,6 @@ public class AdminFXMLController extends Module {
     private JFXTextField userName;
     @FXML
     private JFXComboBox<Department> userDepartment;
-    @FXML
-    private FontAwesomeIconView addNew;
     @FXML
     private JFXTextField newUserUsername;
     @FXML
@@ -74,8 +64,6 @@ public class AdminFXMLController extends Module {
     private JFXListView<User> UserView;
 
     private static ChangeListener changeListener;
-    @FXML
-    private BorderPane root;
 
     /**
      * Initializes the controller class.
@@ -195,7 +183,7 @@ public class AdminFXMLController extends Module {
                     stage.initStyle(StageStyle.UNDECORATED);
                     root.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
                     stage.setScene(new Scene(root));
-                    ((PatientCreationPopupFXMLController) fxmlLoader.getController()).setAdminController(this);
+                    ((PatientCreationPopupFXMLController) fxmlLoader.getController()).setModuleController(this);
                     stage.show();
                 } catch (IOException e) {
                 }

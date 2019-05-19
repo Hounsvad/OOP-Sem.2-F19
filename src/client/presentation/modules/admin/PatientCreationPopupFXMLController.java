@@ -5,6 +5,7 @@
 package client.presentation.modules.admin;
 
 import client.presentation.containers.Department;
+import client.presentation.modules.Module;
 import client.presentation.modules.Popup;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -38,21 +39,18 @@ public class PatientCreationPopupFXMLController extends Popup implements Initial
     }
 
     /**
-     *
-     * @param c is the controller that should be updated after the addition of
-     *          the new user
-     */
-    protected void setAdminController(AdminFXMLController c) {
-        adminController = c;
-    }
-
-    /**
      * Closes the popup
      */
     @FXML
     @Override
     public void close() {
         ((Stage) cross.getScene().getWindow()).close();
+    }
+
+    @Override
+    public void setModuleController(Module moduleController) {
+        super.setModuleController(moduleController);
+        adminController = (AdminFXMLController) getModuleController();
     }
 
     /**

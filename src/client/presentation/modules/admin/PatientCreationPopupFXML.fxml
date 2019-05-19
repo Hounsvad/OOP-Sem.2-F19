@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
 Developed by SI2-PRO Group 3
 Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
@@ -20,10 +21,10 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
             <Font size="36.0" />
          </font>
       </Label>
-      <Label layoutX="36.0" layoutY="89.0" text="Department:" textFill="#048ba8" />
-      <JFXComboBox fx:id="department" focusColor="#048ba8" layoutX="119.0" layoutY="83.0" prefHeight="31.0" prefWidth="384.0" stylesheets="@../../css/generalStyleSheet.css" unFocusColor="#048ba8" />
-      <Label layoutX="48.0" layoutY="142.0" text="Name:" textFill="#048ba8" />
-      <JFXTextField fx:id="name" focusColor="#048ba8" layoutX="119.0" layoutY="130.0" prefHeight="31.0" prefWidth="384.0" stylesheets="@../../css/generalStyleSheet.css" unFocusColor="#048ba8" />
+      <Label layoutX="36.0" layoutY="89.0" text="Department:" textFill="#048ba8" AnchorPane.rightAnchor="504.0" />
+      <JFXComboBox fx:id="department" focusColor="#048ba8" layoutX="119.0" layoutY="83.0" prefHeight="31.0" prefWidth="384.0" stylesheets="@../../css/generalStyleSheet.css" unFocusColor="#048ba8" AnchorPane.leftAnchor="119.0" />
+      <Label layoutX="48.0" layoutY="142.0" text="Name:" textFill="#048ba8" AnchorPane.rightAnchor="504.0" />
+      <JFXTextField fx:id="name" focusColor="#048ba8" layoutX="119.0" layoutY="130.0" prefHeight="31.0" prefWidth="384.0" stylesheets="@../../css/generalStyleSheet.css" unFocusColor="#048ba8" AnchorPane.leftAnchor="119.0" />
       <JFXButton layoutX="514.0" layoutY="203.0" onAction="#close" text="Cancel" />
       <JFXButton layoutX="440.0" layoutY="203.0" onAction="#create" text="Create" />
     </children>

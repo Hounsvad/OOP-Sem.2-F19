@@ -136,11 +136,12 @@ public class DashboardFXMLController extends Module {
                     messageView.getItems().clear();
                     activityView.getItems().addAll(activityEntries);
                     messageView.getItems().addAll(messageEntries);
-
-                    cache.get("DashboardActivity").clear();
-                    cache.get("DashboardActivity").addAll(activityEntries);
-                    cache.get("DashboardMessage").clear();
-                    cache.get("DashboardMessage").addAll(messageEntries);
+                    if (cache.get("DashboardActivity") != null && cache.get("DashboardMessage") != null) {
+                        cache.get("DashboardActivity").clear();
+                        cache.get("DashboardActivity").addAll(activityEntries);
+                        cache.get("DashboardMessage").clear();
+                        cache.get("DashboardMessage").addAll(messageEntries);
+                    }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
