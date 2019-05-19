@@ -22,7 +22,7 @@ import javafx.stage.StageStyle;
  *
  * @author Sanitas Solutions
  */
-public class MessageEntry {
+public class MessageEntry extends Entry {
 
     /**
      * The subject of the the entry

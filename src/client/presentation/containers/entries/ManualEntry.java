@@ -24,7 +24,7 @@ import javax.swing.text.DateFormatter;
  *
  * @author Sanitas Solutions
  */
-public class ManualEntry {
+public class ManualEntry extends Entry {
 
     private final String date;
     private final String patientId;

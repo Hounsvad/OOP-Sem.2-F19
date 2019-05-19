@@ -20,7 +20,7 @@ import javafx.stage.StageStyle;
  *
  * @author Sanitas Solutions
  */
-public class ActivityEntry {
+public class ActivityEntry extends Entry {
 
     private final String typeOfEntry;
     private final String dateOfEntryString;

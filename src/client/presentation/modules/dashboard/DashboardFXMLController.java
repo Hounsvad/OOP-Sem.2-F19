@@ -4,8 +4,10 @@
  */
 package client.presentation.modules.dashboard;
 
-import client.presentation.containers.entries.MessageEntry;
 import client.presentation.containers.entries.ActivityEntry;
+import client.presentation.containers.entries.Cache;
+import client.presentation.containers.entries.Entry;
+import client.presentation.containers.entries.MessageEntry;
 import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
 import com.jfoenix.controls.JFXListView;
@@ -13,7 +15,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -35,8 +39,10 @@ public class DashboardFXMLController extends Module {
     @FXML
     private JFXListView<MessageEntry> messageView;
 
-    private static List<ActivityEntry> activityEntriesCache;
-    private static List<MessageEntry> messageEntriesCache;
+    private static List<ActivityEntry> activityEntriesCacheOld;
+    private static List<MessageEntry> messageEntriesCacheOld;
+
+    private final Map<String, List<Entry>> cache = Cache.getInstance().getCache();
 
     private static ChangeListener changeListener;
 
@@ -53,6 +59,7 @@ public class DashboardFXMLController extends Module {
 
         updateData();
 
+        //Opens popup upon click on elements in the listViews
         activityView.setOnMouseClicked((MouseEvent event) -> {
             try {
                 activityView.getSelectionModel().getSelectedItem().showPopup();
@@ -65,10 +72,11 @@ public class DashboardFXMLController extends Module {
             try {
                 messageView.getSelectionModel().getSelectedItem().showPopup();
             } catch (NullPointerException e) {
-                //Do nothing
+                //Do nothing n the event that the user cliced in the message view but not on a message
             }
         });
 
+        //Instantiated custom changelisner in order to ensure that it can be removed upon re-setting it
         changeListener = new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> a, Boolean b, Boolean c) {
@@ -87,19 +95,19 @@ public class DashboardFXMLController extends Module {
 
     @FXML
     private void addNewMessage(MouseEvent event) {
+        //Shows its own popup upon creation and the instance is not used further
         new MessageEntry(this);
     }
 
-    /**
-     *
-     */
+    @Override
     public void updateData() {
         //Check if there are cached values, and use those until the new values arrive
-        if (activityEntriesCache != null && messageEntriesCache != null) {
+        if (cache.get("DashboardActivity") != null && cache.get("DashboardMessage") != null) {
             activityView.getItems().clear();
             messageView.getItems().clear();
-            activityView.getItems().addAll(activityEntriesCache);
-            messageView.getItems().addAll(messageEntriesCache);
+            //Gets cached entries and casts them to the appropriate type
+            activityView.getItems().addAll(cache.get("DashboardActivity").stream().map(t -> (ActivityEntry) t).collect(Collectors.toList()));
+            messageView.getItems().addAll(cache.get("DashboardMessage").stream().map(t -> (MessageEntry) t).collect(Collectors.toList()));
         }
 
         //Find the previous Updater thread, if any and kill it
@@ -111,44 +119,39 @@ public class DashboardFXMLController extends Module {
 
         //New thread to get and update the values and store the new values in a cache
         new Thread(() -> {
+            List<ActivityEntry> activityEntries = new ArrayList<>();
+            List<MessageEntry> messageEntries = new ArrayList<>();
+
+            //Get new values
             try {
-                List<ActivityEntry> activityEntries = new ArrayList<>();
-                List<MessageEntry> messageEntries = new ArrayList<>();
-
-                //Get new values
-                try {
-                    communicationHandler.sendQuery("getActivity").forEach((tuple) -> activityEntries.add(new ActivityEntry(tuple[1], new Date(Long.parseLong(tuple[0])), tuple[2], tuple[3])));
-                    communicationHandler.sendQuery("getMessages").forEach((tuple) -> messageEntries.add(new MessageEntry(tuple[2], tuple[0] + "(" + tuple[1] + ")", tuple[3], new Date(Long.parseLong(tuple[4])))));
-                } catch (Exception e) {
-                }
-
-                //Update the values to the FX elements and update the cache
-                Platform.runLater(() -> {
-                    try {
-                        activityView.getItems().clear();
-                        messageView.getItems().clear();
-                        activityView.getItems().addAll(activityEntries);
-                        messageView.getItems().addAll(messageEntries);
-
-                        activityEntriesCache = new ArrayList<>(activityEntries);
-                        messageEntriesCache = new ArrayList<>(messageEntries);
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
-                });
-
-            } catch (Exception ex) {
+                communicationHandler.sendQuery("getActivity").forEach((tuple) -> activityEntries.add(new ActivityEntry(tuple[1], new Date(Long.parseLong(tuple[0])), tuple[2], tuple[3])));
+                communicationHandler.sendQuery("getMessages").forEach((tuple) -> messageEntries.add(new MessageEntry(tuple[2], tuple[0] + "(" + tuple[1] + ")", tuple[3], new Date(Long.parseLong(tuple[4])))));
+            } catch (Exception e) {
             }
-        }, "DashboardUpdater").
-                start();
+
+            //Update the values to the FX elements and update the cache
+            Platform.runLater(() -> {
+                try {
+                    activityView.getItems().clear();
+                    messageView.getItems().clear();
+                    activityView.getItems().addAll(activityEntries);
+                    messageView.getItems().addAll(messageEntries);
+
+                    cache.get("DashboardActivity").clear();
+                    cache.get("DashboardActivity").addAll(activityEntries);
+                    cache.get("DashboardMessage").clear();
+                    cache.get("DashboardMessage").addAll(messageEntries);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+            });
+        }, "DashboardUpdater").start();
     }
 
-    /**
-     *
-     */
+    @Override
     protected void clearAll() {
-        activityEntriesCache = null;
-        messageEntriesCache = null;
+        cache.remove("getActivity");
+        cache.remove("getMessages");
         Platform.runLater(() -> {
             activityView.getItems().clear();
             messageView.getItems().clear();

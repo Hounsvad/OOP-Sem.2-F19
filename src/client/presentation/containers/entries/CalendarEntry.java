@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -10,7 +10,7 @@ import client.presentation.utils.StringUtils;
  *
  * @author Sanitas Solutions
  */
-public class CalendarEntry {
+public class CalendarEntry extends Entry {
 
     private final String title;
     private final String description;

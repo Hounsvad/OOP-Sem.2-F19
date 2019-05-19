@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -59,11 +59,12 @@ public class ActivityEntryPopupFXMLController extends Popup {
 
     /**
      * Set the data for the ActivityEntry popup
+     * persistenceInterface.parseQuery();
      *
      * @param titleString       the title for the entry
      * @param descriptionString the description of the entry
      * @param dateString        the date of the entry
-     * @param ipString          the ip of the entry
+     * @param ipString          the IP of the entry
      */
     public void setData(String titleString, String descriptionString, String dateString, String ipString) {
         title.setText(titleString);
