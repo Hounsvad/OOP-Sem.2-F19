@@ -4,6 +4,8 @@
  */
 package client.presentation.modules.journal;
 
+import client.presentation.containers.ManualEntry;
+import client.presentation.containers.MedicinalEntry;
 import client.presentation.containers.Patient;
 import client.presentation.modules.Module;
 import com.jfoenix.controls.JFXListView;

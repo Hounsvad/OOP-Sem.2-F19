@@ -4,6 +4,8 @@
  */
 package client.presentation.modules.dashboard;
 
+import client.presentation.containers.MessageEntry;
+import client.presentation.containers.ActivityEntry;
 import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
 import com.jfoenix.controls.JFXListView;
