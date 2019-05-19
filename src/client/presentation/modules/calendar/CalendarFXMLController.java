@@ -6,7 +6,7 @@ package client.presentation.modules.calendar;
 
 import client.presentation.containers.Patient;
 import client.presentation.modules.Module;
-import client.presentation.containers.MessageEntry;
+import client.presentation.containers.entries.MessageEntry;
 import client.presentation.utils.credentials.CredentialContainer;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;

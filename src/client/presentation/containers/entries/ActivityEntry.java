@@ -2,7 +2,7 @@
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
-package client.presentation.containers;
+package client.presentation.containers.entries;
 
 import client.presentation.modules.dashboard.ActivityEntryPopupFXMLController;
 import static client.presentation.utils.StringUtils.getBoldString;
