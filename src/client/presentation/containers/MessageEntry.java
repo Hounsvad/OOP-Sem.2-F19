@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -97,7 +97,7 @@ public class MessageEntry {
         Platform.runLater(()
                 -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MessageEntryPopupFXML.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/presentation/modules/dashboard/MessageEntryPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 MessageEntryPopupFXMLController controller = fxmlLoader.<MessageEntryPopupFXMLController>getController();
                 controller.setData(sender + ": " + subject, message, sentDateString);
@@ -119,7 +119,7 @@ public class MessageEntry {
         Platform.runLater(()
                 -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(MessageEntry.class.getResource("MessageEntryCreationPopupFXML.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(MessageEntry.class.getResource("/client/presentation/modules/dashboard/MessageEntryCreationPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 fxmlLoader.<MessageEntryCreationPopupFXMLController>getController().setModuleController(moduleController);
                 Stage stage = new Stage();

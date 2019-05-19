@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -55,7 +55,7 @@ public class MedicinalEntry {
         Platform.runLater(()
                 -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MedicalEntryShowMessagePopupFXML.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/presentation/modules/journal/MedicalEntryShowMessagePopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 MedicinalEntryShowMessagePopupFXMLController controller = fxmlLoader.<MedicinalEntryShowMessagePopupFXMLController>getController();
                 controller.setData(notes, date, medicin, dosage);
@@ -79,7 +79,7 @@ public class MedicinalEntry {
         Platform.runLater(()
                 -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(MedicinalEntry.class.getResource("MedicalEntryCreationPopupFXML.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(MedicinalEntry.class.getResource("/client/presentation/modules/journal/MedicalEntryCreationPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 fxmlLoader.<MedicinalEntryCreationPopupFXMLController>getController().setModuleController(moduleController);
                 Stage stage = new Stage();

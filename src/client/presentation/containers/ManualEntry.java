@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -40,7 +40,7 @@ public class ManualEntry {
         Platform.runLater(()
                 -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManualEntryShowMessagePopupFXML.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/presentation/modules/journal/ManualEntryShowMessagePopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 ManualEntryShowMessagePopupFXMLController controller = fxmlLoader.<ManualEntryShowMessagePopupFXMLController>getController();
                 controller.setData(contents, date);
@@ -63,7 +63,7 @@ public class ManualEntry {
         Platform.runLater(()
                 -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(ManualEntry.class.getResource("ManualEntryCreationPopupFXML.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(ManualEntry.class.getResource("/client/presentation/modules/journal/ManualEntryCreationPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 ((ManualEntryCreationPopupFXMLController) fxmlLoader.getController()).setModuleController(moduleController);
                 Stage stage = new Stage();

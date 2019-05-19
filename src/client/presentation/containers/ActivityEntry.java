@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -58,7 +58,7 @@ public class ActivityEntry {
         Platform.runLater(()
                 -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ActivityEntryPopupFXML.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/presentation/modules/dashboard/ActivityEntryPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 ActivityEntryPopupFXMLController controller = fxmlLoader.<ActivityEntryPopupFXMLController>getController();
                 controller.setData(typeOfEntry, specificsOfEntry, dateOfEntryString, ip);
