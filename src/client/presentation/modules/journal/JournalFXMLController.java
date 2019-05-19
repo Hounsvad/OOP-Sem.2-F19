@@ -4,15 +4,16 @@
  */
 package client.presentation.modules.journal;
 
+import client.presentation.containers.Patient;
 import client.presentation.containers.entries.ManualEntry;
 import client.presentation.containers.entries.MedicinalEntry;
-import client.presentation.containers.Patient;
 import client.presentation.modules.Module;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
@@ -119,15 +120,17 @@ public class JournalFXMLController extends Module {
     }
 
     private void updateEntryDate() {
-        manualEntriesView.getItems().clear();
-        medicinalEntriesView.getItems().clear();
-        List<ManualEntry> manualEntries = new ArrayList<>();
-        communicationHandler.sendQuery("getJournal", getPatient().getPatientID()).forEach((tuple) -> manualEntries.add(new ManualEntry(tuple[1], tuple[0], tuple[2])));
-        manualEntriesView.getItems().addAll(manualEntries);
-
-        List<MedicinalEntry> medicalEntries = new ArrayList<>();
-        communicationHandler.sendQuery("getMedicinalJournal", getPatient().getPatientID()).forEach((tuple) -> medicalEntries.add(new MedicinalEntry(tuple[0], tuple[1], tuple[2])));
-        medicinalEntriesView.getItems().addAll(medicalEntries);
+        new Thread(() -> {
+            List<ManualEntry> manualEntries = new ArrayList<>();
+            List<MedicinalEntry> medicalEntries = new ArrayList<>();
+            communicationHandler.sendQuery("getMedicinalJournal", getPatient().getPatientID()).forEach((tuple) -> medicalEntries.add(new MedicinalEntry(tuple[0], tuple[1], tuple[2])));
+            communicationHandler.sendQuery("getJournal", getPatient().getPatientID()).forEach((tuple) -> manualEntries.add(new ManualEntry(tuple[1], tuple[0], tuple[2])));
+            Platform.runLater(() -> {
+                manualEntriesView.getItems().clear();
+                medicinalEntriesView.getItems().clear();
+                manualEntriesView.getItems().addAll(manualEntries);
+                medicinalEntriesView.getItems().addAll(medicalEntries);
+            });
+        }, "Journal Updater").start();
     }
-
 }
