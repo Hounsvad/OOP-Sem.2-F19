@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -54,11 +54,12 @@ public class MessageEntryCreationPopupFXMLController extends Popup {
 
     @FXML
     private void send() {
+        //Check for to see if every field is selected and or filled
         if (recipients.getSelectionModel().getSelectedItem() != null && !subject.getText().isEmpty() && !message.getText().isEmpty()) {
             communicationHandler.sendQuery("sendMessage", recipients.getSelectionModel().getSelectedItem().getUserID(), subject.getText(), message.getText());
             new Thread(() -> {
                 Platform.runLater(() -> ((DashboardFXMLController) getModuleController()).updateData());
-            }).start();
+            }, "MessageCreatingPopupDashboardUpdateStarter").start();
             close();
         } else {
             JFXAlert alert = new JFXAlert<>(((Stage) message.getScene().getWindow()));
