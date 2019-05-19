@@ -143,7 +143,7 @@ public class LoginPopupFXMLController implements Initializable {
                     -> {
                 loadpane.setVisible(false);
             });
-        }).start();
+        }, "SkipLoginHandler").start();
     }
 
     /**
@@ -187,7 +187,7 @@ public class LoginPopupFXMLController implements Initializable {
                     -> {
                 loadpane.setVisible(false);
             });
-        }).start();
+        }, "LoginHandler").start();
     }
 
     /**

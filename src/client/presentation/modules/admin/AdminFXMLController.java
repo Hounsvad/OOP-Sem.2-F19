@@ -80,18 +80,8 @@ public class AdminFXMLController extends Module {
             roleView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
             //Get department and populate
-            new Thread(() -> {
-                try {
-                    Thread.sleep(600);
-                    Platform.runLater(() -> {
-                        populateDepartmentLists();
-                        populateRolesList();
-
-                    });
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace(System.err);
-                }
-            }).start();
+            updateData();
+            populateRolesList();
 
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -188,7 +178,7 @@ public class AdminFXMLController extends Module {
                 } catch (IOException e) {
                 }
             });
-        }).start();
+        }, "AddPatientPopupLoader").start();
     }
 
     private void populateDepartmentLists() {
@@ -210,7 +200,7 @@ public class AdminFXMLController extends Module {
                 populateUserList();
                 populatePatientList();
             });
-        }).start();
+        }, "DepartmentListPopulater").start();
 
     }
 
@@ -222,7 +212,7 @@ public class AdminFXMLController extends Module {
                 UserView.getItems().clear();
                 UserView.getItems().addAll(users);
             });
-        }).start();
+        }, "UserListPopulater").start();
 
     }
 
@@ -236,7 +226,7 @@ public class AdminFXMLController extends Module {
                 assignmentView.getItems().clear();
                 assignmentView.getItems().addAll(patients);
             });
-        }).start();
+        }, "PatientListPopulater(AdminPanel)").start();
 
     }
 
@@ -248,12 +238,12 @@ public class AdminFXMLController extends Module {
                 roleView.getItems().clear();
                 roleView.getItems().addAll(roles);
             });
-        }).start();
+        }, "RoleListPopulator").start();
 
     }
 
     /**
-     *
+     * Updates the list of patient assignemts
      */
     protected void updatePatientAssignments() {
         new Thread(() -> {
@@ -264,7 +254,7 @@ public class AdminFXMLController extends Module {
                     assignmentView.getSelectionModel().selectIndices(indecies[0], indecies);
                 }
             });
-        }).start();
+        }, "PatientAssignmentSelectionUpdater").start();
 
     }
 
@@ -277,7 +267,7 @@ public class AdminFXMLController extends Module {
                     roleView.getSelectionModel().selectIndices(indecies[0], indecies);
                 }
             });
-        }).start();
+        }, "RoleAssignmentSelectionUpdater").start();
 
     }
 
@@ -304,9 +294,6 @@ public class AdminFXMLController extends Module {
         assignmentView.getSelectionModel().clearSelection();
     }
 
-    /**
-     *
-     */
     @Override
     protected void clearAll() {
         //clears department pickers
@@ -318,9 +305,6 @@ public class AdminFXMLController extends Module {
         clearFields();
     }
 
-    /**
-     *
-     */
     @Override
     public void updateData() {
         populateDepartmentLists();

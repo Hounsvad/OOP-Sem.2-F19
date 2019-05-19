@@ -190,6 +190,6 @@ public class MainFXMLController implements Initializable {
                 } catch (IOException e) {
                 }
             });
-        }).start();
+        }, "SettingsWindowLoader").start();
     }
 }

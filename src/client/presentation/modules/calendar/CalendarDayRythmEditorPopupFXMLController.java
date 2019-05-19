@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -132,7 +132,7 @@ public class CalendarDayRythmEditorPopupFXMLController extends Popup {
             if (glyph != null) {
                 Platform.runLater(() -> iconView.setIcon(FontAwesomeIcon.valueOf(glyph)));
             }
-        }).start();
+        }, "GlyphUpdater").start();
 
     }
 

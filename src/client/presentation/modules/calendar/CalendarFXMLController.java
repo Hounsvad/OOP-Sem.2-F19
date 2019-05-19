@@ -1,12 +1,12 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
 package client.presentation.modules.calendar;
 
 import client.presentation.containers.Patient;
-import client.presentation.modules.Module;
 import client.presentation.containers.entries.MessageEntry;
+import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
@@ -414,7 +414,7 @@ public class CalendarFXMLController extends Module {
             System.arraycopy(entryToString(entry), 0, query, 2, 3);
             communicationHandler.sendQuery(query);
             getCalendarEvents();
-        }).start();
+        }, "EventCreatorPopupLoader").start();
     }
 
     private void getDayRythm() {
