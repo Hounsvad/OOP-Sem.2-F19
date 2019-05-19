@@ -28,7 +28,7 @@ public class MedicinalEntryShowMessagePopupFXMLController extends Popup {
     @FXML
     private FontAwesomeIconView cross;
     @FXML
-    private JFXTextField medicin;
+    private JFXTextField medicine;
     @FXML
     private JFXTextField dosage;
     @FXML
@@ -52,11 +52,19 @@ public class MedicinalEntryShowMessagePopupFXMLController extends Popup {
         close();
     }
 
+    /**
+     * Sets the data for the popup
+     *
+     * @param notes      the data for the notes field in the medicinal popup
+     * @param dateString the date as a long stored in a string
+     * @param medicin    the data for the medicine field in the medicinal popup
+     * @param dosage     the data for the dosage field in the medicinal popup
+     */
     public void setData(String notes, String dateString, String medicin, String dosage) {
         DateFormatter dateFormatter = new DateFormatter(DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM));
         this.notes.setText(notes);
         this.dosage.setText(dosage);
-        this.medicin.setText(medicin);
+        this.medicine.setText(medicin);
         try {
             dateLabel.setText(dateFormatter.valueToString(new Date(Long.parseLong(dateString))));
         } catch (ParseException ex) {

@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 public class MedicinalEntryCreationPopupFXMLController extends Popup {
 
     @FXML
-    private JFXComboBox<String> medicin;
+    private JFXComboBox<String> medicine;
     @FXML
     private JFXTextField dosage;
     @FXML
@@ -42,13 +42,13 @@ public class MedicinalEntryCreationPopupFXMLController extends Popup {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        medicin.getItems().addAll("Parcetamol", "Ibuprofen", "Morfin", "Antihestamin");
+        medicine.getItems().addAll("Parcetamol", "Ibuprofen", "Morfin", "Antihestamin");
     }
 
     @FXML
     private void send() {
-        if (medicin.getSelectionModel().getSelectedItem() != null && !dosage.getText().isEmpty() && !notes.getText().isEmpty()) {
-            communicationHandler.sendQuery("addJournalEntry", getPatient().getPatientID(), "medicinal", String.join(";:;", new String[]{medicin.getSelectionModel().getSelectedItem(), dosage.getText(), notes.getText()}));
+        if (medicine.getSelectionModel().getSelectedItem() != null && !dosage.getText().isEmpty() && !notes.getText().isEmpty()) {
+            communicationHandler.sendQuery("addJournalEntry", getPatient().getPatientID(), "medicinal", String.join(";:;", new String[]{medicine.getSelectionModel().getSelectedItem(), dosage.getText(), notes.getText()}));
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
