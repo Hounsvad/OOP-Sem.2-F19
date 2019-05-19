@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -42,12 +41,6 @@ public class JournalFXMLController extends Module {
      */
     @FXML
     protected JFXListView<Patient> patientView;
-
-    @FXML
-    private AnchorPane addMedicinalEntryButton;
-
-    @FXML
-    private AnchorPane addManualEntryButton;
 
     /**
      * Initializes the controller class
@@ -85,9 +78,7 @@ public class JournalFXMLController extends Module {
         return patientView.getSelectionModel().getSelectedItem();
     }
 
-    /**
-     *
-     */
+    @Override
     public void updateData() {
         clearAll();
         List<Patient> patients = new ArrayList<>();
@@ -97,9 +88,6 @@ public class JournalFXMLController extends Module {
         updateEntryDate();
     }
 
-    /**
-     * Clears the data stored int the views
-     */
     @Override
     protected void clearAll() {
         manualEntriesView.getItems().clear();
