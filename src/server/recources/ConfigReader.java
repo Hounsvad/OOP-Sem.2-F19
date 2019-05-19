@@ -4,7 +4,6 @@
  */
 package server.recources;
 
-import java.io.File;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -28,12 +27,7 @@ public final class ConfigReader {
     public ConfigReader(String configName) {
         this.configName = configName;
         this.properties = new TreeMap<>();
-        File configFile = new File(configName + ".config");
-        if (configFile.exists() && configFile.isFile() && configFile.canRead()) {
-            reload();
-        } else {
-            throw new IllegalArgumentException("The config file with the name: \"" + configName + "\" Does not exist, or can not be read");
-        }
+        reload();
     }
 
     /**
