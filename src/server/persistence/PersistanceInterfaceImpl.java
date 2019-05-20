@@ -141,7 +141,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 break;
             case "addCalendarEvent":
                 try {
-                    stmt = conn.prepareStatement("INSERT INTO calendar VALUES ((SELECT MAX(W.event_id) FROM calendar as W)+1, ?, ?, ?, ?)");
+                    stmt = conn.prepareStatement("INSERT INTO calendar VALUES ((SELECT MAX(W.event_id) FROM calendar as W)+1, ?, ?, ?, ?); SELECT MAX(event_id) FROM calendar");
                     stmt.setLong(1, Long.parseLong(query[1]));
                     stmt.setString(2, query[3]);
                     stmt.setString(3, query[4]);
