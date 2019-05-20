@@ -29,6 +29,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Skin;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
@@ -94,6 +95,12 @@ public class CalendarEventCreationPopupFXMLController extends Popup {
                 ex.printStackTrace();
             }
         });
+        fromTime.set24HourView(true);
+        fromTime.setDefaultColor(Color.web("#048BA8"));
+        fromDate.setDefaultColor(Color.web("#048BA8"));
+        toTime.set24HourView(true);
+        toTime.setDefaultColor(Color.web("#048BA8"));
+        toDate.setDefaultColor(Color.web("#048BA8"));
     }
 
     @FXML
@@ -107,8 +114,9 @@ public class CalendarEventCreationPopupFXMLController extends Popup {
             alert.setContent(layout);
             alert.initModality(Modality.NONE);
             alert.showAndWait();
+            return;
         }
-        if (fromDate.getValue().isBefore(toDate.getValue()) || fromTime.getValue().isBefore(toTime.getValue())) {
+        if (fromDate.getValue().isAfter(toDate.getValue()) || fromTime.getValue().isAfter(toTime.getValue())) {
             JFXAlert alert = new JFXAlert<>(((Stage) cross.getScene().getWindow()));
             JFXDialogLayout layout = new JFXDialogLayout();
             layout.setBody(new Label("The entered time inteval is not valid"));
@@ -117,6 +125,7 @@ public class CalendarEventCreationPopupFXMLController extends Popup {
             alert.setContent(layout);
             alert.initModality(Modality.NONE);
             alert.showAndWait();
+            return;
         }
         if (fromDate.getValue().equals(toDate.getValue()) && fromTime.getValue().equals(toTime.getValue())) {
             JFXAlert alert = new JFXAlert<>(((Stage) cross.getScene().getWindow()));
@@ -127,12 +136,13 @@ public class CalendarEventCreationPopupFXMLController extends Popup {
             alert.setContent(layout);
             alert.initModality(Modality.NONE);
             alert.showAndWait();
+            return;
         }
         lock.lock();
         try {
             entry = new Entry<>(title.getText(), new Interval(LocalDateTime.of(fromDate.getValue(), fromTime.getValue()), LocalDateTime.of(toDate.getValue(), toTime.getValue())));
             entry.setLocation(details.getText());
-            entry.setUserObject((User[]) participents.getItems().toArray());
+            entry.setUserObject(participents.getItems().toArray(new User[participents.getItems().size()]));
             condition.signal();
             close();
         } finally {
