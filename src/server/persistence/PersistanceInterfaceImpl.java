@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -141,10 +141,10 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 break;
             case "addCalendarEvent":
                 try {
-                    stmt = conn.prepareStatement("INSERT INTO calender VALUES ((SELECT MAX(W.event_id) FROM calender as W)+1, ?, ?, ?, ?)");
+                    stmt = conn.prepareStatement("INSERT INTO calendar VALUES ((SELECT MAX(W.event_id) FROM calendar as W)+1, ?, ?, ?, ?)");
                     stmt.setLong(1, Long.parseLong(query[1]));
-                    stmt.setLong(2, Long.parseLong(query[3]));
-                    stmt.setLong(3, Long.parseLong(query[4]));
+                    stmt.setString(2, query[3]);
+                    stmt.setString(3, query[4]);
                     stmt.setLong(4, Long.parseLong(query[2]));
                 } catch (SQLException ex) {
                     ex.printStackTrace(System.err);
@@ -170,7 +170,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 break;
             case "updateCalendarEvent":
                 try {
-                    stmt = conn.prepareStatement("UPDATE calender SET date = ?, event_name = ?, event_detail = ?, date_end = ? WHERE event_id = ?");
+                    stmt = conn.prepareStatement("UPDATE calendar SET date = ?, event_name = ?, event_detail = ?, date_end = ? WHERE event_id = ?");
                     stmt.setLong(1, Long.parseLong(query[2]));
                     stmt.setString(2, (query[4]));
                     stmt.setString(3, (query[5]));
@@ -181,7 +181,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 break;
             case "removeCalendarEvent":
                 try {
-                    stmt = conn.prepareStatement("DELETE FROM participation WHERE event_id = ?; DELETE FROM calender WHERE event_id = ?");
+                    stmt = conn.prepareStatement("DELETE FROM participation WHERE event_id = ?; DELETE FROM calendar WHERE event_id = ?");
                     stmt.setLong(1, Long.parseLong(query[1]));
                     stmt.setLong(2, Long.parseLong(query[1]));
                 } catch (SQLException ex) {

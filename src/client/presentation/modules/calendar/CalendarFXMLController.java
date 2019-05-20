@@ -189,11 +189,11 @@ public class CalendarFXMLController extends Module {
                             Long.toString(toMillis(detailedWeekView.getEndDate(), detailedWeekView.getEndTime())))
                             .forEach(tuple -> {
                                 Entry entry = new Entry<>(
-                                        tuple[3],
+                                        tuple[2],
                                         new Interval(LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(tuple[1])), ZoneId.systemDefault()),
                                                 LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(tuple[4])), ZoneId.systemDefault())
                                         ));
-                                entry.setLocation(tuple[4]);
+                                entry.setLocation(tuple[3]);
                                 List<Patient> participants = communicationHandler.sendQuery("getEventParticipants", tuple[0]).stream().map(pTuple -> new Patient(pTuple[1], pTuple[0])).collect(Collectors.toList());
                                 entry.setUserObject(new CalendarEntryData(tuple[0], participants.toArray(new Patient[participants.size()])));
                                 calendar.addEntry(entry);
@@ -309,7 +309,8 @@ public class CalendarFXMLController extends Module {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarEventDetailsPopoverFXML.fxml"));
             Node node = fxmlLoader.load();
-            ((CalendarEventDetailsPopoverFXMLController) fxmlLoader.getController()).setData(parameter.getEntry());
+            ((CalendarEventDetailsPopoverFXMLController) fxmlLoader.getController()).setData((Entry<CalendarEntryData>) parameter.getEntry());
+            return node;
         } catch (IOException ex) {
             ex.printStackTrace(System.err);
         }
@@ -438,7 +439,7 @@ public class CalendarFXMLController extends Module {
             detailedWeekView.getCalendars().get(0).addEntry(entry);
             String[] entryArray = entryToString(entry);
             String[] query = new String[entryArray.length + 1];
-            query[0] = "createCalendarEvent";
+            query[0] = "addCalendarEvent";
             System.arraycopy(entryArray, 0, query, 1, entryArray.length);
             communicationHandler.sendQuery(query);
             Platform.runLater(() -> getCalendarEvents());

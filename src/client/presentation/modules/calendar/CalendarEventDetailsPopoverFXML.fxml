@@ -11,9 +11,9 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
 
 <AnchorPane id="AnchorPane" prefHeight="194.0" prefWidth="262.0" style="-fx-border-color: STEELBLUE; -fx-background-color: #2E4057;" stylesheets="@../../css/generalStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.presentation.modules.calendar.CalendarEventDetailsPopoverFXMLController">
     <children>
-        <Label fx:id="title" layoutX="13.0" layoutY="4.0" prefHeight="54.0" prefWidth="236.0" style="-fx-text-fill: #048ba8;" text="Dis is Title">
+        <Label fx:id="title" layoutX="13.0" layoutY="4.0" prefHeight="54.0" prefWidth="242.0" style="-fx-text-fill: #048ba8;" text="Dis is Title" wrapText="true">
             <font>
-                <Font size="36.0" />
+                <Font size="22.0" />
             </font>
         </Label>
         <Label fx:id="description" alignment="TOP_LEFT" layoutX="13.0" layoutY="58.0" prefHeight="96.0" prefWidth="227.0" style="-fx-text-fill: #048ba8;" text="Dis is Description" wrapText="true" />
