@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -104,13 +106,23 @@ public class CalendarDayRythmEditorPopupFXMLController extends Popup {
             GridPane.setRowIndex(number, input.indexOf(tuple));
 
             //Create icon
-            FontAwesomeIconView icon = new FontAwesomeIconView();
-            icon.setGlyphName(tuple[1]);
-            icon.glyphSizeProperty().set(30);
-            gridpane.getChildren().add(icon);
-            GridPane.setColumnIndex(icon, 1);
-            GridPane.setRowIndex(icon, input.indexOf(tuple));
-            icon.setOnMouseClicked(param -> openIconChange((FontAwesomeIconView) param.getSource()));
+            CustomFontAwesomeIconView iconView = new CustomFontAwesomeIconView();
+
+            //Disable logger wanings from FontAwesomFX because of the empty string
+            Logger logger = Logger.getLogger("de.jensd.fx.glyphs.GlyphIcon");
+            logger.setLevel(Level.OFF);
+
+            iconView.setGlyphName(tuple[1]);
+            iconView.glyphSizeProperty().set(30);
+            if (tuple[1].length() == 0) {
+                iconView.setGlyphStyle("-fx-fill : #1B2634;");
+            } else {
+                iconView.setGlyphStyle("-fx-fill : #048BA8;");
+            }
+            gridpane.getChildren().add(iconView);
+            GridPane.setColumnIndex(iconView, 1);
+            GridPane.setRowIndex(iconView, input.indexOf(tuple));
+            iconView.setOnMouseClicked(param -> openIconChange((FontAwesomeIconView) param.getSource()));
 
             //Create Label
             JFXTextField label = new JFXTextField(tuple[2]);
@@ -129,8 +141,11 @@ public class CalendarDayRythmEditorPopupFXMLController extends Popup {
     private void openIconChange(FontAwesomeIconView iconView) {
         new Thread(() -> {
             String glyph = MinimalGlyphsBrowser.getGlyph(iconView);
-            if (glyph != null) {
-                Platform.runLater(() -> iconView.setIcon(FontAwesomeIcon.valueOf(glyph)));
+            if (glyph != null && !glyph.isEmpty() && glyph != "") {
+                Platform.runLater(() -> {
+                    iconView.setGlyphStyle("-fx-fill : #048BA8;");
+                    iconView.setIcon(FontAwesomeIcon.valueOf(glyph));
+                });
             }
         }, "GlyphUpdater").start();
 

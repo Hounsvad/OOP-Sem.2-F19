@@ -10,6 +10,7 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 import com.jfoenix.animation.alert.JFXAlertAnimation;
 import com.jfoenix.controls.JFXAlert;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextArea;
@@ -28,11 +29,10 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Skin;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -65,6 +65,8 @@ public class CalendarEventEditPopupFXMLController extends Popup {
     private JFXDatePicker fromDate;
     @FXML
     private JFXDatePicker toDate;
+    @FXML
+    private JFXButton deleteButton;
 
     private Entry<CalendarEntryData> originalEntry = null;
 
@@ -126,6 +128,7 @@ public class CalendarEventEditPopupFXMLController extends Popup {
         toTime.set24HourView(true);
         toTime.setDefaultColor(Color.web("#048BA8"));
         toDate.setDefaultColor(Color.web("#048BA8"));
+        deleteButton.setFocusTraversable(false);
     }
 
     @FXML
@@ -192,11 +195,44 @@ public class CalendarEventEditPopupFXMLController extends Popup {
 
     @FXML
     private void delete() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Deleting event");
-        alert.setContentText("Are you sure want to delete this event?");
-        Optional<ButtonType> answer = alert.showAndWait();
-        if (answer.get() == ButtonType.OK) {
+        JFXAlert<Boolean> alert = new JFXAlert<>((Stage) cross.getScene().getWindow());
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(false);
+
+        // Create the content of the JFXAlert with JFXDialogLayout
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setStyle("-fx-background-color: #2E4057;");
+        Label heading = new Label("Deleting event");
+        heading.setStyle("-fx-text-fill: #048BA8;");
+        layout.setHeading(heading);
+        Label body = new Label("This will delete the event for all participants and can't be reversed.\nAre you sure want to delete this event?");
+        body.setStyle("-fx-text-fill: #048BA8;");
+        layout.setBody(new VBox(body));
+
+        // Buttons get added into the actions section of the layout.
+        JFXButton yesButton = new JFXButton("Yes");
+        yesButton.setFocusTraversable(false);
+        yesButton.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+        yesButton.getStyleClass().add("delete");
+        yesButton.setOnAction(addEvent -> {
+            // When the button is clicked, we set the result accordingly
+            alert.setResult(true);
+            alert.hideWithAnimation();
+        });
+
+        JFXButton cancelButton = new JFXButton("No");
+        cancelButton.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+        cancelButton.setDefaultButton(true);
+        cancelButton.setOnAction(closeEvent -> {
+            alert.setResult(false);
+            alert.hideWithAnimation();
+        });
+
+        layout.setActions(yesButton, cancelButton);
+        alert.setContent(layout);
+        alert.setHideOnEscape(true);
+        Optional<Boolean> answer = alert.showAndWait();
+        if (answer.isPresent() && answer.get()) {
             lock.lock();
             try {
                 entry = null;

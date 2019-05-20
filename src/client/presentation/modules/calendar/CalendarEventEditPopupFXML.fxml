@@ -29,8 +29,8 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
       <JFXTextField fx:id="title" focusColor="#048ba8" layoutX="119.0" layoutY="134.0" prefHeight="31.0" prefWidth="384.0" stylesheets="@../../css/generalStyleSheet.css" unFocusColor="#048ba8" />
       <Label layoutX="59.0" layoutY="309.0" text="Details:" textFill="#048ba8" />
       <JFXTextArea fx:id="details" focusColor="#048ba8" layoutX="119.0" layoutY="339.0" prefHeight="216.0" prefWidth="384.0" stylesheets="@../../css/generalStyleSheet.css" unFocusColor="#048ba8" />
-      <JFXButton layoutX="503.0" layoutY="582.0" onAction="#close" text="Cancel" />
-      <JFXButton layoutX="421.0" layoutY="582.0" onAction="#save" text="Save" />
+      <JFXButton cancelButton="true" layoutX="503.0" layoutY="582.0" onAction="#close" text="Cancel" />
+      <JFXButton defaultButton="true" layoutX="421.0" layoutY="582.0" onAction="#save" text="Save" />
       <JFXTimePicker fx:id="fromTime" layoutX="119.0" layoutY="270.0" prefHeight="31.0" prefWidth="159.0" />
       <JFXTimePicker fx:id="toTime" layoutX="332.0" layoutY="270.0" prefHeight="31.0" prefWidth="159.0" />
       <JFXDatePicker fx:id="fromDate" layoutX="117.0" layoutY="226.0" prefHeight="31.0" prefWidth="159.0" />
@@ -38,6 +38,6 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
       <Label layoutX="119.0" layoutY="205.0" text="From:" textFill="#048ba8" />
       <Label layoutX="332.0" layoutY="205.0" text="To:" textFill="#048ba8" />
       <CheckComboBox fx:id="participents" layoutX="119.0" layoutY="84.0" prefHeight="31.0" prefWidth="384.0" />
-      <JFXButton layoutX="31.0" layoutY="582.0" onAction="#delete" styleClass="delete" text="Delete event" />
+      <JFXButton fx:id="deleteButton" layoutX="31.0" layoutY="582.0" onAction="#delete" styleClass="delete" text="Delete event" />
     </children>
 </AnchorPane>

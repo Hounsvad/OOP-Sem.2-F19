@@ -303,7 +303,7 @@ public class CalendarFXMLController extends Module {
         if (parameter.getEntry().getCalendar().getName().equalsIgnoreCase("rhythm")) {
             Label label = new Label(parameter.getEntry().getTitle());
             label.setTextAlignment(TextAlignment.CENTER);
-            label.setStyle("-fx-text-fill: #048BA8; -fx-background-color: #2E4057;");
+            label.setStyle("-fx-text-fill: #048BA8;");
             int length = label.getText().length() * 10 + 20;
             label.setPrefSize(length < 60 ? 60 : length, 60);
             label.setPadding(new Insets(8));
@@ -325,16 +325,22 @@ public class CalendarFXMLController extends Module {
             return null;
         }
         MenuItem editEvent = new MenuItem("Edit");
+        editEvent.setStyle("-fx-text-fill: #048BA8;");
         editEvent.setOnAction(param -> openEventEditor(parameter));
-        return new ContextMenu(editEvent);
+        ContextMenu contextMenu = new ContextMenu(editEvent);
+        contextMenu.setStyle("-fx-background-color: #2E4057;");
+        return contextMenu;
     }
 
     private ContextMenu calendarContextMenu() {
         MenuItem editDayRythm = new MenuItem("Edit Dayrythm");
+        editDayRythm.setStyle("-fx-text-fill: #048BA8;");
         editDayRythm.setOnAction(param -> openDayRythmEditor());
         MenuItem createEvent = new MenuItem("Create event");
+        createEvent.setStyle("-fx-text-fill: #048BA8;");
         createEvent.setOnAction(param -> openEventCreator());
-        return new ContextMenu(editDayRythm, createEvent);
+        ContextMenu contextMenu = new ContextMenu(editDayRythm, createEvent);
+        return contextMenu;
     }
 
     private Entry<String> createCalendarEntry() {
@@ -461,7 +467,6 @@ public class CalendarFXMLController extends Module {
             try {
                 detailedWeekView.getCalendarSources().remove(1);
             } catch (Exception e) {
-                e.printStackTrace();
             }
             CalendarSource calendarSource = new CalendarSource();
             calendarSource.getCalendars().add(dayRythmCache.get(patientView.getSelectionModel().getSelectedItem().getPatientID()));
