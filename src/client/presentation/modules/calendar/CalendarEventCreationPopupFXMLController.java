@@ -4,7 +4,7 @@
  */
 package client.presentation.modules.calendar;
 
-import client.presentation.containers.User;
+import client.presentation.containers.Patient;
 import client.presentation.modules.Popup;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
@@ -42,9 +42,9 @@ import org.controlsfx.control.CheckComboBox;
 public class CalendarEventCreationPopupFXMLController extends Popup {
 
     @FXML
-    private CheckComboBox<User> participents;
+    private CheckComboBox<Patient> participents;
 
-    private Entry<User[]> entry = null;
+    private Entry<CalendarEntryData> entry = null;
 
     private final Lock lock = new ReentrantLock();
     private final Condition condition = lock.newCondition();
@@ -62,7 +62,7 @@ public class CalendarEventCreationPopupFXMLController extends Popup {
     @FXML
     private JFXDatePicker toDate;
 
-    public Entry<User[]> createEvent() {
+    public Entry<CalendarEntryData> createEvent() {
         lock.lock();
         try {
             condition.await();
@@ -77,10 +77,10 @@ public class CalendarEventCreationPopupFXMLController extends Popup {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<User> userList = new ArrayList<>();
-        List<String[]> returnValue = communicationHandler.sendQuery("userList");
+        List<Patient> userList = new ArrayList<>();
+        List<String[]> returnValue = communicationHandler.sendQuery("getPatients");
         for (String[] tuple : returnValue) {
-            userList.add(new User(tuple[0], tuple[1], tuple[2]));
+            userList.add(new Patient(tuple[1], tuple[0]));
         }
         participents.getItems().addAll(userList);
         Platform.runLater(() -> {
@@ -142,7 +142,7 @@ public class CalendarEventCreationPopupFXMLController extends Popup {
         try {
             entry = new Entry<>(title.getText(), new Interval(LocalDateTime.of(fromDate.getValue(), fromTime.getValue()), LocalDateTime.of(toDate.getValue(), toTime.getValue())));
             entry.setLocation(details.getText());
-            entry.setUserObject(participents.getItems().toArray(new User[participents.getItems().size()]));
+            entry.setUserObject(new CalendarEntryData(null, participents.getItems().toArray(new Patient[participents.getItems().size()])));
             condition.signal();
             close();
         } finally {
