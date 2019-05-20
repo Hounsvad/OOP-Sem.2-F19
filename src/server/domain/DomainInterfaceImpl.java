@@ -181,6 +181,7 @@ public class DomainInterfaceImpl implements DomainInterface {
                             for (int i = 8; i < query.length; i++) {
                                 if (!participants.contains(query[i])) {
                                     persistenceInterface.parseQuery("addEventParticipant", query[3], query[i]);
+                                } else {
                                     participants.remove(participants.indexOf(query[i]));
                                 }
                             }
