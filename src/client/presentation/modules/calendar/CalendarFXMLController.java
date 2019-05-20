@@ -39,6 +39,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -301,9 +302,11 @@ public class CalendarFXMLController extends Module {
     private Node calendarDetailsPopup(EntryDetailsPopOverContentParameter parameter) {
         if (parameter.getEntry().getCalendar().getName().equalsIgnoreCase("rhythm")) {
             Label label = new Label(parameter.getEntry().getTitle());
-            label.setPrefSize(100, 60);
             label.setTextAlignment(TextAlignment.CENTER);
-            label.setStyle("-fx-background-color: #2E4057; -fx-text-fill: #048BA8;");
+            label.setStyle("-fx-text-fill: #048BA8; -fx-background-color: #2E4057;");
+            int length = label.getText().length() * 10 + 20;
+            label.setPrefSize(length < 60 ? 60 : length, 60);
+            label.setPadding(new Insets(8));
             return label;
         }
         try {
