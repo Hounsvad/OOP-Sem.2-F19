@@ -5,7 +5,9 @@
 package client.presentation.modules.calendar;
 
 import client.presentation.modules.Popup;
+import com.calendarfx.view.DateControl.EntryDetailsPopOverContentParameter;
 import java.net.URL;
+import java.time.ZoneOffset;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -26,12 +28,18 @@ public class CalendarEventDetailsPopoverFXMLController extends Popup {
     @FXML
     private Label dateEnd;
 
-    /**
+    private /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+    }
+
+    public void setData(EntryDetailsPopOverContentParameter event) {
+        title.setText(event.getEntry().getTitle());
+        description.setText(event.getEntry().getLocation());
+        event.getEntry().getEndAsLocalDateTime().atOffset(ZoneOffset.systemDefault());
     }
 
 }

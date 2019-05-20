@@ -307,7 +307,8 @@ public class CalendarFXMLController extends Module {
         }
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarEventDetailsPopoverFXML.fxml"));
-            return fxmlLoader.load();
+            Node node = fxmlLoader.load();
+            ((CalendarEventDetailsPopoverFXMLController) fxmlLoader.getController()).setData(parameter.getEntry());
         } catch (IOException ex) {
             ex.printStackTrace(System.err);
         }
