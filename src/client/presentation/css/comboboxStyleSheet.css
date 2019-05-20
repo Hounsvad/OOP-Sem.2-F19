@@ -65,3 +65,58 @@
 .jfx-combo-box .error-icon {
     -fx-fill: #D34336;
 }
+
+.jfx-combo-box  .check-box {
+    -jfx-unchecked-color: #5A5A5A;
+    -jfx-checked-color: #0F9D58;
+}
+
+.jfx-combo-box  .check-box .box-container {
+
+    -fx-padding: 10;
+}
+
+.jfx-combo-box  .check-box .box,
+.jfx-combo-box  .check-box:indeterminate .box,
+.jfx-combo-box  .check-box:indeterminate:selected .box{
+    -fx-pref-width: 18;
+    -fx-pref-height: 18;
+
+    -fx-min-width: -fx-pref-width;
+    -fx-max-width: -fx-pref-width;
+    -fx-min-height: -fx-pref-height;
+    -fx-max-height: -fx-pref-height;
+
+    -fx-background-color: TRANSPARENT;
+    -fx-background-radius: 2;
+    -fx-border-color: -jfx-unchecked-color;
+    -fx-border-style: solid;
+    -fx-border-radius: 2;
+    -fx-border-width: 2;
+}
+
+.jfx-combo-box  .check-box:selected .box {
+    -fx-border-color: -jfx-checked-color;
+}
+
+.jfx-combo-box  .check-box .mark {
+
+    -fx-max-width: 15;
+    -fx-max-height: 12;
+    
+    -fx-background-color: WHITE;
+
+    -fx-border-color: #1b2634;
+    -fx-border-width: 2;
+    -fx-border-radius: 0;
+}
+
+.jfx-combo-box  .check-box .indeterminate-mark{
+    -fx-background-color: -jfx-checked-color;
+    -fx-border-color: white;
+    -fx-background-radius: 2;
+    -fx-border-width: 2;
+    -fx-border-radius: 2;
+    -fx-max-width: 10;
+    -fx-max-height: 10;
+}
