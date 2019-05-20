@@ -15,6 +15,7 @@ import java.net.Socket;
 public class ServerController implements Runnable {
 
     private ServerSocket serverSocket;
+    private boolean run = true;
 
     /**
      * initialises the connection to the client
@@ -23,7 +24,7 @@ public class ServerController implements Runnable {
     public void run() {
         try {
             serverSocket = new ServerSocket(1025);
-            while (true) {
+            while (run) {
                 Socket clientSocket = serverSocket.accept();
                 Thread clientHandler = new ClientHandlerThread(clientSocket);
                 clientHandler.start();
@@ -31,5 +32,17 @@ public class ServerController implements Runnable {
         } catch (IOException ex) {
             ex.printStackTrace(System.err);
         }
+    }
+
+    /**
+     * Initiates the stop function
+     *
+     * Note that the server wont stop before a client tries to connect
+     *
+     * @return the value of the run variable
+     */
+    public synchronized boolean stop() {
+        run = false;
+        return run;
     }
 }

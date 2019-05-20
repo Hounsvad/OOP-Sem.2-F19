@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -18,5 +18,5 @@ public interface CommunicationInterface {
      * @param query with the instructions for the database
      * @return the the data from the database
      */
-    public List<String[]> sendQuery(String[] query);
+    public List<String[]> sendQuery(String... query);
 }
