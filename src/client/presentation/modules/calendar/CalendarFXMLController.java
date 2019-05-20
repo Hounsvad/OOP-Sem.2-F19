@@ -367,6 +367,7 @@ public class CalendarFXMLController extends Module {
             }
             Entry<CalendarEntryData> entry = fxmlLoader.<CalendarEventEditPopupFXMLController>getController().editEvent((Entry<CalendarEntryData>) param.getEntry());
             if (entry == null) {
+                Platform.runLater(() -> getCalendarEvents());
                 return;
             }
             detailedWeekView.getCalendars().get(0).addEntry(entry);

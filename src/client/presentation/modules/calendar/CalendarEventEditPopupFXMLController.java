@@ -200,7 +200,7 @@ public class CalendarEventEditPopupFXMLController extends Popup {
             lock.lock();
             try {
                 entry = null;
-                communicationHandler.sendQuery("removeCalendarEvent", originalEntry.getId());
+                communicationHandler.sendQuery("removeCalendarEvent", originalEntry.getUserObject().getEventID());
                 condition.signal();
                 close();
             } finally {
