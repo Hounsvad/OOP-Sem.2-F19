@@ -167,7 +167,8 @@ public class DomainInterfaceImpl implements DomainInterface {
 
                         case "addCalendarEvent":
                             addActivity();
-                            List<String[]> eventId = persistenceInterface.parseQuery("addCalendarEvent", query[3], query[4], query[5], query[6]);
+                            persistenceInterface.parseQuery("addCalendarEvent", query[3], query[4], query[5], query[6]);
+                            List<String[]> eventId = persistenceInterface.parseQuery("maxEventId");
                             for (int i = 7; i < query.length; i++) {
                                 persistenceInterface.parseQuery("addEventParticipant", eventId.get(0)[0], query[i]);
                             }
