@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -328,7 +328,8 @@ public class DomainInterfaceImpl implements DomainInterface {
 
                         case "getMenuItems":
                             return persistenceInterface.parseQuery("getMenuItems", userId);
-
+                        default:
+                            return constructReturn("Error", "The action: " + query[0] + " Does not exist");
                     }
                 } else {
                     return constructReturn("Error", "Missing required roles");
