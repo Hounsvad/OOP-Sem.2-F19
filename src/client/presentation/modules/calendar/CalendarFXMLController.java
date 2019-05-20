@@ -1,10 +1,11 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
 package client.presentation.modules.calendar;
 
 import client.presentation.containers.Patient;
+import client.presentation.containers.User;
 import client.presentation.containers.entries.MessageEntry;
 import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
@@ -145,7 +146,6 @@ public class CalendarFXMLController extends Module {
         //Make sure that there is only one active listener from this class
         CredentialContainer.getInstance().getCredentialReadyProperty().removeListener(changeListener);
         CredentialContainer.getInstance().getCredentialReadyProperty().addListener(changeListener);
-
         updateData();
     }
 
@@ -391,7 +391,8 @@ public class CalendarFXMLController extends Module {
                     Stage stage = new Stage();
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.initStyle(StageStyle.UNDECORATED);
-                    root.getStylesheets().add(MessageEntry.class.getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+                    root.getStylesheets().add(CalendarFXMLController.class.getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+                    root.getStylesheets().add(CalendarFXMLController.class.getResource("/client/presentation/css/comboboxStyleSheet.css").toExternalForm());
                     stage.setScene(new Scene(root));
                     stage.show();
                 } catch (IOException ex) {
@@ -403,7 +404,7 @@ public class CalendarFXMLController extends Module {
             } catch (InterruptedException ex) {
                 ex.printStackTrace(System.err);
             }
-            Entry<String> entry = fxmlLoader.<CalendarEventCreationPopupFXMLController>getController().createEvent();
+            Entry<User[]> entry = fxmlLoader.<CalendarEventCreationPopupFXMLController>getController().createEvent();
             if (entry == null) {
                 return;
             }
@@ -491,7 +492,7 @@ public class CalendarFXMLController extends Module {
                 start();
     }
 
-    private String[] entryToString(Entry<String> entry) {
+    private String[] entryToString(Entry<User[]> entry) {
         return new String[]{entry.toString()}; //TO BE CHANGED
     }
 
