@@ -142,7 +142,7 @@ public class CalendarEventCreationPopupFXMLController extends Popup {
         try {
             entry = new Entry<>(title.getText(), new Interval(LocalDateTime.of(fromDate.getValue(), fromTime.getValue()), LocalDateTime.of(toDate.getValue(), toTime.getValue())));
             entry.setLocation(details.getText());
-            entry.setUserObject(new CalendarEntryData(null, participents.getItems().toArray(new Patient[participents.getItems().size()])));
+            entry.setUserObject(new CalendarEntryData(null, participents.getCheckModel().getCheckedItems().toArray(new Patient[participents.getCheckModel().getCheckedItems().size()])));
             condition.signal();
             close();
         } finally {

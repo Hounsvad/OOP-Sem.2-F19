@@ -73,7 +73,7 @@ public class CalendarEventEditPopupFXMLController extends Popup {
         setEntry(entry);
         try {
             condition.await();
-            return entry;
+            return this.entry;
         } catch (InterruptedException ex) {
             ex.printStackTrace(System.err);
         } finally {
@@ -83,19 +83,21 @@ public class CalendarEventEditPopupFXMLController extends Popup {
     }
 
     public void setEntry(Entry<CalendarEntryData> entry) {
-        originalEntry = entry;
-        participents.getCheckModel().clearChecks();
-        Arrays.asList(entry.getUserObject().getEventParticipants()).forEach(p -> {
-            if (participents.getItems().contains(p)) {
-                participents.getCheckModel().check(p);
-            }
+        Platform.runLater(() -> {
+            originalEntry = entry;
+            participents.getCheckModel().clearChecks();
+            Arrays.asList(entry.getUserObject().getEventParticipants()).forEach(p -> {
+                if (participents.getItems().contains(p)) {
+                    participents.getCheckModel().check(p);
+                }
+            });
+            title.setText(entry.getTitle());
+            details.setText(entry.getLocation());
+            fromDate.setValue(entry.getStartDate());
+            fromTime.setValue(entry.getStartTime());
+            toDate.setValue(entry.getEndDate());
+            toTime.setValue(entry.getEndTime());
         });
-        title.setText(entry.getTitle());
-        details.setText(entry.getLocation());
-        fromDate.setValue(entry.getStartDate());
-        fromTime.setValue(entry.getStartTime());
-        toDate.setValue(entry.getEndDate());
-        toTime.setValue(entry.getEndTime());
     }
 
     @Override
@@ -127,7 +129,7 @@ public class CalendarEventEditPopupFXMLController extends Popup {
     }
 
     @FXML
-    private void update() {
+    private void save() {
         if (title.getText().isEmpty() || fromDate.getValue() == null || fromTime.getValue() == null || toDate.getValue() == null || toTime.getValue() == null) {
             JFXAlert alert = new JFXAlert<>(((Stage) cross.getScene().getWindow()));
             JFXDialogLayout layout = new JFXDialogLayout();
@@ -165,7 +167,7 @@ public class CalendarEventEditPopupFXMLController extends Popup {
         try {
             entry = new Entry<>(title.getText(), new Interval(LocalDateTime.of(fromDate.getValue(), fromTime.getValue()), LocalDateTime.of(toDate.getValue(), toTime.getValue())));
             entry.setLocation(details.getText());
-            List<Patient> participentsIncludingRedacted = Arrays.asList(originalEntry.getUserObject().getEventParticipants());
+            List<Patient> participentsIncludingRedacted = new ArrayList(Arrays.asList(originalEntry.getUserObject().getEventParticipants()));
             participentsIncludingRedacted.removeAll(participents.getItems());
             participentsIncludingRedacted.addAll(participents.getCheckModel().getCheckedItems());
             entry.setUserObject(new CalendarEntryData(originalEntry.getUserObject().getEventID(), participentsIncludingRedacted.toArray(new Patient[participentsIncludingRedacted.size()])));
@@ -176,6 +178,7 @@ public class CalendarEventEditPopupFXMLController extends Popup {
         }
     }
 
+    @FXML
     private void cancel() {
         lock.lock();
         try {
@@ -187,6 +190,7 @@ public class CalendarEventEditPopupFXMLController extends Popup {
         }
     }
 
+    @FXML
     private void delete() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Deleting event");
