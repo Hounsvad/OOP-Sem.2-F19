@@ -228,3 +228,8 @@ and open the template in the editor.
 .border-pane{
     -fx-background-color: -fx-background;
 }
+
+.delete {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}

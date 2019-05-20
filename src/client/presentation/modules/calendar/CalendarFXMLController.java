@@ -5,7 +5,6 @@
 package client.presentation.modules.calendar;
 
 import client.presentation.containers.Patient;
-import client.presentation.containers.User;
 import client.presentation.containers.entries.MessageEntry;
 import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
@@ -34,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -193,8 +193,9 @@ public class CalendarFXMLController extends Module {
                                         new Interval(LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(tuple[1])), ZoneId.systemDefault()),
                                                 LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(tuple[4])), ZoneId.systemDefault())
                                         ));
-                                entry.setId(tuple[0]);
                                 entry.setLocation(tuple[4]);
+                                List<Patient> participants = communicationHandler.sendQuery("getEventParticipants", tuple[0]).stream().map(pTuple -> new Patient(pTuple[1], pTuple[0])).collect(Collectors.toList());
+                                entry.setUserObject(new CalendarEntryData(tuple[0], participants.toArray(new Patient[participants.size()])));
                                 calendar.addEntry(entry);
                             }
                             );
@@ -320,7 +321,7 @@ public class CalendarFXMLController extends Module {
             return null;
         }
         MenuItem editEvent = new MenuItem("Edit");
-        editEvent.setOnAction(param -> openEventEditor());
+        editEvent.setOnAction(param -> openEventEditor(parameter));
         return new ContextMenu(editEvent);
     }
 
@@ -337,19 +338,44 @@ public class CalendarFXMLController extends Module {
         return null;
     }
 
-    private void openEventEditor() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarEventEditPopupFXML.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            root.getStylesheets().add(MessageEntry.class.getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace(System.err);
+    private void openEventEditor(EntryContextMenuParameter param) {
+        if (param.getEntry() == null) {
+            return;
         }
+        new Thread(() -> {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarEventEditPopupFXML.fxml"));
+            Platform.runLater(() -> {
+                try {
+                    Parent root = fxmlLoader.load();
+                    Stage stage = new Stage();
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.initStyle(StageStyle.UNDECORATED);
+                    root.getStylesheets().add(CalendarFXMLController.class.getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+                    root.getStylesheets().add(CalendarFXMLController.class.getResource("/client/presentation/css/comboboxStyleSheet.css").toExternalForm());
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException ex) {
+                    ex.printStackTrace(System.err);
+                }
+            });
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace(System.err);
+            }
+            Entry<CalendarEntryData> entry = fxmlLoader.<CalendarEventEditPopupFXMLController>getController().editEvent((Entry<CalendarEntryData>) param.getEntry());
+            if (entry == null) {
+                return;
+            }
+            detailedWeekView.getCalendars().get(0).addEntry(entry);
+            String[] entryArray = entryToString(entry);
+            String[] query = new String[entryArray.length + 1];
+            query[0] = "updateCalendarEvent";
+            System.arraycopy(entryArray, 0, query, 1, entryArray.length);
+            communicationHandler.sendQuery(query);
+            Platform.runLater(() -> getCalendarEvents());
+        }, "EventEditorPopupLoader").start();
     }
 
     private void openDayRythmEditor() {
@@ -405,17 +431,17 @@ public class CalendarFXMLController extends Module {
             } catch (InterruptedException ex) {
                 ex.printStackTrace(System.err);
             }
-            Entry<User[]> entry = fxmlLoader.<CalendarEventCreationPopupFXMLController>getController().createEvent();
+            Entry<CalendarEntryData> entry = fxmlLoader.<CalendarEventCreationPopupFXMLController>getController().createEvent();
             if (entry == null) {
                 return;
             }
             detailedWeekView.getCalendars().get(0).addEntry(entry);
-            String[] query = new String[4];
+            String[] entryArray = entryToString(entry);
+            String[] query = new String[entryArray.length + 1];
             query[0] = "createCalendarEvent";
-            query[1] = patientView.getSelectionModel().getSelectedItem().getPatientID();
-            System.arraycopy(entryToString(entry), 0, query, 2, 3);
+            System.arraycopy(entryArray, 0, query, 1, entryArray.length);
             communicationHandler.sendQuery(query);
-            getCalendarEvents();
+            Platform.runLater(() -> getCalendarEvents());
         }, "EventCreatorPopupLoader").start();
     }
 
@@ -493,8 +519,19 @@ public class CalendarFXMLController extends Module {
                 start();
     }
 
-    private String[] entryToString(Entry<User[]> entry) {
-        return new String[]{entry.toString()}; //TO BE CHANGED
+    private String[] entryToString(Entry<CalendarEntryData> entry) {
+        List<String> query = new ArrayList<>();
+        if (entry.getUserObject().getEventID() != null) {
+            query.add(entry.getUserObject().getEventID());
+        }
+        query.add(Long.toString(toMillis(entry.getStartDate(), entry.getStartTime())));
+        query.add(Long.toString(toMillis(entry.getEndDate(), entry.getEndTime())));
+        query.add(entry.getTitle());
+        query.add(entry.getLocation());
+        for (Patient p : entry.getUserObject().getEventParticipants()) {
+            query.add(p.getPatientID());
+        }
+        return query.toArray(new String[query.size()]);
     }
 
     protected String getPatientID() {
