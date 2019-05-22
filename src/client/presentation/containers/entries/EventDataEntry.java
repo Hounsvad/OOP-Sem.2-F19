@@ -3,7 +3,7 @@
  * Frederik Alexander Hounsvad, Andreas Kaer Lauritzen,  Patrick Nielsen, Oliver Lind Nordestgaard, Benjamin Eichler Staugaard
  * The use of this work is limited to educational purposes
  */
-package client.presentation.modules.calendar;
+package client.presentation.containers.entries;
 
 import client.presentation.containers.Patient;
 
@@ -11,7 +11,7 @@ import client.presentation.containers.Patient;
  *
  * @author Oliver
  */
-public class CalendarEntryData {
+public class EventDataEntry {
 
     private String eventID;
 
@@ -44,7 +44,7 @@ public class CalendarEntryData {
         this.eventParticipants = eventParticipants;
     }
 
-    public CalendarEntryData(String eventID, Patient[] eventParticipants) {
+    public EventDataEntry(String eventID, Patient[] eventParticipants) {
         this.eventID = eventID;
         this.eventParticipants = eventParticipants;
     }

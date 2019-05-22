@@ -4,6 +4,7 @@
  */
 package client.presentation.modules.calendar;
 
+import client.presentation.containers.entries.EventDataEntry;
 import client.presentation.containers.Patient;
 import client.presentation.modules.Popup;
 import com.calendarfx.model.Entry;
@@ -48,7 +49,7 @@ public class CalendarEventEditPopupFXMLController extends Popup {
     @FXML
     private CheckComboBox<Patient> participents;
 
-    private Entry<CalendarEntryData> entry = null;
+    private Entry<EventDataEntry> entry = null;
 
     private final Lock lock = new ReentrantLock();
     private final Condition condition = lock.newCondition();
@@ -66,9 +67,9 @@ public class CalendarEventEditPopupFXMLController extends Popup {
     @FXML
     private JFXDatePicker toDate;
 
-    private Entry<CalendarEntryData> originalEntry = null;
+    private Entry<EventDataEntry> originalEntry = null;
 
-    public Entry<CalendarEntryData> editEvent(Entry<CalendarEntryData> entry) {
+    public Entry<EventDataEntry> editEvent(Entry<EventDataEntry> entry) {
         lock.lock();
         setEntry(entry);
         try {
@@ -82,7 +83,7 @@ public class CalendarEventEditPopupFXMLController extends Popup {
         return null;
     }
 
-    public void setEntry(Entry<CalendarEntryData> entry) {
+    public void setEntry(Entry<EventDataEntry> entry) {
         originalEntry = entry;
         participents.getCheckModel().clearChecks();
         Arrays.asList(entry.getUserObject().getEventParticipants()).forEach(p -> {
@@ -168,7 +169,7 @@ public class CalendarEventEditPopupFXMLController extends Popup {
             List<Patient> participentsIncludingRedacted = Arrays.asList(originalEntry.getUserObject().getEventParticipants());
             participentsIncludingRedacted.removeAll(participents.getItems());
             participentsIncludingRedacted.addAll(participents.getCheckModel().getCheckedItems());
-            entry.setUserObject(new CalendarEntryData(originalEntry.getUserObject().getEventID(), participentsIncludingRedacted.toArray(new Patient[participentsIncludingRedacted.size()])));
+            entry.setUserObject(new EventDataEntry(originalEntry.getUserObject().getEventID(), participentsIncludingRedacted.toArray(new Patient[participentsIncludingRedacted.size()])));
             condition.signal();
             close();
         } finally {

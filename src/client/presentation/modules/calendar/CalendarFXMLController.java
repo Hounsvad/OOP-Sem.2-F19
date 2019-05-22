@@ -4,7 +4,9 @@
  */
 package client.presentation.modules.calendar;
 
+import client.presentation.containers.Cache;
 import client.presentation.containers.Patient;
+import client.presentation.containers.entries.EventDataEntry;
 import client.presentation.containers.entries.MessageEntry;
 import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
@@ -67,6 +69,7 @@ public class CalendarFXMLController extends Module {
     @FXML
     private AnchorPane datePickerPane;
 
+    private final Cache cache = Cache.getInstance();
     private static List<Patient> patientsCache;
     private static Map<CalendarCacheKey, Calendar> calendarsCache;
     private static Map<String, Calendar> dayRythmCache;
@@ -195,7 +198,7 @@ public class CalendarFXMLController extends Module {
                                         ));
                                 entry.setLocation(tuple[3]);
                                 List<Patient> participants = communicationHandler.sendQuery("getEventParticipants", tuple[0]).stream().map(pTuple -> new Patient(pTuple[1], pTuple[0])).collect(Collectors.toList());
-                                entry.setUserObject(new CalendarEntryData(tuple[0], participants.toArray(new Patient[participants.size()])));
+                                entry.setUserObject(new EventDataEntry(tuple[0], participants.toArray(new Patient[participants.size()])));
                                 calendar.addEntry(entry);
                             }
                             );
@@ -232,9 +235,9 @@ public class CalendarFXMLController extends Module {
 
     private void getPatients() {
         //Insert the cached date, if available
-        if (patientsCache != null) {
+        if (cache.getCache().get("patientsCache") != null) {
             patientView.getItems().clear();
-            patientView.getItems().addAll(patientsCache);
+            patientView.getItems().addAll(cache.get("patientsCache").stream().map(t -> (ArrayList<Patient>) t).collect(Collectors.toList());// (ArrayList<Patient>) cache.getCache().get("patientsCache"));
         }
 
         //Find the previous Updater thread, if any and kill it
@@ -262,7 +265,7 @@ public class CalendarFXMLController extends Module {
                         patientView.getItems().clear();
                         patientView.getItems().addAll(patients);
 
-                        patientsCache = new ArrayList<>(patients);
+                        cache.getCache().put("", value) = new ArrayList<>(patients);
 
                         //If nothing is selected, select the first element
                         if (patientView.getSelectionModel().getSelectedItem() == null) {
@@ -287,7 +290,7 @@ public class CalendarFXMLController extends Module {
     @Override
     protected void clearAll() {
         patientsCache = null;
-        calendarsCache = null;
+        C calendarsCache = null;
         Platform.runLater(() -> {
             patientView.getItems().clear();
             detailedWeekView.getCalendars().clear();
@@ -309,7 +312,7 @@ public class CalendarFXMLController extends Module {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarEventDetailsPopoverFXML.fxml"));
             Node node = fxmlLoader.load();
-            ((CalendarEventDetailsPopoverFXMLController) fxmlLoader.getController()).setData((Entry<CalendarEntryData>) parameter.getEntry());
+            ((CalendarEventDetailsPopoverFXMLController) fxmlLoader.getController()).setData((Entry<EventDataEntry>) parameter.getEntry());
             return node;
         } catch (IOException ex) {
             ex.printStackTrace(System.err);
@@ -365,7 +368,7 @@ public class CalendarFXMLController extends Module {
             } catch (InterruptedException ex) {
                 ex.printStackTrace(System.err);
             }
-            Entry<CalendarEntryData> entry = fxmlLoader.<CalendarEventEditPopupFXMLController>getController().editEvent((Entry<CalendarEntryData>) param.getEntry());
+            Entry<EventDataEntry> entry = fxmlLoader.<CalendarEventEditPopupFXMLController>getController().editEvent((Entry<EventDataEntry>) param.getEntry());
             if (entry == null) {
                 return;
             }
@@ -432,7 +435,7 @@ public class CalendarFXMLController extends Module {
             } catch (InterruptedException ex) {
                 ex.printStackTrace(System.err);
             }
-            Entry<CalendarEntryData> entry = fxmlLoader.<CalendarEventCreationPopupFXMLController>getController().createEvent();
+            Entry<EventDataEntry> entry = fxmlLoader.<CalendarEventCreationPopupFXMLController>getController().createEvent();
             if (entry == null) {
                 return;
             }
@@ -520,7 +523,7 @@ public class CalendarFXMLController extends Module {
                 start();
     }
 
-    private String[] entryToString(Entry<CalendarEntryData> entry) {
+    private String[] entryToString(Entry<EventDataEntry> entry) {
         List<String> query = new ArrayList<>();
         if (entry.getUserObject().getEventID() != null) {
             query.add(entry.getUserObject().getEventID());

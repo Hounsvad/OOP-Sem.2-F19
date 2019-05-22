@@ -1,12 +1,11 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
 package client.presentation.modules.dashboard;
 
+import client.presentation.containers.Cache;
 import client.presentation.containers.entries.ActivityEntry;
-import client.presentation.containers.entries.Cache;
-import client.presentation.containers.entries.Entry;
 import client.presentation.containers.entries.MessageEntry;
 import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
@@ -39,10 +38,7 @@ public class DashboardFXMLController extends Module {
     @FXML
     private JFXListView<MessageEntry> messageView;
 
-    private static List<ActivityEntry> activityEntriesCacheOld;
-    private static List<MessageEntry> messageEntriesCacheOld;
-
-    private final Map<String, List<Entry>> cache = Cache.getInstance().getCache();
+    private final Map<String, List<Object>> cache = Cache.getInstance().getCache();
 
     private static ChangeListener changeListener;
 

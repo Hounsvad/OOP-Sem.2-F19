@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -7,6 +7,7 @@ package client.presentation.containers.entries;
 import client.presentation.modules.dashboard.ActivityEntryPopupFXMLController;
 import static client.presentation.utils.StringUtils.getBoldString;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +21,7 @@ import javafx.stage.StageStyle;
  *
  * @author Sanitas Solutions
  */
-public class ActivityEntry extends Entry {
+public class ActivityEntry {
 
     private final String typeOfEntry;
     private final String dateOfEntryString;
@@ -36,12 +37,7 @@ public class ActivityEntry extends Entry {
      */
     public ActivityEntry(String typeOfEntry, Date dateOfEntry, String specificsOfEntry, String ip) {
         this.typeOfEntry = typeOfEntry;
-        this.dateOfEntryString = String.format("%1$" + 2 + "s", dateOfEntry.getHours()).replace(' ', '0') + ":"
-                + String.format("%1$" + 2 + "s", dateOfEntry.getMinutes()).replace(' ', '0') + ":"
-                + String.format("%1$" + 2 + "s", dateOfEntry.getSeconds()).replace(' ', '0') + " "
-                + String.format("%1$" + 2 + "s", dateOfEntry.getDate()).replace(' ', '0') + "/"
-                + String.format("%1$" + 2 + "s", dateOfEntry.getMonth()).replace(' ', '0') + "/"
-                + (dateOfEntry.getYear() + 1900);
+        this.dateOfEntryString = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy").format(dateOfEntry);
         this.specificsOfEntry = specificsOfEntry;
         this.ip = ip;
     }

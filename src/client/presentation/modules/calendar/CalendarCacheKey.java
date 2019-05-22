@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -22,6 +22,7 @@ public class CalendarCacheKey {
 
     @Override
     public boolean equals(Object obj) {
+
         if (this == obj) {
             return true;
         }
@@ -32,13 +33,8 @@ public class CalendarCacheKey {
             return false;
         }
         final CalendarCacheKey other = (CalendarCacheKey) obj;
-        if (!Objects.equals(this.patientID, other.patientID)) {
-            return false;
-        }
-        if (!Objects.equals(this.epochDateStart, other.epochDateStart)) {
-            return false;
-        }
-        return true;
+
+        return Objects.equals(this.patientID, other.patientID) && Objects.equals(this.epochDateStart, other.epochDateStart);
     }
 
     @Override

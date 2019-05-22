@@ -2,7 +2,7 @@
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
-package client.presentation.containers.entries;
+package client.presentation.containers;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.Map;
 public class Cache {
 
     private static Cache instance = null;
-    private final Map<String, List<Entry>> cache;
+    private final Map<String, List<Object>> cache;
 
     /**
      *
@@ -37,7 +37,7 @@ public class Cache {
      *
      * @return the value of string
      */
-    public Map<String, List<Entry>> getCache() {
+    public Map<String, List<Object>> getCache() {
         return cache;
     }
 

@@ -4,7 +4,7 @@
  */
 package client.presentation;
 
-import client.presentation.containers.entries.Cache;
+import client.presentation.containers.Cache;
 import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;

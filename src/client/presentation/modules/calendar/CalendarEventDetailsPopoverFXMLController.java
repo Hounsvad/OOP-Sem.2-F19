@@ -4,6 +4,7 @@
  */
 package client.presentation.modules.calendar;
 
+import client.presentation.containers.entries.EventDataEntry;
 import client.presentation.modules.Popup;
 import com.calendarfx.model.Entry;
 import java.net.URL;
@@ -38,7 +39,7 @@ public class CalendarEventDetailsPopoverFXMLController extends Popup {
 
     }
 
-    public void setData(Entry<CalendarEntryData> entry) {
+    public void setData(Entry<EventDataEntry> entry) {
         title.setText(entry.getTitle());
         description.setText(entry.getLocation());
         dateStart.setText(LocalDateTime.of(entry.getStartDate(), entry.getStartTime()).format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)));

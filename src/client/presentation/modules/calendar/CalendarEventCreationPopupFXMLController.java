@@ -4,6 +4,7 @@
  */
 package client.presentation.modules.calendar;
 
+import client.presentation.containers.entries.EventDataEntry;
 import client.presentation.containers.Patient;
 import client.presentation.modules.Popup;
 import com.calendarfx.model.Entry;
@@ -44,7 +45,7 @@ public class CalendarEventCreationPopupFXMLController extends Popup {
     @FXML
     private CheckComboBox<Patient> participents;
 
-    private Entry<CalendarEntryData> entry = null;
+    private Entry<EventDataEntry> entry = null;
 
     private final Lock lock = new ReentrantLock();
     private final Condition condition = lock.newCondition();
@@ -62,7 +63,7 @@ public class CalendarEventCreationPopupFXMLController extends Popup {
     @FXML
     private JFXDatePicker toDate;
 
-    public Entry<CalendarEntryData> createEvent() {
+    public Entry<EventDataEntry> createEvent() {
         lock.lock();
         try {
             condition.await();
@@ -142,7 +143,7 @@ public class CalendarEventCreationPopupFXMLController extends Popup {
         try {
             entry = new Entry<>(title.getText(), new Interval(LocalDateTime.of(fromDate.getValue(), fromTime.getValue()), LocalDateTime.of(toDate.getValue(), toTime.getValue())));
             entry.setLocation(details.getText());
-            entry.setUserObject(new CalendarEntryData(null, participents.getItems().toArray(new Patient[participents.getItems().size()])));
+            entry.setUserObject(new EventDataEntry(null, participents.getItems().toArray(new Patient[participents.getItems().size()])));
             condition.signal();
             close();
         } finally {

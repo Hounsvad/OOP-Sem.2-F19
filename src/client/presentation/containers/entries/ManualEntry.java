@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -24,7 +24,7 @@ import javax.swing.text.DateFormatter;
  *
  * @author Sanitas Solutions
  */
-public class ManualEntry extends Entry {
+public class ManualEntry {
 
     private final String date;
     private final String patientId;
