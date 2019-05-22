@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -38,7 +37,7 @@ public class DashboardFXMLController extends Module {
     @FXML
     private JFXListView<MessageEntry> messageView;
 
-    private final Map<String, List<Object>> cache = Cache.getInstance().getCache();
+    private final Map<String, Object> cache = Cache.getInstance().getCache();
 
     private static ChangeListener changeListener;
 
@@ -102,8 +101,8 @@ public class DashboardFXMLController extends Module {
             activityView.getItems().clear();
             messageView.getItems().clear();
             //Gets cached entries and casts them to the appropriate type
-            activityView.getItems().addAll(cache.get("DashboardActivity").stream().map(t -> (ActivityEntry) t).collect(Collectors.toList()));
-            messageView.getItems().addAll(cache.get("DashboardMessage").stream().map(t -> (MessageEntry) t).collect(Collectors.toList()));
+            activityView.getItems().addAll((ArrayList<ActivityEntry>) cache.get("DashboardActivity"));
+            messageView.getItems().addAll((ArrayList<MessageEntry>) cache.get("DashboardMessage"));
         }
 
         //Find the previous Updater thread, if any and kill it
@@ -133,14 +132,12 @@ public class DashboardFXMLController extends Module {
                     activityView.getItems().addAll(activityEntries);
                     messageView.getItems().addAll(messageEntries);
                     if (cache.get("DashboardActivity") != null && cache.get("DashboardMessage") != null) {
-                        cache.get("DashboardActivity").clear();
-                        cache.get("DashboardActivity").addAll(activityEntries);
-                        cache.get("DashboardMessage").clear();
-                        cache.get("DashboardMessage").addAll(messageEntries);
-                    } else {
-                        cache.put("DashboardActivity", new ArrayList<>(activityEntries));
-                        cache.put("DashboardMessage", new ArrayList<>(messageEntries));
+                        cache.remove("DashboardActivity");
+                        cache.remove("DashboardMessage");
                     }
+                    cache.put("DashboardActivity", new ArrayList<>(activityEntries));
+                    cache.put("DashboardMessage", new ArrayList<>(messageEntries));
+
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }

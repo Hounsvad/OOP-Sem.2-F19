@@ -4,8 +4,8 @@
  */
 package client.presentation.modules.calendar;
 
-import client.presentation.containers.entries.EventDataEntry;
 import client.presentation.containers.Patient;
+import client.presentation.containers.entries.EventDataEntry;
 import client.presentation.modules.Popup;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
@@ -85,7 +85,7 @@ public class CalendarEventEditPopupFXMLController extends Popup {
         return null;
     }
 
-    public void setEntry(Entry<CalendarEntryData> entry) {
+    public void setEntry(Entry<EventDataEntry> entry) {
         Platform.runLater(() -> {
             originalEntry = entry;
             participents.getCheckModel().clearChecks();

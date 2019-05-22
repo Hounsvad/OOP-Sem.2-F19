@@ -233,8 +233,8 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             case "addPatient":
                 try {
                     stmt = conn.prepareStatement("INSERT INTO id VALUES ((SELECT MAX(id) FROM id WHERE id < 9000000000) + 1, ?); INSERT INTO patients VALUES((SELECT MAX(id) FROM id WHERE id < 9000000000), ?)");
-                    stmt.setLong(1, Long.parseLong(query[1]));
-                    stmt.setLong(2, Long.parseLong(query[2]));
+                    stmt.setString(1, query[1]);
+                    stmt.setString(2, query[2]);
                 } catch (SQLException ex) {
                     ex.printStackTrace(System.err);
                 }
@@ -276,7 +276,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
             case "addUser":
                 try {
                     stmt = conn.prepareStatement("INSERT INTO id VALUES((SELECT MAX(id) FROM id)+1, ?); INSERT INTO users VALUES (?, ?, ?, (SELECT MAX(id.id)from id))");
-                    stmt.setLong(1, Long.parseLong(query[2]));
+                    stmt.setString(1, (query[2]));
                     stmt.setString(2, (query[1]));
                     stmt.setString(3, (query[3]));
                     stmt.setString(4, (query[4]));

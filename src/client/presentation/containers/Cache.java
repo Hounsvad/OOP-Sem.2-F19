@@ -5,7 +5,6 @@
 package client.presentation.containers;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,7 +14,7 @@ import java.util.Map;
 public class Cache {
 
     private static Cache instance = null;
-    private final Map<String, List<Object>> cache;
+    private final Map<String, Object> cache;
 
     /**
      *
@@ -37,7 +36,7 @@ public class Cache {
      *
      * @return the value of string
      */
-    public Map<String, List<Object>> getCache() {
+    public Map<String, Object> getCache() {
         return cache;
     }
 

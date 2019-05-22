@@ -71,9 +71,7 @@ public class CalendarFXMLController extends Module {
     private AnchorPane datePickerPane;
 
     private final Cache cache = Cache.getInstance();
-    private static List<Patient> patientsCache;
-    private static Map<CalendarCacheKey, Calendar> calendarsCache;
-    private static Map<String, Calendar> dayRythmCache;
+
     private static ChangeListener changeListener;
 
     DetailedWeekView detailedWeekView = new DetailedWeekView();
@@ -161,9 +159,9 @@ public class CalendarFXMLController extends Module {
         }
 
         //Insert the cached date, if available
-        if (calendarsCache != null && calendarsCache.containsKey(new CalendarCacheKey(Long.parseLong(patientView.getSelectionModel().getSelectedItem().getPatientID()), detailedWeekView.getStartDate().toEpochDay()))) {
+        if (cache.getCache().get("calendarsCache") != null && ((Map<CalendarCacheKey, Calendar>) cache.getCache().get("calendarsCache")).containsKey(new CalendarCacheKey(Long.parseLong(patientView.getSelectionModel().getSelectedItem().getPatientID()), detailedWeekView.getStartDate().toEpochDay()))) {
             CalendarSource calendarSource = new CalendarSource();
-            calendarSource.getCalendars().add(calendarsCache.get(new CalendarCacheKey(Long.parseLong(patientView.getSelectionModel().getSelectedItem().getPatientID()), detailedWeekView.getStartDate().toEpochDay())));
+            calendarSource.getCalendars().add(((Map<CalendarCacheKey, Calendar>) cache.getCache().get("calendarsCache")).get(new CalendarCacheKey(Long.parseLong(patientView.getSelectionModel().getSelectedItem().getPatientID()), detailedWeekView.getStartDate().toEpochDay())));
             try {
                 detailedWeekView.getCalendarSources().remove(0);
             } catch (Exception e) {
@@ -219,10 +217,13 @@ public class CalendarFXMLController extends Module {
                         }
                         detailedWeekView.getCalendarSources().add(0, calendarSource);
 
-                        if (calendarsCache == null) {
-                            calendarsCache = new HashMap<>();
+                        if (cache.getCache().get("calendarsCache") == null) {
+                            cache.getCache().put("calendarsCache", new HashMap<CalendarCacheKey, Calendar>() {
+                                {
+                                    put(new CalendarCacheKey(Long.parseLong(patientView.getSelectionModel().getSelectedItem().getPatientID()), detailedWeekView.getStartDate().toEpochDay()), calendar);
+                                }
+                            });
                         }
-                        calendarsCache.put(new CalendarCacheKey(Long.parseLong(patientView.getSelectionModel().getSelectedItem().getPatientID()), detailedWeekView.getStartDate().toEpochDay()), calendar);
                         getDayRythm();
                     } catch (NullPointerException e) {
                         e.printStackTrace();
@@ -238,7 +239,7 @@ public class CalendarFXMLController extends Module {
         //Insert the cached date, if available
         if (cache.getCache().get("patientsCache") != null) {
             patientView.getItems().clear();
-            patientView.getItems().addAll(cache.get("patientsCache").stream().map(t -> (ArrayList<Patient>) t).collect(Collectors.toList());// (ArrayList<Patient>) cache.getCache().get("patientsCache"));
+            patientView.getItems().addAll((ArrayList<Patient>) cache.getCache().get("patientsCache"));
         }
 
         //Find the previous Updater thread, if any and kill it
@@ -266,7 +267,7 @@ public class CalendarFXMLController extends Module {
                         patientView.getItems().clear();
                         patientView.getItems().addAll(patients);
 
-                        cache.getCache().put("", value) = new ArrayList<>(patients);
+                        cache.getCache().put("patientsCache", new ArrayList<>(patients));
 
                         //If nothing is selected, select the first element
                         if (patientView.getSelectionModel().getSelectedItem() == null) {
@@ -290,8 +291,8 @@ public class CalendarFXMLController extends Module {
 
     @Override
     protected void clearAll() {
-        patientsCache = null;
-        calendarsCache = null;
+        cache.getCache().remove("patientsCache");
+        cache.getCache().remove("calendarsCache");
         Platform.runLater(() -> {
             patientView.getItems().clear();
             detailedWeekView.getCalendars().clear();
@@ -466,13 +467,13 @@ public class CalendarFXMLController extends Module {
         }
 
         //Insert the cached date, if available
-        if (dayRythmCache != null && dayRythmCache.get(patientView.getSelectionModel().getSelectedItem().getPatientID()) != null) {
+        if (cache.getCache().get("dayRythmCache") != null && ((Map<String, Calendar>) cache.getCache().get("dayRythmCache")).get(patientView.getSelectionModel().getSelectedItem().getPatientID()) != null) {
             try {
                 detailedWeekView.getCalendarSources().remove(1);
             } catch (Exception e) {
             }
             CalendarSource calendarSource = new CalendarSource();
-            calendarSource.getCalendars().add(dayRythmCache.get(patientView.getSelectionModel().getSelectedItem().getPatientID()));
+            calendarSource.getCalendars().add(((Map<String, Calendar>) cache.getCache().get("dayRythmCache")).get(patientView.getSelectionModel().getSelectedItem().getPatientID()));
             detailedWeekView.getCalendarSources().add(1, calendarSource);
         }
 
@@ -517,10 +518,13 @@ public class CalendarFXMLController extends Module {
                         } catch (Exception e) {
                         }
                         detailedWeekView.getCalendarSources().add(1, calendarSource);
-                        if (dayRythmCache == null) {
-                            dayRythmCache = new HashMap<>();
+                        if (cache.getCache().get("dayRythmCache") == null) {
+                            cache.getCache().put("dayRythmCache", new HashMap<String, Calendar>() {
+                                {
+                                    put(patientView.getSelectionModel().getSelectedItem().getPatientID(), calendar);
+                                }
+                            });
                         }
-                        dayRythmCache.put(patientView.getSelectionModel().getSelectedItem().getPatientID(), calendar);
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }

@@ -4,8 +4,8 @@
  */
 package client.presentation.modules.calendar;
 
-import client.presentation.containers.entries.EventDataEntry;
 import client.presentation.containers.Patient;
+import client.presentation.containers.entries.EventDataEntry;
 import client.presentation.modules.Popup;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
@@ -143,7 +143,7 @@ public class CalendarEventCreationPopupFXMLController extends Popup {
         try {
             entry = new Entry<>(title.getText(), new Interval(LocalDateTime.of(fromDate.getValue(), fromTime.getValue()), LocalDateTime.of(toDate.getValue(), toTime.getValue())));
             entry.setLocation(details.getText());
-            entry.setUserObject(new CalendarEntryData(null, participents.getCheckModel().getCheckedItems().toArray(new Patient[participents.getCheckModel().getCheckedItems().size()])));
+            entry.setUserObject(new EventDataEntry(null, participents.getCheckModel().getCheckedItems().toArray(new Patient[participents.getCheckModel().getCheckedItems().size()])));
             condition.signal();
             close();
         } finally {
