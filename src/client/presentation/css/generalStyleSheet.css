@@ -26,16 +26,15 @@ and open the template in the editor.
 .button{
     -fx-text-fill: -fx-primary;
     -fx-background-color: -fx-secondary;
-    -fx-border-color: -fx-primary;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
+    -fx-border-radius: 0px;
+    -fx-background-radius: 5px;
     -fx-font-size: 12pt;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0, 2, 2);
 }
 
 .button:hover, .button:focused{
-    -fx-border-color: -fx-secondary;
-    -fx-background-color: -fx-primary;
-    -fx-text-fill: -fx-secondary;
+    -fx-text-fill: -fx-primary;
+    -fx-background-color: derive(-fx-secondary, -10%);
 }
 
 /*Login Screen Specific*/
@@ -204,8 +203,8 @@ and open the template in the editor.
 }
 
 .increment-button:hover ,.decrement-button:hover {
-    /*-fx-background-color: derive(-fx-secondary, 20%);*/
-    /*-fx-border-color: derive(-fx-secondary, 20%);*/
+    -fx-background-color: derive(-fx-secondary, 20%);
+    -fx-border-color: derive(-fx-secondary, 20%);
 }
 
 .text-area{

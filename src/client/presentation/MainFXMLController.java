@@ -28,10 +28,12 @@ import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -83,6 +85,7 @@ public class MainFXMLController implements Initializable {
         //Configuring the side drawer-menu
         menu.prefHeightProperty().bind(((AnchorPane) menu.getParent()).heightProperty());
         subScene.heightProperty().bind(menu.heightProperty());
+
         ((AnchorPane) subScene.getParent()).widthProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -118,7 +121,9 @@ public class MainFXMLController implements Initializable {
     public void loadSubScene(String path) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
-            subScene.setRoot(loader.load());
+            Parent root = loader.load();
+            root.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+            subScene.setRoot(root);
             module = loader.getController();
         } catch (IOException ex) {
             ex.printStackTrace(System.err);
@@ -139,7 +144,9 @@ public class MainFXMLController implements Initializable {
             label.setMaxHeight(Double.MAX_VALUE);
             label.setAlignment(Pos.CENTER_LEFT);
             label.setGraphic(new Label(tuple[0]));
+            ((Label) label.getGraphic()).setTextFill(Color.web("#2E4057"));
             ((Label) label.getGraphic()).setFont(((Label) buttonDashboardLabel.getGraphic()).getFont());
+            label.setEffect(new DropShadow(0, Color.TRANSPARENT));
             menuGrid.getChildren().add(label);
             GridPane.setColumnIndex(label, 0);
             GridPane.setRowIndex(label, input.indexOf(tuple) + 1);
@@ -154,6 +161,7 @@ public class MainFXMLController implements Initializable {
             icon.setGraphic(new FontAwesomeIconView());
             ((FontAwesomeIconView) icon.getGraphic()).glyphNameProperty().set(tuple[1]);
             ((FontAwesomeIconView) icon.getGraphic()).glyphSizeProperty().set(40);
+            icon.setEffect(new DropShadow(0, Color.TRANSPARENT));
             menuGrid.getChildren().add(icon);
             GridPane.setColumnIndex(icon, 1);
             GridPane.setRowIndex(icon, input.indexOf(tuple) + 1);

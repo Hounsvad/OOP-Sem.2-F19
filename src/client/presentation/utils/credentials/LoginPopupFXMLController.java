@@ -188,7 +188,7 @@ public class LoginPopupFXMLController implements Initializable {
             decorator.setCustomMaximize(true);
             decorator.setGraphic(new SVGGlyph());
             Scene scene = new Scene(decorator);
-            scene.getStylesheets().add(getClass().getResource("/client/presentation/css/generalStyleSheet.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/client/presentation/css/menuStyleSheet.css").toExternalForm());
             stage.setScene(scene);
             stage.setMinHeight(845);
             stage.setMinWidth(1290);

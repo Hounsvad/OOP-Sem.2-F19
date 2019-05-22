@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
 Developed by SI2-PRO Group 3
 Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
@@ -11,6 +12,7 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -28,6 +30,9 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
                <children>
                   <JFXComboBox fx:id="departmentPicker" layoutY="8.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#departmentPicked" prefHeight="26.0" prefWidth="1010.0" promptText="Department" style="-fx-prompt-text-fill: #F4F4F4; -fx-text-fill: #F4F4F4;" stylesheets="@../../css/adminStyleSheet.css" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="8.0" />
                </children>
+               <effect>
+                  <DropShadow radius="4.75" width="0.0" />
+               </effect>
             </AnchorPane>
          </top>
          <center>
@@ -51,6 +56,9 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" top="10.0" />
                      </HBox.margin>
+                     <effect>
+                        <DropShadow />
+                     </effect>
                   </VBox>
                   <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="250.0" HBox.hgrow="SOMETIMES">
                      <children>
@@ -69,6 +77,9 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" top="10.0" />
                      </HBox.margin>
+                     <effect>
+                        <DropShadow />
+                     </effect>
                   </VBox>
                   <VBox HBox.hgrow="SOMETIMES">
                      <HBox.margin>
@@ -118,6 +129,9 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
+                           <effect>
+                              <DropShadow />
+                           </effect>
                         </VBox>
                         <VBox prefHeight="370.0" prefWidth="100.0" VBox.vgrow="SOMETIMES">
                            <children>
@@ -151,6 +165,9 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
                                  </children>
                               </AnchorPane>
                            </children>
+                           <effect>
+                              <DropShadow />
+                           </effect>
                         </VBox>
                      </children>
                   </VBox>
@@ -172,7 +189,10 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
                   <FontAwesomeIconView glyphName="KEY" layoutX="164.0" layoutY="21.0" onMouseClicked="#resetPassword" size="40" style="-fx-fill: #F4F4F4;" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
                </children>
             </AnchorPane>
-            <JFXListView fx:id="UserView" fixedCellSize="0.0" onMouseClicked="#userSelected" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="ALWAYS" />
+            <JFXListView fx:id="UserView" fixedCellSize="0.0" onMouseClicked="#userSelected" styleClass="mylistview" stylesheets="@../../css/generalStyleSheet.css" VBox.vgrow="ALWAYS">
+               <effect>
+                  <DropShadow height="0.0" radius="4.75" />
+               </effect></JFXListView>
          </children>
       </VBox>
    </right>

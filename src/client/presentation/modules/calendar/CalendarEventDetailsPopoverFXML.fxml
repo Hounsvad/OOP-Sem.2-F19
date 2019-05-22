@@ -6,10 +6,11 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
 -->
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="194.0" prefWidth="262.0" style="-fx-border-color: STEELBLUE; -fx-background-color: #2E4057;" stylesheets="@../../css/generalStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.presentation.modules.calendar.CalendarEventDetailsPopoverFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="194.0" prefWidth="262.0" style="-fx-background-color: #2E4057;" stylesheets="@../../css/generalStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.presentation.modules.calendar.CalendarEventDetailsPopoverFXMLController">
     <children>
         <Label fx:id="title" layoutX="13.0" layoutY="4.0" prefHeight="54.0" prefWidth="242.0" style="-fx-text-fill: #048ba8;" text="Dis is Title" wrapText="true">
             <font>
@@ -20,4 +21,7 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
         <Label fx:id="dateStart" alignment="TOP_LEFT" layoutX="13.0" layoutY="154.0" prefHeight="17.0" prefWidth="219.0" style="-fx-text-fill: #048ba8;" text="I am date start" wrapText="true" />
         <Label fx:id="dateEnd" alignment="TOP_LEFT" layoutX="13.0" layoutY="172.0" prefHeight="17.0" prefWidth="227.0" style="-fx-text-fill: #048ba8;" text="I am date end" wrapText="true" />
     </children>
+   <effect>
+      <DropShadow />
+   </effect>
 </AnchorPane>

@@ -12,11 +12,12 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="639.0" prefWidth="596.0" style="-fx-border-color: STEELBLUE; -fx-background-color: #2E4057;" stylesheets="@../../css/generalStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.presentation.modules.calendar.CalendarEventEditPopupFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="639.0" prefWidth="596.0" style="-fx-background-color: #2E4057;" stylesheets="@../../css/generalStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.presentation.modules.calendar.CalendarEventEditPopupFXMLController">
     <children>
         <FontAwesomeIconView fx:id="cross" fill="#048ba8" glyphName="TIMES" layoutX="540.0" layoutY="55.0" onMouseClicked="#close" size="40" style="-fx-fill: #048ba8;" />
       <Label layoutX="30.0" layoutY="14.0" prefHeight="54.0" prefWidth="494.0" text="Edit event" textFill="#048ba8">
@@ -40,4 +41,7 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
       <CheckComboBox fx:id="participents" layoutX="119.0" layoutY="84.0" prefHeight="31.0" prefWidth="384.0" />
       <JFXButton fx:id="deleteButton" layoutX="31.0" layoutY="582.0" onAction="#delete" styleClass="delete" text="Delete event" />
     </children>
+   <effect>
+      <DropShadow />
+   </effect>
 </AnchorPane>

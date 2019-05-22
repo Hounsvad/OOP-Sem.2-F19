@@ -10,6 +10,7 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -38,4 +39,7 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
       <JFXPasswordField fx:id="password" layoutX="130.0" layoutY="65.0" onKeyTyped="#updatePassword" prefHeight="31.0" prefWidth="384.0" promptText="Password" stylesheets="@css/generalStyleSheet.css" />
       <JFXPasswordField fx:id="repeatPassword" layoutX="130.0" layoutY="119.0" onKeyTyped="#updateRepeat" prefHeight="31.0" prefWidth="384.0" promptText="Repeat password" stylesheets="@css/generalStyleSheet.css" />
     </children>
+   <effect>
+      <DropShadow />
+   </effect>
 </AnchorPane>
