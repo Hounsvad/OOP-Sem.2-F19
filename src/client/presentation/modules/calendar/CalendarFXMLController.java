@@ -291,7 +291,7 @@ public class CalendarFXMLController extends Module {
     @Override
     protected void clearAll() {
         patientsCache = null;
-        C calendarsCache = null;
+        calendarsCache = null;
         Platform.runLater(() -> {
             patientView.getItems().clear();
             detailedWeekView.getCalendars().clear();
