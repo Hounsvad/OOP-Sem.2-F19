@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -59,6 +59,7 @@ public class SettingsPopupFXMLController implements Initializable {
     @FXML
     private void updatePassword(KeyEvent event) {
         //updates the css of the password field based on the password
+        System.out.println("PASSWPRD");
         if (validatePassword()) {
             if (password.getStyleClass().contains("wrong-credentials")) {
                 password.getStyleClass().remove("wrong-credentials");
@@ -69,6 +70,7 @@ public class SettingsPopupFXMLController implements Initializable {
     @FXML
     private void updateRepeat(KeyEvent event) {
         ////updates the css of the repeatPassword field based on the if the passwords are equal
+        System.out.println("REAOKROPAÅKSDOKAPOÅSKD");
         if (validateEqual()) {
             if (repeatPassword.getStyleClass().contains("wrong-credentials")) {
                 repeatPassword.getStyleClass().remove("wrong-credentials");
@@ -82,11 +84,17 @@ public class SettingsPopupFXMLController implements Initializable {
     }
 
     private boolean validatePassword() {
+        if (!password.getStyleClass().contains("wrong-credentials")) {
+            password.getStyleClass().add("wrong-credentials");
+        }
         //Checks if the password is valid
         return password.getText().length() >= 8;
     }
 
     private boolean validateEqual() {
+        if (!repeatPassword.getStyleClass().contains("wrong-credentials")) {
+            repeatPassword.getStyleClass().add("wrong-credentials");
+        }
         //Checks if the password fields are equal
         return password.getText().equals(repeatPassword.getText());
     }

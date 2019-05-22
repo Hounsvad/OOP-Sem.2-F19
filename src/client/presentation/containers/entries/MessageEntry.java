@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -9,6 +9,7 @@ import client.presentation.modules.dashboard.MessageEntryCreationPopupFXMLContro
 import client.presentation.modules.dashboard.MessageEntryPopupFXMLController;
 import static client.presentation.utils.StringUtils.getBoldString;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -58,12 +59,7 @@ public class MessageEntry extends Entry {
         this.subject = subject;
         this.sender = sender;
         this.message = message;
-        this.sentDateString = String.format("%1$" + 2 + "s", sentDate.getHours()).replace(' ', '0') + ":"
-                + String.format("%1$" + 2 + "s", sentDate.getMinutes()).replace(' ', '0') + ":"
-                + String.format("%1$" + 2 + "s", sentDate.getSeconds()).replace(' ', '0') + " "
-                + String.format("%1$" + 2 + "s", sentDate.getDate()).replace(' ', '0') + "/"
-                + String.format("%1$" + 2 + "s", sentDate.getMonth() + 1).replace(' ', '0') + "/"
-                + (sentDate.getYear() + 1900);
+        this.sentDateString = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy").format(sentDate);
         this.moduleController = null;
     }
 
@@ -87,7 +83,7 @@ public class MessageEntry extends Entry {
      */
     @Override
     public String toString() {
-        return getBoldString(sender) + ": " + subject + "\n" + message + "\n" + sentDateString;
+        return getBoldString(sender) + ": " + subject + "\n" + sentDateString;
     }
 
     /**

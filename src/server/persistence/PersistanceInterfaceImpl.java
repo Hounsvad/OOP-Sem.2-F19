@@ -447,7 +447,7 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                 break;
             case "getMailDomainByDepartment":
                 try {
-                    stmt = conn.prepareStatement("SELECT department_mail_domain FROM departments WHERE department_id = ?)");
+                    stmt = conn.prepareStatement("SELECT department_mail_domain FROM departments WHERE department_id = ?");
                     stmt.setString(1, (query[1]));
                 } catch (SQLException ex) {
                     ex.printStackTrace(System.err);

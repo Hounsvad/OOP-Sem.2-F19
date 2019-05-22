@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
 Developed by SI2-PRO Group 3
 Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
@@ -34,7 +35,7 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXPasswordField fx:id="password" layoutX="130.0" layoutY="65.0" onKeyReleased="#updatePassword" prefHeight="31.0" prefWidth="384.0" promptText="Password" stylesheets="@css/generalStyleSheet.css" />
-      <JFXPasswordField fx:id="repeatPassword" layoutX="130.0" layoutY="119.0" onKeyReleased="#updateRepeat" prefHeight="31.0" prefWidth="384.0" promptText="Repeat password" stylesheets="@css/generalStyleSheet.css" />
+      <JFXPasswordField fx:id="password" layoutX="130.0" layoutY="65.0" onKeyTyped="#updatePassword" prefHeight="31.0" prefWidth="384.0" promptText="Password" stylesheets="@css/generalStyleSheet.css" />
+      <JFXPasswordField fx:id="repeatPassword" layoutX="130.0" layoutY="119.0" onKeyTyped="#updateRepeat" prefHeight="31.0" prefWidth="384.0" promptText="Repeat password" stylesheets="@css/generalStyleSheet.css" />
     </children>
 </AnchorPane>

@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -41,4 +41,11 @@ public class Cache {
         return cache;
     }
 
+    /**
+     * Deletes the cache
+     */
+    public void reset() {
+        cache.clear();
+        instance = null;
+    }
 }

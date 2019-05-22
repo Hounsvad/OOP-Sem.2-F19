@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -27,7 +27,6 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -107,43 +106,6 @@ public class LoginPopupFXMLController implements Initializable {
             }
         });
         containerInstance = CredentialContainer.getInstance();
-    }
-
-    /**
-     * Cheeky way around the login - DELETE IN FINAL VERSION
-     *
-     * @param event
-     */
-    @FXML
-    private void skip(ContextMenuEvent event) {
-        loadpane.setVisible(true);
-        new Thread(() -> {
-            List<String[]> sqlReturn = communicationHandler.sendQuery(new String[]{"login", "olnor18", StringUtils.hash("kode")});
-            if (sqlReturn != null && !sqlReturn.isEmpty() && !sqlReturn.get(0)[0].equalsIgnoreCase("error")) {
-                CredentialContainer.getInstance().setUsername("olnor18");
-                CredentialContainer.getInstance().setPassword(StringUtils.hash("kode"));
-                Platform.runLater(() -> {
-                    if (containerInstance.isFirst()) {
-                        loadMain();
-                    }
-                    closeStage();
-                });
-
-            } else {
-                Platform.runLater(()
-                        -> {
-                    message.setText("Wrong username or password!");
-                    password.setText("");
-                    username.getStyleClass().add("wrong-credentials");
-                    password.getStyleClass().add("wrong-credentials");
-                });
-
-            }
-            Platform.runLater(()
-                    -> {
-                loadpane.setVisible(false);
-            });
-        }, "SkipLoginHandler").start();
     }
 
     /**

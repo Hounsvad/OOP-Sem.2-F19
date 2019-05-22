@@ -1,13 +1,15 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
 package client.presentation;
 
+import client.presentation.containers.entries.Cache;
 import client.presentation.modules.Module;
 import client.presentation.utils.credentials.CredentialContainer;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -190,5 +192,21 @@ public class MainFXMLController implements Initializable {
                 }
             });
         }, "SettingsWindowLoader").start();
+    }
+
+    @FXML
+    private void logOut(ActionEvent event) throws URISyntaxException, IOException {
+
+        CredentialContainer.getInstance().reset();
+        Cache.getInstance().reset();
+        communicationHandler.reset();
+        Platform.runLater(() -> {
+            try {
+                new Presentation().start(new Stage());
+                ((Stage) subScene.getScene().getWindow()).close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 }

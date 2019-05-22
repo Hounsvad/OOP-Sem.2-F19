@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -77,14 +77,11 @@ public class CommunicationHandler {
                 if (returnVariable.get(0)[0].equalsIgnoreCase("error")) {
                     {
                         System.err.println(returnVariable.get(0)[1]);
-                        System.exit(0);
                     }
                 }
                 name = returnVariable.get(0)[0];
             } else {
                 System.err.println("Return from login query was empty");
-                System.exit(0);
-
             }
         } else {
             mainFXMLController.setSpinner(true);
@@ -104,5 +101,13 @@ public class CommunicationHandler {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Resets the communication handler
+     */
+    public void reset() {
+        name = null;
+        instance = null;
     }
 }
