@@ -41,6 +41,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -304,9 +305,11 @@ public class CalendarFXMLController extends Module {
     private Node calendarDetailsPopup(EntryDetailsPopOverContentParameter parameter) {
         if (parameter.getEntry().getCalendar().getName().equalsIgnoreCase("rhythm")) {
             Label label = new Label(parameter.getEntry().getTitle());
-            label.setPrefSize(100, 60);
             label.setTextAlignment(TextAlignment.CENTER);
-            label.setStyle("-fx-background-color: #2E4057; -fx-text-fill: #048BA8;");
+            label.setStyle("-fx-text-fill: #048BA8;");
+            int length = label.getText().length() * 10 + 20;
+            label.setPrefSize(length < 60 ? 60 : length, 60);
+            label.setPadding(new Insets(8));
             return label;
         }
         try {
@@ -325,16 +328,22 @@ public class CalendarFXMLController extends Module {
             return null;
         }
         MenuItem editEvent = new MenuItem("Edit");
+        editEvent.setStyle("-fx-text-fill: #048BA8;");
         editEvent.setOnAction(param -> openEventEditor(parameter));
-        return new ContextMenu(editEvent);
+        ContextMenu contextMenu = new ContextMenu(editEvent);
+        contextMenu.setStyle("-fx-background-color: #2E4057;");
+        return contextMenu;
     }
 
     private ContextMenu calendarContextMenu() {
         MenuItem editDayRythm = new MenuItem("Edit Dayrythm");
+        editDayRythm.setStyle("-fx-text-fill: #048BA8;");
         editDayRythm.setOnAction(param -> openDayRythmEditor());
         MenuItem createEvent = new MenuItem("Create event");
+        createEvent.setStyle("-fx-text-fill: #048BA8;");
         createEvent.setOnAction(param -> openEventCreator());
-        return new ContextMenu(editDayRythm, createEvent);
+        ContextMenu contextMenu = new ContextMenu(editDayRythm, createEvent);
+        return contextMenu;
     }
 
     private Entry<String> createCalendarEntry() {
@@ -370,6 +379,7 @@ public class CalendarFXMLController extends Module {
             }
             Entry<EventDataEntry> entry = fxmlLoader.<CalendarEventEditPopupFXMLController>getController().editEvent((Entry<EventDataEntry>) param.getEntry());
             if (entry == null) {
+                Platform.runLater(() -> getCalendarEvents());
                 return;
             }
             detailedWeekView.getCalendars().get(0).addEntry(entry);
@@ -460,7 +470,6 @@ public class CalendarFXMLController extends Module {
             try {
                 detailedWeekView.getCalendarSources().remove(1);
             } catch (Exception e) {
-                e.printStackTrace();
             }
             CalendarSource calendarSource = new CalendarSource();
             calendarSource.getCalendars().add(dayRythmCache.get(patientView.getSelectionModel().getSelectedItem().getPatientID()));

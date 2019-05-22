@@ -182,7 +182,8 @@ public class PersistanceInterfaceImpl implements PersistanceInterface {
                     stmt.setLong(1, Long.parseLong(query[2]));
                     stmt.setString(2, (query[4]));
                     stmt.setString(3, (query[5]));
-                    stmt.setLong(4, Long.parseLong(query[1]));
+                    stmt.setLong(4, Long.parseLong(query[3]));
+                    stmt.setLong(5, Long.parseLong(query[1]));
                 } catch (SQLException ex) {
                     ex.printStackTrace(System.err);
                 }

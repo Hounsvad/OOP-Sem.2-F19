@@ -232,4 +232,32 @@ and open the template in the editor.
 .delete {
     -fx-background-color: red;
     -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+
+.delete:hover,
+.delete:selected,
+.delete:pressed{
+    -fx-background-color: derive(red, -40%);
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+
+.context-menu {
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: -fx-secondary;
+}
+
+.menu-item .label {
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: -fx-secondary;
+}
+
+.menu-item:focused .label {
+    -fx-background-color: derive(-fx-primary, -20%);
+    -fx-text-fill: -fx-secondary;
+}
+
+.menu-item:focused{
+    -fx-background-color: derive(-fx-primary, -20%);
 }
