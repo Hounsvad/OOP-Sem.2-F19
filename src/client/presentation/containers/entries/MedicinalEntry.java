@@ -55,7 +55,7 @@ public class MedicinalEntry {
         Platform.runLater(()
                 -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/presentation/modules/journal/MedicalEntryShowMessagePopupFXML.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/presentation/modules/journal/MedicinalEntryShowMessagePopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 MedicinalEntryShowMessagePopupFXMLController controller = fxmlLoader.<MedicinalEntryShowMessagePopupFXMLController>getController();
                 controller.setData(notes, date, medicin, dosage);
@@ -79,7 +79,8 @@ public class MedicinalEntry {
         Platform.runLater(()
                 -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(MedicinalEntry.class.getResource("/client/presentation/modules/journal/MedicalEntryCreationPopupFXML.fxml"));
+                System.out.println("happen");
+                FXMLLoader fxmlLoader = new FXMLLoader(MedicinalEntry.class.getResource("/client/presentation/modules/journal/MedicinalEntryCreationPopupFXML.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 fxmlLoader.<MedicinalEntryCreationPopupFXMLController>getController().setModuleController(moduleController);
                 Stage stage = new Stage();
@@ -89,6 +90,7 @@ public class MedicinalEntry {
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException e) {
+                e.printStackTrace();
             }
         });
     }
