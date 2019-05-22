@@ -15,7 +15,7 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="642.0" prefWidth="600.0" style="-fx-background-color: #2E4057;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.presentation.modules.journal.MedicalEntryCreationPopupFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="642.0" prefWidth="600.0" style="-fx-background-color: #2E4057;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.presentation.modules.journal.MedicinalEntryCreationPopupFXMLController">
     <children>
         <FontAwesomeIconView fx:id="cross" fill="#048ba8" glyphName="TIMES" layoutX="540.0" layoutY="55.0" onMouseClicked="#close" size="40" style="-fx-fill: #048ba8;" />
       <Label layoutX="30.0" layoutY="14.0" prefHeight="54.0" text="Create medicinal entry" textFill="#048ba8" AnchorPane.leftAnchor="119.0">
@@ -24,7 +24,7 @@ Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Ki
          </font>
       </Label>
       <Label layoutX="42.0" layoutY="88.0" text="Medicine:" textFill="#048ba8" AnchorPane.rightAnchor="506.0" />
-      <JFXComboBox fx:id="medicin" focusColor="#048ba8" layoutX="119.0" layoutY="83.0" prefHeight="31.0" prefWidth="384.0" unFocusColor="#048ba8" AnchorPane.leftAnchor="119.0" />
+      <JFXComboBox fx:id="medicine" focusColor="#048ba8" layoutX="119.0" layoutY="83.0" prefHeight="31.0" prefWidth="384.0" unFocusColor="#048ba8" AnchorPane.leftAnchor="119.0" />
       <JFXTextField fx:id="dosage" focusColor="#048ba8" layoutX="119.0" layoutY="130.0" prefHeight="31.0" prefWidth="384.0" unFocusColor="#048ba8" AnchorPane.leftAnchor="119.0" />
       <Label layoutX="56.0" layoutY="184.0" text="Notes:" textFill="#048ba8" AnchorPane.rightAnchor="506.0" />
       <JFXTextArea fx:id="notes" focusColor="#048ba8" layoutX="119.0" layoutY="179.0" prefHeight="368.0" prefWidth="384.0" unFocusColor="#048ba8" AnchorPane.leftAnchor="119.0" />
