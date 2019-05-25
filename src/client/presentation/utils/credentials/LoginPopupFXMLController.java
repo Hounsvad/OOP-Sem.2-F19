@@ -124,10 +124,10 @@ public class LoginPopupFXMLController implements Initializable {
             return;
         }
         new Thread(() -> {
-            List<String[]> sqlReturn = communicationHandler.sendQuery(new String[]{"login", username.getText(), StringUtils.hash(password.getText())});
+            List<String[]> sqlReturn = communicationHandler.sendQuery(new String[]{"login", username.getText().toLowerCase(), StringUtils.hash(username.getText().toLowerCase() + password.getText())});
             if (sqlReturn != null && !sqlReturn.isEmpty() && !sqlReturn.get(0)[0].equalsIgnoreCase("error")) {
-                CredentialContainer.getInstance().setUsername(username.getText());
-                CredentialContainer.getInstance().setPassword(StringUtils.hash(username.getText() + password.getText()));
+                CredentialContainer.getInstance().setUsername(username.getText().toLowerCase());
+                CredentialContainer.getInstance().setPassword(StringUtils.hash(username.getText().toLowerCase() + password.getText()));
                 Platform.runLater(() -> {
                     if (containerInstance.isFirst()) {
                         loadMain();

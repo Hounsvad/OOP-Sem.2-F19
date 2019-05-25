@@ -263,7 +263,7 @@ public class DomainInterfaceImpl implements DomainInterface {
                         case "resetUserPassword":
                             addActivity();
                             String newPassword = generatePassword();
-                            persistenceInterface.parseQuery("setUserPassword", query[3], Hashing.sha256().hashString(newPassword, Charset.forName("UTF-8")).toString());
+                            persistenceInterface.parseQuery("setUserPassword", query[3], Hashing.sha256().hashString("sanitasoverviewsalt" + query[5] + newPassword, Charset.forName("UTF-8")).toString());
                             String domain = persistenceInterface.parseQuery("getMailDomainByDepartment", query[4]).get(0)[0];
                             sendPassword(query[5], domain, newPassword);
                             return constructReturn("Success", "Password updated");
