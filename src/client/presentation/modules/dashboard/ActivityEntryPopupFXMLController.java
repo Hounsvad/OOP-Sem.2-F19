@@ -7,6 +7,7 @@ package client.presentation.modules.dashboard;
 import client.presentation.modules.Popup;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -62,7 +63,9 @@ public class ActivityEntryPopupFXMLController extends Popup {
      */
     public void setData(String titleString, String descriptionString, String dateString, String ipString) {
         title.setText(titleString);
-        description.setText(descriptionString);
+        StringBuilder formattedMessage = new StringBuilder();
+        new Scanner(descriptionString).useDelimiter(";:;").forEachRemaining((t) -> formattedMessage.append(t).append("\n"));
+        description.setText(formattedMessage.toString());
         date.setText(dateString);
         ip.setText(ipString);
     }
