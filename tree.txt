@@ -1,0 +1,684 @@
+Folder PATH listing for volume Sekund‘r
+Volume serial number is CA77-0608
+F:.
+|   .gitignore
+|   build.xml
+|   hs_err_pid11784.log
+|   manifest.mf
+|   README.md
+|   tree.txt
+|   
++---build
+|   |   built-jar.properties
+|   |   
+|   +---classes
+|   |   +---client
+|   |   |   +---communication
+|   |   |   |       CommunicationInterface.class
+|   |   |   |       CommunicationInterfaceImpl.class
+|   |   |   |       
+|   |   |   \---presentation
+|   |   |       |   CommunicationHandler.class
+|   |   |       |   MainFXML.fxml
+|   |   |       |   MainFXMLController$1.class
+|   |   |       |   MainFXMLController.class
+|   |   |       |   Presentation.class
+|   |   |       |   SettingsPopupFXML.fxml
+|   |   |       |   SettingsPopupFXMLController.class
+|   |   |       |   
+|   |   |       +---containers
+|   |   |       |   |   Cache.class
+|   |   |       |   |   Department.class
+|   |   |       |   |   Patient.class
+|   |   |       |   |   PatientExtended.class
+|   |   |       |   |   Role.class
+|   |   |       |   |   User.class
+|   |   |       |   |   
+|   |   |       |   \---entries
+|   |   |       |           ActivityEntry.class
+|   |   |       |           CalendarEntry.class
+|   |   |       |           Entry.class
+|   |   |       |           EventDataEntry.class
+|   |   |       |           ManualEntry.class
+|   |   |       |           MedicinalEntry.class
+|   |   |       |           MessageEntry.class
+|   |   |       |           
+|   |   |       +---css
+|   |   |       |       adminStyleSheet.css
+|   |   |       |       calendarStyleSheet.css
+|   |   |       |       comboboxStyleSheet.css
+|   |   |       |       generalStyleSheet.css
+|   |   |       |       menuStyleSheet.css
+|   |   |       |       
+|   |   |       +---modules
+|   |   |       |   |   Module.class
+|   |   |       |   |   Popup.class
+|   |   |       |   |   
+|   |   |       |   +---admin
+|   |   |       |   |       AdminFXML.fxml
+|   |   |       |   |       AdminFXMLController$1.class
+|   |   |       |   |       AdminFXMLController.class
+|   |   |       |   |       PatientCreationPopupFXML.fxml
+|   |   |       |   |       PatientCreationPopupFXMLController.class
+|   |   |       |   |       
+|   |   |       |   +---calendar
+|   |   |       |   |       CalendarCacheKey.class
+|   |   |       |   |       CalendarDayRythmEditorPopupFXML.fxml
+|   |   |       |   |       CalendarDayRythmEditorPopupFXMLController.class
+|   |   |       |   |       CalendarEventCreationPopupFXML.fxml
+|   |   |       |   |       CalendarEventCreationPopupFXMLController.class
+|   |   |       |   |       CalendarEventDetailsPopoverFXML.fxml
+|   |   |       |   |       CalendarEventDetailsPopoverFXMLController.class
+|   |   |       |   |       CalendarEventEditPopupFXML.fxml
+|   |   |       |   |       CalendarEventEditPopupFXMLController.class
+|   |   |       |   |       CalendarFXML.fxml
+|   |   |       |   |       CalendarFXMLController$1.class
+|   |   |       |   |       CalendarFXMLController$2.class
+|   |   |       |   |       CalendarFXMLController$3.class
+|   |   |       |   |       CalendarFXMLController.class
+|   |   |       |   |       CustomFontAwesomeIconView.class
+|   |   |       |   |       
+|   |   |       |   +---dashboard
+|   |   |       |   |       ActivityEntryPopupFXML.fxml
+|   |   |       |   |       ActivityEntryPopupFXMLController.class
+|   |   |       |   |       DashboardFXML.fxml
+|   |   |       |   |       DashboardFXMLController$1.class
+|   |   |       |   |       DashboardFXMLController.class
+|   |   |       |   |       MessageEntryCreationPopupFXML.fxml
+|   |   |       |   |       MessageEntryCreationPopupFXMLController.class
+|   |   |       |   |       MessageEntryPopupFXML.fxml
+|   |   |       |   |       MessageEntryPopupFXMLController.class
+|   |   |       |   |       
+|   |   |       |   \---journal
+|   |   |       |           JournalFXML.fxml
+|   |   |       |           JournalFXMLController.class
+|   |   |       |           ManualEntryCreationPopupFXML.fxml
+|   |   |       |           ManualEntryCreationPopupFXMLController$1.class
+|   |   |       |           ManualEntryCreationPopupFXMLController.class
+|   |   |       |           ManualEntryShowMessagePopupFXML.fxml
+|   |   |       |           ManualEntryShowMessagePopupFXMLController.class
+|   |   |       |           MedicinalEntryCreationPopupFXML.fxml
+|   |   |       |           MedicinalEntryCreationPopupFXMLController$1.class
+|   |   |       |           MedicinalEntryCreationPopupFXMLController.class
+|   |   |       |           MedicinalEntryShowMessagePopupFXML.fxml
+|   |   |       |           MedicinalEntryShowMessagePopupFXMLController.class
+|   |   |       |           
+|   |   |       +---resources
+|   |   |       |   |   monaco.ttf
+|   |   |       |   |   sanitaslogo.ico
+|   |   |       |   |   sanitaslogo.png
+|   |   |       |   |   
+|   |   |       |   \---login
+|   |   |       |           blur.png
+|   |   |       |           
+|   |   |       \---utils
+|   |   |           |   CustomDecorator.class
+|   |   |           |   StringUtils.class
+|   |   |           |   
+|   |   |           \---credentials
+|   |   |                   CredentialContainer.class
+|   |   |                   LoginPopupFXML.fxml
+|   |   |                   LoginPopupFXMLController$1.class
+|   |   |                   LoginPopupFXMLController.class
+|   |   |                   
+|   |   +---launcher
+|   |   |       Launcher.class
+|   |   |       
+|   |   \---server
+|   |       +---communication
+|   |       |       ClientHandlerThread.class
+|   |       |       DomainHandler.class
+|   |       |       ServerController.class
+|   |       |       
+|   |       +---domain
+|   |       |       DomainInterface.class
+|   |       |       DomainInterfaceImpl$1.class
+|   |       |       DomainInterfaceImpl.class
+|   |       |       EmailHandler$1.class
+|   |       |       EmailHandler$2.class
+|   |       |       EmailHandler.class
+|   |       |       
+|   |       +---persistence
+|   |       |       PersistanceInterface.class
+|   |       |       PersistanceInterfaceImpl.class
+|   |       |       
+|   |       \---recources
+|   |               ConfigReader.class
+|   |               Database.config
+|   |               README.txt
+|   |               SMTP.config
+|   |               
+|   +---empty
+|   \---generated-sources
+|       \---ap-source-output
++---db
+|       messages.csv
+|       users.csv
+|       
++---dist
+|   |   OOP-Sem.2-F19.jar
+|   |   Sanitas.html
+|   |   Sanitas.jnlp
+|   |   
+|   +---javadoc
+|   |   |   allclasses-frame.html
+|   |   |   allclasses-noframe.html
+|   |   |   constant-values.html
+|   |   |   deprecated-list.html
+|   |   |   help-doc.html
+|   |   |   index.html
+|   |   |   overview-frame.html
+|   |   |   overview-summary.html
+|   |   |   overview-tree.html
+|   |   |   package-list
+|   |   |   script.js
+|   |   |   stylesheet.css
+|   |   |   
+|   |   +---client
+|   |   |   +---communication
+|   |   |   |   |   CommunicationInterface.html
+|   |   |   |   |   CommunicationInterfaceImpl.html
+|   |   |   |   |   package-frame.html
+|   |   |   |   |   package-summary.html
+|   |   |   |   |   package-tree.html
+|   |   |   |   |   package-use.html
+|   |   |   |   |   
+|   |   |   |   \---class-use
+|   |   |   |           CommunicationInterface.html
+|   |   |   |           CommunicationInterfaceImpl.html
+|   |   |   |           
+|   |   |   \---presentation
+|   |   |       |   CommunicationHandler.html
+|   |   |       |   MainFXMLController.html
+|   |   |       |   package-frame.html
+|   |   |       |   package-summary.html
+|   |   |       |   package-tree.html
+|   |   |       |   package-use.html
+|   |   |       |   Presentation.html
+|   |   |       |   SettingsPopupFXMLController.html
+|   |   |       |   
+|   |   |       +---class-use
+|   |   |       |       CommunicationHandler.html
+|   |   |       |       MainFXMLController.html
+|   |   |       |       Presentation.html
+|   |   |       |       SettingsPopupFXMLController.html
+|   |   |       |       
+|   |   |       +---containers
+|   |   |       |   |   Cache.html
+|   |   |       |   |   Department.html
+|   |   |       |   |   package-frame.html
+|   |   |       |   |   package-summary.html
+|   |   |       |   |   package-tree.html
+|   |   |       |   |   package-use.html
+|   |   |       |   |   Patient.html
+|   |   |       |   |   PatientExtended.html
+|   |   |       |   |   Role.html
+|   |   |       |   |   User.html
+|   |   |       |   |   
+|   |   |       |   +---class-use
+|   |   |       |   |       Cache.html
+|   |   |       |   |       Department.html
+|   |   |       |   |       Patient.html
+|   |   |       |   |       PatientExtended.html
+|   |   |       |   |       Role.html
+|   |   |       |   |       User.html
+|   |   |       |   |       
+|   |   |       |   \---entries
+|   |   |       |       |   ActivityEntry.html
+|   |   |       |       |   CalendarEntry.html
+|   |   |       |       |   Entry.html
+|   |   |       |       |   EventDataEntry.html
+|   |   |       |       |   ManualEntry.html
+|   |   |       |       |   MedicinalEntry.html
+|   |   |       |       |   MessageEntry.html
+|   |   |       |       |   package-frame.html
+|   |   |       |       |   package-summary.html
+|   |   |       |       |   package-tree.html
+|   |   |       |       |   package-use.html
+|   |   |       |       |   
+|   |   |       |       \---class-use
+|   |   |       |               ActivityEntry.html
+|   |   |       |               CalendarEntry.html
+|   |   |       |               Entry.html
+|   |   |       |               EventDataEntry.html
+|   |   |       |               ManualEntry.html
+|   |   |       |               MedicinalEntry.html
+|   |   |       |               MessageEntry.html
+|   |   |       |               
+|   |   |       +---modules
+|   |   |       |   |   Module.html
+|   |   |       |   |   package-frame.html
+|   |   |       |   |   package-summary.html
+|   |   |       |   |   package-tree.html
+|   |   |       |   |   package-use.html
+|   |   |       |   |   Popup.html
+|   |   |       |   |   
+|   |   |       |   +---admin
+|   |   |       |   |   |   AdminFXMLController.html
+|   |   |       |   |   |   package-frame.html
+|   |   |       |   |   |   package-summary.html
+|   |   |       |   |   |   package-tree.html
+|   |   |       |   |   |   package-use.html
+|   |   |       |   |   |   PatientCreationPopupFXMLController.html
+|   |   |       |   |   |   
+|   |   |       |   |   \---class-use
+|   |   |       |   |           AdminFXMLController.html
+|   |   |       |   |           PatientCreationPopupFXMLController.html
+|   |   |       |   |           
+|   |   |       |   +---calendar
+|   |   |       |   |   |   CalendarCacheKey.html
+|   |   |       |   |   |   CalendarDayRythmEditorPopupFXMLController.html
+|   |   |       |   |   |   CalendarEventCreationPopupFXMLController.html
+|   |   |       |   |   |   CalendarEventDetailsPopoverFXMLController.html
+|   |   |       |   |   |   CalendarEventEditPopupFXMLController.html
+|   |   |       |   |   |   CalendarFXMLController.html
+|   |   |       |   |   |   CustomFontAwesomeIconView.html
+|   |   |       |   |   |   package-frame.html
+|   |   |       |   |   |   package-summary.html
+|   |   |       |   |   |   package-tree.html
+|   |   |       |   |   |   package-use.html
+|   |   |       |   |   |   
+|   |   |       |   |   \---class-use
+|   |   |       |   |           CalendarCacheKey.html
+|   |   |       |   |           CalendarDayRythmEditorPopupFXMLController.html
+|   |   |       |   |           CalendarEventCreationPopupFXMLController.html
+|   |   |       |   |           CalendarEventDetailsPopoverFXMLController.html
+|   |   |       |   |           CalendarEventEditPopupFXMLController.html
+|   |   |       |   |           CalendarFXMLController.html
+|   |   |       |   |           CustomFontAwesomeIconView.html
+|   |   |       |   |           
+|   |   |       |   +---class-use
+|   |   |       |   |       Module.html
+|   |   |       |   |       Popup.html
+|   |   |       |   |       
+|   |   |       |   +---dashboard
+|   |   |       |   |   |   ActivityEntryPopupFXMLController.html
+|   |   |       |   |   |   DashboardFXMLController.html
+|   |   |       |   |   |   MessageEntryCreationPopupFXMLController.html
+|   |   |       |   |   |   MessageEntryPopupFXMLController.html
+|   |   |       |   |   |   package-frame.html
+|   |   |       |   |   |   package-summary.html
+|   |   |       |   |   |   package-tree.html
+|   |   |       |   |   |   package-use.html
+|   |   |       |   |   |   
+|   |   |       |   |   \---class-use
+|   |   |       |   |           ActivityEntryPopupFXMLController.html
+|   |   |       |   |           DashboardFXMLController.html
+|   |   |       |   |           MessageEntryCreationPopupFXMLController.html
+|   |   |       |   |           MessageEntryPopupFXMLController.html
+|   |   |       |   |           
+|   |   |       |   \---journal
+|   |   |       |       |   JournalFXMLController.html
+|   |   |       |       |   ManualEntryCreationPopupFXMLController.html
+|   |   |       |       |   ManualEntryShowMessagePopupFXMLController.html
+|   |   |       |       |   MedicinalEntryCreationPopupFXMLController.html
+|   |   |       |       |   MedicinalEntryShowMessagePopupFXMLController.html
+|   |   |       |       |   package-frame.html
+|   |   |       |       |   package-summary.html
+|   |   |       |       |   package-tree.html
+|   |   |       |       |   package-use.html
+|   |   |       |       |   
+|   |   |       |       \---class-use
+|   |   |       |               JournalFXMLController.html
+|   |   |       |               ManualEntryCreationPopupFXMLController.html
+|   |   |       |               ManualEntryShowMessagePopupFXMLController.html
+|   |   |       |               MedicinalEntryCreationPopupFXMLController.html
+|   |   |       |               MedicinalEntryShowMessagePopupFXMLController.html
+|   |   |       |               
+|   |   |       \---utils
+|   |   |           |   CustomDecorator.html
+|   |   |           |   package-frame.html
+|   |   |           |   package-summary.html
+|   |   |           |   package-tree.html
+|   |   |           |   package-use.html
+|   |   |           |   StringUtils.html
+|   |   |           |   
+|   |   |           +---class-use
+|   |   |           |       CustomDecorator.html
+|   |   |           |       StringUtils.html
+|   |   |           |       
+|   |   |           \---credentials
+|   |   |               |   CredentialContainer.html
+|   |   |               |   LoginPopupFXMLController.html
+|   |   |               |   package-frame.html
+|   |   |               |   package-summary.html
+|   |   |               |   package-tree.html
+|   |   |               |   package-use.html
+|   |   |               |   
+|   |   |               \---class-use
+|   |   |                       CredentialContainer.html
+|   |   |                       LoginPopupFXMLController.html
+|   |   |                       
+|   |   +---index-files
+|   |   |       index-1.html
+|   |   |       index-10.html
+|   |   |       index-11.html
+|   |   |       index-12.html
+|   |   |       index-13.html
+|   |   |       index-14.html
+|   |   |       index-15.html
+|   |   |       index-16.html
+|   |   |       index-2.html
+|   |   |       index-3.html
+|   |   |       index-4.html
+|   |   |       index-5.html
+|   |   |       index-6.html
+|   |   |       index-7.html
+|   |   |       index-8.html
+|   |   |       index-9.html
+|   |   |       
+|   |   +---launcher
+|   |   |   |   Launcher.html
+|   |   |   |   package-frame.html
+|   |   |   |   package-summary.html
+|   |   |   |   package-tree.html
+|   |   |   |   package-use.html
+|   |   |   |   
+|   |   |   \---class-use
+|   |   |           Launcher.html
+|   |   |           
+|   |   \---server
+|   |       +---communication
+|   |       |   |   ClientHandlerThread.html
+|   |       |   |   DomainHandler.html
+|   |       |   |   package-frame.html
+|   |       |   |   package-summary.html
+|   |       |   |   package-tree.html
+|   |       |   |   package-use.html
+|   |       |   |   ServerController.html
+|   |       |   |   
+|   |       |   \---class-use
+|   |       |           ClientHandlerThread.html
+|   |       |           DomainHandler.html
+|   |       |           ServerController.html
+|   |       |           
+|   |       +---domain
+|   |       |   |   DomainInterface.html
+|   |       |   |   DomainInterfaceImpl.html
+|   |       |   |   EmailHandler.html
+|   |       |   |   package-frame.html
+|   |       |   |   package-summary.html
+|   |       |   |   package-tree.html
+|   |       |   |   package-use.html
+|   |       |   |   
+|   |       |   \---class-use
+|   |       |           DomainInterface.html
+|   |       |           DomainInterfaceImpl.html
+|   |       |           EmailHandler.html
+|   |       |           
+|   |       +---persistence
+|   |       |   |   package-frame.html
+|   |       |   |   package-summary.html
+|   |       |   |   package-tree.html
+|   |       |   |   package-use.html
+|   |       |   |   PersistanceInterface.html
+|   |       |   |   PersistanceInterfaceImpl.html
+|   |       |   |   
+|   |       |   \---class-use
+|   |       |           PersistanceInterface.html
+|   |       |           PersistanceInterfaceImpl.html
+|   |       |           
+|   |       \---recources
+|   |           |   ConfigReader.html
+|   |           |   package-frame.html
+|   |           |   package-summary.html
+|   |           |   package-tree.html
+|   |           |   package-use.html
+|   |           |   
+|   |           \---class-use
+|   |                   ConfigReader.html
+|   |                   
+|   +---lib
+|   |       activation.jar
+|   |       controlsfx-8.40.15.jar
+|   |       fontawesomefx-commons-8.12.jar
+|   |       fontawesomefx-fontawesome-4.6.3.jar
+|   |       FontAwsomeIntegratableGlyphBrowser.jar
+|   |       guava-23.0.jar
+|   |       jfoenix-8.0.8.jar
+|   |       joda-time-2.10.2.jar
+|   |       mail.jar
+|   |       postgresql-42.2.5.jar
+|   |       pseudoSSLLibrary.jar
+|   |       recurrence-8.5.0.jar
+|   |       view-8.5.0.jar
+|   |       
+|   +---run881028729
+|   |   |   OOP-Sem.2-F19.jar
+|   |   |   Sanitas.html
+|   |   |   Sanitas.jnlp
+|   |   |   
+|   |   +---lib
+|   |   |       activation.jar
+|   |   |       controlsfx-8.40.15.jar
+|   |   |       fontawesomefx-commons-8.12.jar
+|   |   |       fontawesomefx-fontawesome-4.6.3.jar
+|   |   |       FontAwsomeIntegratableGlyphBrowser.jar
+|   |   |       guava-23.0.jar
+|   |   |       jfoenix-8.0.8.jar
+|   |   |       joda-time-2.10.2.jar
+|   |   |       mail.jar
+|   |   |       postgresql-42.2.5.jar
+|   |   |       pseudoSSLLibrary.jar
+|   |   |       recurrence-8.5.0.jar
+|   |   |       view-8.5.0.jar
+|   |   |       
+|   |   \---web-files
+|   |           dtjava.js
+|   |           error.png
+|   |           get_java.png
+|   |           get_javafx.png
+|   |           javafx-chrome.png
+|   |           javafx-loading-100x100.gif
+|   |           javafx-loading-25x25.gif
+|   |           upgrade_java.png
+|   |           upgrade_javafx.png
+|   |           
+|   \---web-files
+|           dtjava.js
+|           error.png
+|           get_java.png
+|           get_javafx.png
+|           javafx-chrome.png
+|           javafx-loading-100x100.gif
+|           javafx-loading-25x25.gif
+|           upgrade_java.png
+|           upgrade_javafx.png
+|           
++---lib
+|   |   guava-23.0-javadoc.jar
+|   |   guava-23.0.jar
+|   |   nblibraries.properties
+|   |   
+|   +---Communication
+|   |       activation.jar
+|   |       guava-23.0-javadoc.jar
+|   |       guava-23.0.jar
+|   |       mail.jar
+|   |       postgresql-42.2.5.jar
+|   |       pseudoSSLLibrary.jar
+|   |       
+|   +---CopyLibs
+|   |       org-netbeans-modules-java-j2seproject-copylibstask.jar
+|   |       
+|   +---Gui libs
+|   |       controlsfx-8.40.15.jar
+|   |       fontawesomefx-8.9.jar
+|   |       fontawesomefx-commons-8.12.jar
+|   |       fontawesomefx-fontawesome-4.6.3.jar
+|   |       FontAwsomeIntegratableGlyphBrowser.jar
+|   |       jfoenix-8.0.2-javadoc.jar
+|   |       jfoenix-8.0.8.jar
+|   |       joda-time-2.10.2.jar
+|   |       recurrence-8.5.0.jar
+|   |       view-8.5.0-javadoc.jar
+|   |       view-8.5.0-sources.jar
+|   |       view-8.5.0.jar
+|   |       
+|   +---hamcrest
+|   |       hamcrest-core-1.3.jar
+|   |       
+|   \---junit_4
+|           junit-4.12-javadoc.jar
+|           junit-4.12-sources.jar
+|           junit-4.12.jar
+|           
++---nbproject
+|   |   build-impl.xml
+|   |   genfiles.properties
+|   |   jfx-impl.xml
+|   |   project.properties
+|   |   project.xml
+|   |   
+|   +---configs
+|   |       Run_as_WebStart.properties
+|   |       Run_in_Browser.properties
+|   |       
+|   \---private
+|       |   private.properties
+|       |   private.xml
+|       |   
+|       +---configs
+|       |       Run_as_WebStart.properties
+|       |       Run_in_Browser.properties
+|       |       
+|       \---retriever
+|               catalog.xml
+|               
++---src
+|   |   tree.txt
+|   |   
+|   +---client
+|   |   +---communication
+|   |   |       CommunicationInterface.java
+|   |   |       CommunicationInterfaceImpl.java
+|   |   |       
+|   |   \---presentation
+|   |       |   CommunicationHandler.java
+|   |       |   MainFXML.fxml
+|   |       |   MainFXMLController.java
+|   |       |   Presentation.java
+|   |       |   SettingsPopupFXML.fxml
+|   |       |   SettingsPopupFXMLController.java
+|   |       |   
+|   |       +---containers
+|   |       |   |   Cache.java
+|   |       |   |   Department.java
+|   |       |   |   Patient.java
+|   |       |   |   PatientExtended.java
+|   |       |   |   Role.java
+|   |       |   |   User.java
+|   |       |   |   
+|   |       |   \---entries
+|   |       |           ActivityEntry.java
+|   |       |           CalendarEntry.java
+|   |       |           Entry.java
+|   |       |           EventDataEntry.java
+|   |       |           ManualEntry.java
+|   |       |           MedicinalEntry.java
+|   |       |           MessageEntry.java
+|   |       |           
+|   |       +---css
+|   |       |       adminStyleSheet.css
+|   |       |       calendarStyleSheet.css
+|   |       |       comboboxStyleSheet.css
+|   |       |       generalStyleSheet.css
+|   |       |       menuStyleSheet.css
+|   |       |       
+|   |       +---modules
+|   |       |   |   Module.java
+|   |       |   |   Popup.java
+|   |       |   |   
+|   |       |   +---admin
+|   |       |   |       AdminFXML.fxml
+|   |       |   |       AdminFXMLController.java
+|   |       |   |       PatientCreationPopupFXML.fxml
+|   |       |   |       PatientCreationPopupFXMLController.java
+|   |       |   |       
+|   |       |   +---calendar
+|   |       |   |       CalendarCacheKey.java
+|   |       |   |       CalendarDayRythmEditorPopupFXML.fxml
+|   |       |   |       CalendarDayRythmEditorPopupFXMLController.java
+|   |       |   |       CalendarEventCreationPopupFXML.fxml
+|   |       |   |       CalendarEventCreationPopupFXMLController.java
+|   |       |   |       CalendarEventDetailsPopoverFXML.fxml
+|   |       |   |       CalendarEventDetailsPopoverFXMLController.java
+|   |       |   |       CalendarEventEditPopupFXML.fxml
+|   |       |   |       CalendarEventEditPopupFXMLController.java
+|   |       |   |       CalendarFXML.fxml
+|   |       |   |       CalendarFXMLController.java
+|   |       |   |       CustomFontAwesomeIconView.java
+|   |       |   |       
+|   |       |   +---dashboard
+|   |       |   |       ActivityEntryPopupFXML.fxml
+|   |       |   |       ActivityEntryPopupFXMLController.java
+|   |       |   |       DashboardFXML.fxml
+|   |       |   |       DashboardFXMLController.java
+|   |       |   |       MessageEntryCreationPopupFXML.fxml
+|   |       |   |       MessageEntryCreationPopupFXMLController.java
+|   |       |   |       MessageEntryPopupFXML.fxml
+|   |       |   |       MessageEntryPopupFXMLController.java
+|   |       |   |       
+|   |       |   \---journal
+|   |       |           JournalFXML.fxml
+|   |       |           JournalFXMLController.java
+|   |       |           ManualEntryCreationPopupFXML.fxml
+|   |       |           ManualEntryCreationPopupFXMLController.java
+|   |       |           ManualEntryShowMessagePopupFXML.fxml
+|   |       |           ManualEntryShowMessagePopupFXMLController.java
+|   |       |           MedicinalEntryCreationPopupFXML.fxml
+|   |       |           MedicinalEntryCreationPopupFXMLController.java
+|   |       |           MedicinalEntryShowMessagePopupFXML.fxml
+|   |       |           MedicinalEntryShowMessagePopupFXMLController.java
+|   |       |           
+|   |       +---resources
+|   |       |   |   monaco.ttf
+|   |       |   |   sanitaslogo.ico
+|   |       |   |   sanitaslogo.png
+|   |       |   |   
+|   |       |   \---login
+|   |       |           blur.png
+|   |       |           
+|   |       \---utils
+|   |           |   CustomDecorator.java
+|   |           |   StringUtils.java
+|   |           |   
+|   |           \---credentials
+|   |                   CredentialContainer.java
+|   |                   LoginPopupFXML.fxml
+|   |                   LoginPopupFXMLController.java
+|   |                   
+|   +---launcher
+|   |       Launcher.java
+|   |       
+|   \---server
+|       +---communication
+|       |       ClientHandlerThread.java
+|       |       DomainHandler.java
+|       |       ServerController.java
+|       |       
+|       +---domain
+|       |       DomainInterface.java
+|       |       DomainInterfaceImpl.java
+|       |       EmailHandler.java
+|       |       
+|       +---persistence
+|       |       PersistanceInterface.java
+|       |       PersistanceInterfaceImpl.java
+|       |       
+|       \---recources
+|               ConfigReader.java
+|               Database.config
+|               README.txt
+|               SMTP.config
+|               
+\---test
+    +---client
+    |   +---communication
+    |   |       CommunicationInterfaceImplTest.java
+    |   |       
+    |   \---presentation
+    |       \---containers
+    |               RoleTest.java
+    |               
+    \---server

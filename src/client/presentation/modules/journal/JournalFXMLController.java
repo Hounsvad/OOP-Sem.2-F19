@@ -120,10 +120,12 @@ public class JournalFXMLController extends Module {
             List<ManualEntry> manualEntries = new ArrayList<>();
             List<MedicinalEntry> medicalEntries = new ArrayList<>();
             List<String[]> medicinalReturn = communicationHandler.sendQuery("getMedicinalJournal", getPatient().getPatientID());
-            if (Arrays.equals(medicinalReturn.get(0), new String[]{"Error", "Missing required roles"})) {
-                Platform.runLater(() -> ((VBox) medicinalEntriesView.getParent().getParent()).getChildren().remove(medicinalEntriesView.getParent()));
-            } else {
-                medicinalReturn.forEach((tuple) -> medicalEntries.add(new MedicinalEntry(tuple[0], tuple[1], tuple[2])));
+            if (!medicinalReturn.isEmpty()) {
+                if (Arrays.equals(medicinalReturn.get(0), new String[]{"Error", "Missing required roles"})) {
+                    Platform.runLater(() -> ((VBox) medicinalEntriesView.getParent().getParent()).getChildren().remove(medicinalEntriesView.getParent()));
+                } else {
+                    medicinalReturn.forEach((tuple) -> medicalEntries.add(new MedicinalEntry(tuple[0], tuple[1], tuple[2])));
+                }
             }
             communicationHandler.sendQuery("getJournal", getPatient().getPatientID()).forEach((tuple) -> manualEntries.add(new ManualEntry(tuple[1], tuple[0], tuple[2])));
             Platform.runLater(() -> {

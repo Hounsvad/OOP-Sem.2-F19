@@ -26,7 +26,7 @@ public class CommunicationInterfaceImplTest {
         ServerController serverC = new ServerController();
         Thread server = new Thread(serverC, "ServerThread");
         server.start();
-        Assert.assertTrue("UltraAdmin".equals(testInstance.sendQuery("login", "olnor18", "0ba8e1e5a89330ed3f159a67fd6c80ad345048b8ce84242bd0cb08b5c4834550").get(0)[0]));
+        Assert.assertTrue("Sanitas Solutions".equals(testInstance.sendQuery("login", "sanitas", "9d9687a72cc7c34b5b4820a5a32e3d7a2aec24b95ed5738f76856a230916f39c").get(0)[0]));
         serverC.stop();
     }
 

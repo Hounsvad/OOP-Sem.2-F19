@@ -253,13 +253,17 @@ public class AdminFXMLController extends Module {
 
     private void updateRoleAssignments() {
         new Thread(() -> {
-            int[] indecies = communicationHandler.sendQuery("getUserRoles", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> roleView.getItems().indexOf(new Role(t[0], "No description"))).collect(Collectors.toList()).stream().mapToInt(i -> i).toArray();
-            Platform.runLater(() -> {
-                roleView.getSelectionModel().clearSelection();
-                if (indecies.length > 0) {
-                    roleView.getSelectionModel().selectIndices(indecies[0], indecies);
-                }
-            });
+            try {
+                int[] indecies = communicationHandler.sendQuery("getUserRoles", UserView.getSelectionModel().getSelectedItem().getUserID()).stream().map((t) -> roleView.getItems().indexOf(new Role(t[0], "No description"))).collect(Collectors.toList()).stream().mapToInt(i -> i).toArray();
+                Platform.runLater(() -> {
+                    roleView.getSelectionModel().clearSelection();
+                    if (indecies.length > 0) {
+                        roleView.getSelectionModel().selectIndices(indecies[0], indecies);
+                    }
+                });
+            } catch (NullPointerException e) {
+                //do nothing
+            }
         }, "RoleAssignmentSelectionUpdater").start();
 
     }
