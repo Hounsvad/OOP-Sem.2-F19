@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -42,14 +42,7 @@ public class StringUtils {
      */
     public static String getBoldString(String s) {
         //Check if the system is capable os the bold characters used in this method
-        String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
-        if ((OS.indexOf("mac") >= 0) || (OS.indexOf("darwin") >= 0)) {
-            return s;
-        } else if (OS.indexOf("win") >= 0) {
-            //Continue
-        } else if (OS.indexOf("nux") >= 0) {
-            //detectedOS = OSType.Linux;
-        } else {
+        if (!(System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH).indexOf("win") >= 0)) {
             return s;
         }
         List<Character> input = Chars.asList(s.toCharArray());
@@ -74,6 +67,6 @@ public class StringUtils {
      * @return input hashed in sha256
      */
     public static String hash(String input) {
-        return Hashing.sha256().hashString(input, Charset.forName("UTF-8")).toString();
+        return Hashing.sha256().hashString("sanitasoverviewsalt" + input, Charset.forName("UTF-8")).toString();
     }
 }

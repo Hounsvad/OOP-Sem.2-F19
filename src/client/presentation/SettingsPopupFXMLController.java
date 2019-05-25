@@ -50,7 +50,7 @@ public class SettingsPopupFXMLController implements Initializable {
     private void saveOwnPassword(ActionEvent event) {
         //Saves the password to the database if valid
         if (validate()) {
-            communicationHandler.sendQuery("alterOwnPassword", Hashing.sha256().hashString(password.getText(), Charset.forName("UTF-8")).toString());
+            communicationHandler.sendQuery("alterOwnPassword", Hashing.sha256().hashString(CredentialContainer.getInstance().getUsername() + password.getText(), Charset.forName("UTF-8")).toString());
             CredentialContainer.getInstance().openLoginWindow();
             close();
         }

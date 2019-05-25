@@ -66,7 +66,7 @@ public class CommunicationHandler {
      * @param input The query for the database
      * @return The data from the database
      */
-    public List<String[]> sendQuery(String... input) {
+    public synchronized List<String[]> sendQuery(String... input) {
 
         String[] query = Arrays.copyOf(input, input.length);
         List<String[]> returnVariable;

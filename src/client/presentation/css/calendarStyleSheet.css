@@ -22,6 +22,28 @@ The use of this code in a non commercial and non exam environment is permitted
     -fx-font-size: 12pt;
 }
 
+.context-menu {
+    -fx-background-color: #2E4057;
+    -fx-border-color: #2E4057;
+    -fx-text-fill: #048BA8;
+}
+
+
+.menu-item .label {
+    -fx-text-fill: #048BA8;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: #048BA8;
+}
+.menu-item{
+    -fx-border-color: #2E4057;
+    -fx-border-width:0.50px;
+
+}
+.menu-item:focused {
+    -fx-background-color: derive(#2E4057, -40%);
+}
 
 
 

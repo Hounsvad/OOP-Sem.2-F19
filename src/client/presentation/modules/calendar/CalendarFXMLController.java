@@ -91,6 +91,7 @@ public class CalendarFXMLController extends Module {
         detailedWeekView.setEntryContextMenuCallback(param -> calendarEntryContextMenu(param));
         detailedWeekView.setContextMenuCallback(param -> calendarContextMenu());
         detailedWeekView.setEntryFactory(param -> createCalendarEntry());
+        detailedWeekView.getStylesheets().add(getClass().getResource("/client/presentation/css/calendarStyleSheet.css").toExternalForm());
 
         //Add calendar to the designated calendar pane
         calendarPane.getChildren().add(detailedWeekView);
@@ -344,6 +345,7 @@ public class CalendarFXMLController extends Module {
         createEvent.setStyle("-fx-text-fill: #048BA8;");
         createEvent.setOnAction(param -> openEventCreator());
         ContextMenu contextMenu = new ContextMenu(editDayRythm, createEvent);
+        contextMenu.setStyle("-fx-background-color: #2E4057;");
         return contextMenu;
     }
 
