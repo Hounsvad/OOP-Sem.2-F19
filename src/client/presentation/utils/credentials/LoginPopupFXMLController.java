@@ -78,12 +78,6 @@ public class LoginPopupFXMLController implements Initializable {
      */
     private CredentialContainer containerInstance;
 
-    /**
-     * Initializes the controller class
-     *
-     * @param url
-     * @param rb
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadpane.setVisible(false);

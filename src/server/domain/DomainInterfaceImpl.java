@@ -87,7 +87,7 @@ public class DomainInterfaceImpl implements DomainInterface {
      *
      * @param query is the query received from the client
      * @return the expected result based on the parseble quarries
-     * <p>
+     * <p\>
      * <pre>
      * Actions:                     Param 1:            Param 2:        Param 3:    Param 4:    Param 5:        Param 6:
      *
@@ -129,10 +129,9 @@ public class DomainInterfaceImpl implements DomainInterface {
      * message is returned in the form of {@literal List<String[]>} with the
      * first index in the first array being a single word descriptor and the
      * second index being a message associated
-     * <p>
-     * <p>
-     * <
-     * pre>
+     * <p\>
+     * <p\>
+     * <pre>
      * Descriptors:
      *  * Error - In the event of errors
      *  * Success - In The event of success

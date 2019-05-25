@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -23,12 +23,6 @@ public class Presentation extends Application {
     private double xOffset = 0;
     private double yOffset = 0;
 
-    /**
-     * Initialize the first login screen without a decorator.
-     *
-     * @param stage
-     * @throws Exception
-     */
     @Override
     public void start(Stage stage) throws Exception {
         //Loads the login-screen

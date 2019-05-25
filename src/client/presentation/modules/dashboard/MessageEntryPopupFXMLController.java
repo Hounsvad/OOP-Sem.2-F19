@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -25,37 +25,33 @@ public class MessageEntryPopupFXMLController extends Popup {
      */
     @FXML
     private FontAwesomeIconView cross;
-    
+
     /**
      * The title of the MessageEntry
      */
     @FXML
     private Label title;
-    
+
     /**
      * The message of the the MessageEntry
      */
     @FXML
     private Label message;
-    
+
     /**
      * The date of the MessageEntry
      */
     @FXML
     private Label date;
 
-    /**
-     * Initializes the controller class
-     * @param url
-     * @param rb
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
     /**
      * Closes the popup
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void close(MouseEvent event) {
@@ -64,14 +60,15 @@ public class MessageEntryPopupFXMLController extends Popup {
 
     /**
      * Sets the data of the MessageEntry popup
-     * @param titleString
-     * @param messageString
-     * @param dateString
+     *
+     * @param titleString   sets the title of the message
+     * @param messageString sets the message contents
+     * @param dateString    sets the date
      */
     public void setData(String titleString, String messageString, String dateString) {
         title.setText(titleString);
         message.setText(messageString);
         date.setText(dateString);
     }
-    
+
 }

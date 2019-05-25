@@ -54,7 +54,7 @@ public class CommunicationHandler {
 
     /**
      *
-     * @param mainFXMLController
+     * @param mainFXMLController The main fxml controller
      */
     public void setMainFXMLController(MainFXMLController mainFXMLController) {
         this.mainFXMLController = mainFXMLController;

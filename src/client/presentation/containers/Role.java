@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -18,8 +18,8 @@ public class Role implements Comparable {
 
     /**
      *
-     * @param roleId
-     * @param roleDescription
+     * @param roleId          is the unique id of the role
+     * @param roleDescription is the description associated with the role
      */
     public Role(String roleId, String roleDescription) {
         this.roleId = roleId;

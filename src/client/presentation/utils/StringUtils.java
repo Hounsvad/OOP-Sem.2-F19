@@ -62,8 +62,9 @@ public class StringUtils {
     }
 
     /**
+     * A method to shorthand the hashing of the
      *
-     * @param input
+     * @param input the input to be hashed
      * @return input hashed in sha256
      */
     public static String hash(String input) {

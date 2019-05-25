@@ -35,9 +35,9 @@ public class MedicinalEntry {
     /**
      * Constructs a medicinal entry for use in medicinal journal
      *
-     * @param patientID
-     * @param date
-     * @param text
+     * @param patientID patients id
+     * @param date      date of entry
+     * @param text      the text associated
      */
     public MedicinalEntry(String patientID, String date, String text) {
         this.patientID = patientID;

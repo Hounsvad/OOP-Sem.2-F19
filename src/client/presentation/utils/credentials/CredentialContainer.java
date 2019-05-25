@@ -126,7 +126,7 @@ public final class CredentialContainer {
     }
 
     /**
-     * Sets the {@link this#password} and updates the system to
+     * Sets the {@link #password} and updates the system to
      * know that it has a new password
      *
      * @param password is the hashed password in a string format
@@ -141,7 +141,7 @@ public final class CredentialContainer {
     }
 
     /**
-     * Sets the {@link this#username} and updates the system to
+     * Sets the {@link #username} and updates the system to
      * know that it has a new username
      *
      * @param username is the username in a string format
@@ -156,7 +156,7 @@ public final class CredentialContainer {
     }
 
     /**
-     * A getter for the {@link this#password}
+     * A getter for the {@link #password}
      *
      * @return the password stored in the container or null if the credentials
      *         are timed out
@@ -170,7 +170,7 @@ public final class CredentialContainer {
     }
 
     /**
-     * A getter for the {@link this#password}
+     * A getter for the {@link #password}
      *
      * @return the username stored in the container or null if the credentials
      *         are timed out

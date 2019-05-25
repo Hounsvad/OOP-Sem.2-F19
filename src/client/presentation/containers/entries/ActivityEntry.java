@@ -29,11 +29,12 @@ public class ActivityEntry {
     private final String ip;
 
     /**
+     * Contructs an activity entry
      *
-     * @param typeOfEntry
-     * @param dateOfEntry
-     * @param specificsOfEntry
-     * @param ip
+     * @param typeOfEntry      the entry type
+     * @param dateOfEntry      the date
+     * @param specificsOfEntry the parameters of the activity
+     * @param ip               the user ip
      */
     public ActivityEntry(String typeOfEntry, Date dateOfEntry, String specificsOfEntry, String ip) {
         this.typeOfEntry = typeOfEntry;

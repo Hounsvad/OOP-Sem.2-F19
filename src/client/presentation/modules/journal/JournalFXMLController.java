@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -43,12 +43,6 @@ public class JournalFXMLController extends Module {
     @FXML
     protected JFXListView<Patient> patientView;
 
-    /**
-     * Initializes the controller class
-     *
-     * @param url
-     * @param rb
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         updateData();

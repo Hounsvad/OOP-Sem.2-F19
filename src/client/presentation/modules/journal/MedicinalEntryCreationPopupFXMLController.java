@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -34,12 +34,6 @@ public class MedicinalEntryCreationPopupFXMLController extends Popup {
     @FXML
     private JFXTextArea notes;
 
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param rb
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         medicine.getItems().addAll("Parcetamol", "Ibuprofen", "Morfin", "Antihestamin");

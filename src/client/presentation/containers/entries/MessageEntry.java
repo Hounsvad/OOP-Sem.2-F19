@@ -65,7 +65,8 @@ public class MessageEntry {
 
     /**
      *
-     * @param moduleController
+     * @param moduleController the controller of the module that launched the
+     *                         popup
      */
     public MessageEntry(Module moduleController) {
         this.subject = "";

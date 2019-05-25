@@ -71,12 +71,6 @@ public class MainFXMLController implements Initializable {
     @FXML
     private GridPane menuGrid1;
 
-    /**
-     * Initializes the controller class
-     *
-     * @param url
-     * @param rb
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 

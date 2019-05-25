@@ -57,7 +57,7 @@ public class ManualEntry {
 
     /**
      *
-     * @param moduleController
+     * @param moduleController the controller that launched the popup
      */
     public static void showCreationPopup(Module moduleController) {
         Platform.runLater(()

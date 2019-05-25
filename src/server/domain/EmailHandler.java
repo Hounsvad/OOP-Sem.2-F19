@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -378,11 +378,12 @@ public class EmailHandler {
     }
 
     /**
+     * Contructs a mail handler
      *
-     * @param host
-     * @param port
-     * @param username
-     * @param password
+     * @param host     the host address
+     * @param port     the host port
+     * @param username the host username
+     * @param password the host password
      */
     public EmailHandler(String host, String port, String username, String password) {
 
@@ -394,9 +395,11 @@ public class EmailHandler {
     }
 
     /**
+     * Sends a mail to the user based on the department domain with the username
+     * and password
      *
-     * @param reciptient
-     * @param userPassword
+     * @param reciptient   the username of the recipient
+     * @param userPassword the new password of the recipient
      */
     public void sendMail(String reciptient, String userPassword) {
 
