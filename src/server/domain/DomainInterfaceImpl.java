@@ -56,8 +56,8 @@ public class DomainInterfaceImpl implements DomainInterface {
             put("getRoles", "002-006");
             put("getDepartments", "000-000");
             put("addJournalEntry", "001-001");
-            put("getMedicinalJournal", "");
-            put("getJournal", "");
+            put("getMedicinalJournal", "001-002");
+            put("getJournal", "001-001");
             put("addActivity", "");
             put("getActivity", "");
             put("getUserActivity", "002-007");
@@ -87,7 +87,9 @@ public class DomainInterfaceImpl implements DomainInterface {
      *
      * @param query is the query received from the client
      * @return the expected result based on the parseble quarries
-     * <p\>
+     * <p>
+     * <p>
+     * </p>
      * <pre>
      * Actions:                     Param 1:            Param 2:        Param 3:    Param 4:    Param 5:        Param 6:
      *
@@ -129,8 +131,8 @@ public class DomainInterfaceImpl implements DomainInterface {
      * message is returned in the form of {@literal List<String[]>} with the
      * first index in the first array being a single word descriptor and the
      * second index being a message associated
-     * <p\>
-     * <p\>
+     * <p>
+     * </p>
      * <pre>
      * Descriptors:
      *  * Error - In the event of errors

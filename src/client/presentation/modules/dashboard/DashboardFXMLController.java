@@ -41,12 +41,6 @@ public class DashboardFXMLController extends Module {
 
     private static ChangeListener changeListener;
 
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param rb
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Set the text on name to the name of the user
