@@ -56,8 +56,8 @@ public class DomainInterfaceImpl implements DomainInterface {
             put("getRoles", "002-006");
             put("getDepartments", "000-000");
             put("addJournalEntry", "001-001");
-            put("getMedicinalJournal", "");
-            put("getJournal", "");
+            put("getMedicinalJournal", "001-002");
+            put("getJournal", "001-001");
             put("addActivity", "");
             put("getActivity", "");
             put("getUserActivity", "002-007");

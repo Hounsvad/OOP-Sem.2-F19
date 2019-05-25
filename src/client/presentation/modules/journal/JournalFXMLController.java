@@ -1,4 +1,4 @@
-/* 
+/*
  * Developed by SI2-PRO Group 3
  * Frederik Alexander Hounsvad, Oliver Lind Nordestgaard, Patrick Nielsen, Jacob Kirketerp Andersen, Nadin Fariss
  */
@@ -11,12 +11,14 @@ import client.presentation.modules.Module;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -123,7 +125,12 @@ public class JournalFXMLController extends Module {
         new Thread(() -> {
             List<ManualEntry> manualEntries = new ArrayList<>();
             List<MedicinalEntry> medicalEntries = new ArrayList<>();
-            communicationHandler.sendQuery("getMedicinalJournal", getPatient().getPatientID()).forEach((tuple) -> medicalEntries.add(new MedicinalEntry(tuple[0], tuple[1], tuple[2])));
+            List<String[]> medicinalReturn = communicationHandler.sendQuery("getMedicinalJournal", getPatient().getPatientID());
+            if (Arrays.equals(medicinalReturn.get(0), new String[]{"Error", "Missing required roles"})) {
+                Platform.runLater(() -> ((VBox) medicinalEntriesView.getParent().getParent()).getChildren().remove(medicinalEntriesView.getParent()));
+            } else {
+                medicinalReturn.forEach((tuple) -> medicalEntries.add(new MedicinalEntry(tuple[0], tuple[1], tuple[2])));
+            }
             communicationHandler.sendQuery("getJournal", getPatient().getPatientID()).forEach((tuple) -> manualEntries.add(new ManualEntry(tuple[1], tuple[0], tuple[2])));
             Platform.runLater(() -> {
                 manualEntriesView.getItems().clear();
